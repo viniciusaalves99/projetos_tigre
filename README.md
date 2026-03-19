@@ -20,10 +20,10 @@ Automação em Python para geração e envio de relatórios semanais de **Pontos
 
 ```
 <pasta configurada>
-├── Base_Extracao_PE_Produto_Foco_TESTE.xlsx  ← Base de dados com os registros de PE
-├── Arquivos_Gerados\                          ← Relatórios gerados (criado automaticamente)
-│   └── TESTE\                                 ← Relatórios gerados em modo teste
-└── LOG_ENVIO_PE.xlsx                          ← Log de envios e erros (criado automaticamente)
+├── Base_Extracao_PE_Produto_Foco_TESTE1.xlsx  ← Base de dados com os registros de PE
+├── Arquivos_Gerados\                           ← Relatórios gerados (criado automaticamente)
+│   └── TESTE\                                  ← Relatórios gerados em modo teste
+└── LOG_ENVIO_PE.xlsx                           ← Log de envios e erros (criado automaticamente)
 ```
 
 > Não é necessário nenhum arquivo de modelo — os relatórios são criados do zero pelo código.
@@ -63,13 +63,12 @@ Automação em Python para geração e envio de relatórios semanais de **Pontos
 Abra o arquivo `Automacao_envio_pe.ipynb` e ajuste as configurações no topo:
 
 ```python
-CAMINHO_BASE = r'C:\...\Base_Extracao_PE_Produto_Foco_TESTE.xlsx'
+CAMINHO_BASE = r'C:\...\Base_Extracao_PE_Produto_Foco_TESTE1.xlsx'
 PASTA_SAIDA  = r'C:\...\Arquivos_Gerados'
 ARQUIVO_LOG  = r'C:\...\LOG_ENVIO_PE.xlsx'
 
 EMAILS_CC = [
-    'coordenador@empresa.com',
-    'diretoria@empresa.com'
+    'l.basaia@spotpromo.com.br'   # e-mail(s) em cópia em todos os envios
 ]
 
 MAX_TENTATIVAS = 2   # Tentativas de reenvio em caso de falha no Outlook
@@ -87,8 +86,10 @@ MODO_TESTE = False  # Gera os arquivos E envia e-mails (pede confirmação antes
 Execute a célula principal. Em modo produção, será exibida uma confirmação:
 
 ```
-⚠️  MODO PRODUÇÃO — 25 destinatários. Confirma? [s/n]:
+⚠️  MODO PRODUÇÃO — 7 destinatários. Confirma? [s/n]:
 ```
+
+Digite `s` e pressione Enter para confirmar o envio.
 
 ---
 
@@ -117,6 +118,17 @@ Resumo de Pontos Extras conquistados, com contagem distinta de `CHAVE` agrupada 
 
 ---
 
+## E-mail enviado
+
+O e-mail é enviado em formato **HTML** com:
+- Saudação personalizada com o nome do destinatário
+- Observação sobre a coluna `CHAVE_TI` (diferencia PE de retorno de nova aquisição)
+- Botão de acesso ao **Dashboard** do sistema
+- **Assinatura automática** do Outlook carregada dinamicamente
+- Arquivo `.xlsx` em anexo
+
+---
+
 ## Fluxo de execução
 
 ```
@@ -129,7 +141,7 @@ Base Excel (extração)
     │          → Gera BASE_PE (colunas A:O, dados filtrados)
     │          → Gera TT_PE  (contagem distinta de PE por subcategoria/tipo + total)
     │          → Salva arquivo .xlsx
-    │          → (produção) Envia e-mail via Outlook com retry
+    │          → (produção) Envia e-mail HTML via Outlook com retry
     │
     ├─ Para cada GERENTE:
     │       └─ (mesma lógica acima)
