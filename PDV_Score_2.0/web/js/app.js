@@ -433,7 +433,6 @@ function scrPEQ6() {
         <div class="q-text">6. Existe algum ponto extra executado no PDV?</div>
         <button class="opt-btn ${S.q6 === 'sim' ? 'sel' : ''}" onclick="S.q6='sim'; render()">✅ Sim</button>
         <button class="opt-btn ${S.q6 === 'nao' ? 'sel' : ''}" onclick="S.q6='nao'; render()">❌ Não</button>
-        ${S.q6 === 'sim' ? fotoInput('q6') : ''}
       </div>
       <div class="info-box">
         💡 Peso: Sim = <strong>0 pts</strong> (detalhado na próxima etapa) &nbsp;|&nbsp; Não = <strong>–0,50</strong>
@@ -441,8 +440,7 @@ function scrPEQ6() {
     </div>
     <div class="bottom-actions">
       <button class="btn-ghost"   onclick="go('dashboard')">← Voltar</button>
-      <button class="btn-primary" onclick="afterQ6()"
-        ${!S.q6 || (S.q6 === 'sim' && !S.fotos.q6) ? 'disabled' : ''}>Próximo →</button>
+      <button class="btn-primary" onclick="afterQ6()" ${!S.q6 ? 'disabled' : ''}>Próximo →</button>
     </div>`;
 }
 
@@ -478,6 +476,24 @@ function scrPEQ7() {
           const qty = S.q7[pe.id] || 0;
           const pts = calcPEItem(pe.peso, qty).toFixed(2);
           const dica = qty > 1 ? `${pe.peso.toFixed(2)} + ${(0.25*(qty-1)).toFixed(2)}` : pe.peso.toFixed(2);
+          const fotosArr = S.fotos.q7[pe.id] || [];
+          const fotosOk = fotosArr.filter(Boolean).length;
+
+          const fotosHtml = qty > 0 ? Array.from({ length: qty }, (_, i) => {
+            const data = fotosArr[i];
+            const id = `foto-q7-${pe.id}-${i}`;
+            return `
+              <div class="foto-upload" style="margin-top:8px">
+                <input type="file" accept="image/*" capture="environment" id="${id}"
+                       onchange="setFotoQ7('${pe.id}', ${i}, this)">
+                <label for="${id}" class="${data ? 'has-foto' : ''}">
+                  ${data
+                    ? `<img src="${data}" alt="Foto ${i+1}"><span class="foto-ok">✅ Foto ${i+1} de ${qty} — toque para alterar</span>`
+                    : `<div class="foto-icon">📷</div><div>Foto ${i+1} de ${qty}</div><div class="foto-req">Obrigatório</div>`}
+                </label>
+              </div>`;
+          }).join('') : '';
+
           return `
             <div class="pe-row ${qty > 0 ? 'active' : ''}">
               <div class="pe-row-top">
@@ -490,7 +506,10 @@ function scrPEQ7() {
                 <button class="qty-btn" onclick="changeQty('${pe.id}', 1)">+</button>
                 ${qty > 0 ? `<span class="qty-pts">= ${pts} pts &nbsp;(${dica})</span>` : ''}
               </div>
-              ${qty > 0 ? fotoInput('q7', pe.id) : ''}
+              ${qty > 0 ? `<div style="font-size:11px;color:${fotosOk >= qty ? '#27AE60' : '#E53935'};margin-top:6px;font-weight:700">
+                📷 ${fotosOk} de ${qty} foto${qty > 1 ? 's' : ''} anexada${qty > 1 ? 's' : ''}
+              </div>` : ''}
+              ${fotosHtml}
             </div>`;
         }).join('')}
       </div>
@@ -501,8 +520,7 @@ function scrPEQ7() {
     </div>
     <div class="bottom-actions">
       <button class="btn-ghost"   onclick="go('pe_q6')">← Voltar</button>
-      <button class="btn-primary" onclick="concluirPE()"
-        ${Object.keys(S.q7).some(id => (S.q7[id] > 0) && !(S.fotos.q7 && S.fotos.q7[id])) ? 'disabled' : ''}>
+      <button class="btn-primary" onclick="concluirPE()" ${!fotosQ7Ok() ? 'disabled' : ''}>
         Concluir Ponto Extra ✓
       </button>
     </div>`;
@@ -655,6 +673,26 @@ function setFoto(key, inputEl, subkey) {
   reader.readAsDataURL(file);
 }
 
+function setFotoQ7(peId, idx, inputEl) {
+  const file = inputEl.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    if (!S.fotos.q7[peId]) S.fotos.q7[peId] = [];
+    S.fotos.q7[peId][idx] = e.target.result;
+    render();
+  };
+  reader.readAsDataURL(file);
+}
+
+function fotosQ7Ok() {
+  return Object.entries(S.q7).every(([id, qty]) => {
+    if (qty < 1) return true;
+    const arr = S.fotos.q7[id] || [];
+    return arr.filter(Boolean).length >= qty;
+  });
+}
+
 function fotoInput(key, subkey) {
   const data = subkey !== undefined
     ? (S.fotos[key] && S.fotos[key][subkey])
@@ -719,7 +757,13 @@ function concluirPE() {
 function changeQty(id, delta) {
   const cur = S.q7[id] || 0;
   const nxt = Math.max(0, cur + delta);
-  if (nxt === 0) delete S.q7[id]; else S.q7[id] = nxt;
+  if (nxt === 0) {
+    delete S.q7[id];
+    delete S.fotos.q7[id];
+  } else {
+    S.q7[id] = nxt;
+    if (S.fotos.q7[id]) S.fotos.q7[id] = S.fotos.q7[id].slice(0, nxt);
+  }
   render();
 }
 
