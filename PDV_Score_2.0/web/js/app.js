@@ -30,6 +30,9 @@ function sugestoesLoja(prefix, max = 6) {
 }
 
 function onCodLojaInput(val) {
+  const inputEl   = document.getElementById('cod-loja-input');
+  const cursorPos = inputEl ? inputEl.selectionStart : val.length;
+
   S.pdv.codigo      = val;
   S._lojaConfirmada = false;
   S.pdv.nome        = '';
@@ -39,13 +42,14 @@ function onCodLojaInput(val) {
   S.pdv.cnpj        = '';
   S._sugestoes      = sugestoesLoja(val);
 
-  // Atualiza só o dropdown — sem re-renderizar o input (evita perda de foco)
   const container = document.querySelector('.sug-list-container');
   if (container) {
     const sugs = S._sugestoes;
     container.innerHTML = sugs.length
       ? `<div class="sug-list">${sugs.map(s =>
-          `<div class="sug-item" onclick="selecionarSugestao('${s.cod}')">
+          `<div class="sug-item"
+               onmousedown="event.preventDefault()"
+               onclick="selecionarSugestao('${s.cod}')">
              <span class="sug-cod">${s.cod}</span>
              <span class="sug-nome">${s.nome || s.razao || ''}</span>
              <span class="sug-loc">${s.cidade || ''}${s.uf ? ' – ' + s.uf : ''}</span>
@@ -54,6 +58,12 @@ function onCodLojaInput(val) {
       : '';
   }
   syncBtn();
+
+  // Garante que o foco e o cursor voltam ao input caso o browser tenha deslocado
+  if (inputEl) {
+    inputEl.focus();
+    inputEl.setSelectionRange(cursorPos, cursorPos);
+  }
 }
 
 function selecionarSugestao(cod) {
@@ -305,8 +315,8 @@ function scrPDVInfo() {
       <div class="q-card">
         <div class="form-group" style="position:relative">
           <label class="form-label">Cód. Loja</label>
-          <input class="form-input" type="text" inputmode="numeric" placeholder="Ex: 1132221"
-                 value="${S.pdv.codigo}"
+          <input id="cod-loja-input" class="form-input" type="text" inputmode="numeric"
+                 placeholder="Ex: 1132221" value="${S.pdv.codigo}"
                  oninput="onCodLojaInput(this.value)" autocomplete="off">
           <div class="sug-list-container"></div>
         </div>
