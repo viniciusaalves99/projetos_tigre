@@ -814,7 +814,7 @@ function scrResultado() {
         📤 Exportar / Compartilhar
       </button>
       <div style="display:flex;gap:8px;width:100%">
-        <button class="btn-ghost"   style="flex:1" onclick="go('dashboard')">← Dashboard</button>
+        <button class="btn-ghost"   style="flex:1" onclick="go('dashboard')">← Voltar à Pesquisa</button>
         <button class="btn-primary" style="flex:1" onclick="novaColeta()">📋 Nova Coleta</button>
       </div>
     </div>`;
