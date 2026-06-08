@@ -23,10 +23,25 @@ function buscarLoja(cod) {
 function sugestoesLoja(prefix, max = 6) {
   if (!LOJAS || !prefix || prefix.length < 1) return [];
   const p = String(prefix).trim();
-  return Object.entries(LOJAS)
-    .filter(([k]) => k.startsWith(p))
-    .slice(0, max)
-    .map(([k, v]) => ({ cod: k, ...v }));
+
+  if (/^\d+$/.test(p)) {
+    // busca por prefixo de código numérico
+    return Object.entries(LOJAS)
+      .filter(([k]) => k.startsWith(p))
+      .slice(0, max)
+      .map(([k, v]) => ({ cod: k, ...v }));
+  }
+
+  // busca por nome (mín. 3 letras para evitar resultados demais)
+  if (p.length < 3) return [];
+  const pUp = p.toUpperCase();
+  const results = [];
+  for (const [k, v] of Object.entries(LOJAS)) {
+    if ((v.nome || v.razao || '').toUpperCase().includes(pUp))
+      results.push({ cod: k, ...v });
+    if (results.length >= max) break;
+  }
+  return results;
 }
 
 function onCodLojaInput(val) {
@@ -315,9 +330,10 @@ function scrPDVInfo() {
       <div class="q-card">
         <div class="form-group" style="position:relative">
           <label class="form-label">Cód. Loja</label>
-          <input id="cod-loja-input" class="form-input" type="text" inputmode="numeric"
-                 placeholder="Ex: 1132221" value="${S.pdv.codigo}"
+          <input id="cod-loja-input" class="form-input" type="text"
+                 placeholder="Código ou nome da loja" value="${S.pdv.codigo}"
                  oninput="onCodLojaInput(this.value)" autocomplete="off">
+          <div style="font-size:11px;color:#999;margin-top:4px">🔍 Digite o código numérico ou parte do nome</div>
           <div class="sug-list-container"></div>
         </div>
         ${lojaOk ? lojaInfoHtml : `
@@ -702,52 +718,105 @@ function scrMixDetalhe() {
 /* ---- RESULTADO ---- */
 
 function scrResultado() {
-  const sc = calcScore();
-  const cl = classificacao(sc.total);
+  const sc    = calcScore();
+  const cl    = classificacao(sc.total);
+  const isB   = S.tipoPDV === 'balcao';
+  const tipo  = isB ? 'Balcão' : S.tipoPDV === 'misto' ? 'Misto' : 'Autosserviço';
+  const comList = isB ? COMUNICACOES.balcao : COMUNICACOES.misto;
+  const peList  = isB ? PONTOS_EXTRA.balcao : PONTOS_EXTRA.misto;
 
   function bdRow(icon, label, val) {
     const v = typeof val === 'number' ? val : 0;
-    return `
-      <div class="bd-row">
-        <span class="bd-lbl">${icon} ${label}</span>
-        <span class="bd-val ${v >= 0 ? 'pos' : 'neg'}">${v >= 0 ? '+' : ''}${v.toFixed(2)}</span>
-      </div>`;
+    return `<div class="bd-row">
+      <span class="bd-lbl">${icon} ${label}</span>
+      <span class="bd-val ${v >= 0 ? 'pos' : 'neg'}">${v >= 0 ? '+' : ''}${v.toFixed(2)}</span>
+    </div>`;
   }
 
-  const tipo = S.tipoPDV === 'balcao' ? 'Balcão' : S.tipoPDV === 'misto' ? 'Misto' : 'Autosserviço';
+  // --- Resumo Comunicação ---
+  const comChecked = S.q5.map(id => comList.find(c => c.id === id)).filter(Boolean);
+  const comResumo = S.comConcluido ? `
+    <div class="resumo-section">
+      <div class="resumo-title">📢 Comunicação – itens encontrados</div>
+      ${comChecked.length
+        ? comChecked.map(it => `<div class="resumo-item ok">✅ ${it.label}</div>`).join('')
+        : '<div class="resumo-item neutral">Nenhum material de comunicação encontrado</div>'}
+    </div>` : '';
+
+  // --- Resumo Ponto Extra ---
+  let peResumo = '';
+  if (S.peConcluido) {
+    if (S.q6 === 'nao') {
+      peResumo = `<div class="resumo-section">
+        <div class="resumo-title">🏪 Ponto Extra</div>
+        <div class="resumo-item neg">❌ Sem ponto extra executado</div>
+      </div>`;
+    } else {
+      const entries = Object.entries(S.q7).filter(([, qty]) => qty > 0);
+      peResumo = `<div class="resumo-section">
+        <div class="resumo-title">🏪 Ponto Extra – tipos executados</div>
+        ${entries.length
+          ? entries.map(([id, qty]) => {
+              const it = peList.find(p => p.id === id);
+              return `<div class="resumo-item ok">✅ ${it ? it.label : id}<span class="resumo-qty">×${qty}</span></div>`;
+            }).join('')
+          : '<div class="resumo-item neutral">Nenhum tipo informado</div>'}
+      </div>`;
+    }
+  }
+
+  // --- Resumo Mix ---
+  const mixResumo = S.mixConcluido ? `
+    <div class="resumo-section">
+      <div class="resumo-title">🛒 Mix e Preços – linhas avaliadas</div>
+      ${S.linhas.map(l => {
+        const d = S.mixData[l] || {};
+        if (!d.trabalha) return `<div class="resumo-item neutral">➖ ${l}: não trabalha</div>`;
+        return `<div class="resumo-item ${d.ruptura ? 'neg' : 'ok'}">${d.ruptura ? '⚠️' : '✅'} ${l}: ${d.ruptura ? 'com ruptura' : 'sem ruptura'}</div>`;
+      }).join('')}
+    </div>` : '';
 
   return `
     ${header(pdvLine(), 'Resultado da Avaliação', 'dashboard')}
     <div class="content">
-      <div style="text-align:center;padding:20px 0 8px">
-        <div class="score-circle">
-          <div class="score-val">${sc.total.toFixed(1)}</div>
-          <div class="score-lbl">Score Total</div>
+      <div id="resultado-card">
+        <div style="text-align:center;padding:20px 0 8px">
+          <div class="score-circle">
+            <div class="score-val">${sc.total.toFixed(1)}</div>
+            <div class="score-lbl">Score Total</div>
+          </div>
+          <div class="score-class ${cl.cls}">${cl.label}</div>
         </div>
-        <div class="score-class ${cl.cls}">${cl.label}</div>
-      </div>
 
-      <div class="breakdown">
-        <div class="bd-title">📊 Detalhamento por módulo</div>
-        ${bdRow('📢', 'Comunicação', sc.com)}
-        ${bdRow('🏪', `Ponto Extra (limite: ${S.tipoPDV === 'balcao' ? '3,10' : '5,00'} pts)`, sc.pe)}
-        ${bdRow('🛒', 'Mix e Preços', sc.mix)}
-        <div class="bd-row total-row">
-          <span class="bd-lbl">SCORE FINAL <small style="font-weight:400;color:#999">(máx. 10,00)</small></span>
-          <span class="bd-val" style="color:#1B3F70">${sc.total.toFixed(2)}</span>
+        <div class="breakdown">
+          <div class="bd-title">📊 Detalhamento por módulo</div>
+          ${bdRow('📢', 'Comunicação', sc.com)}
+          ${bdRow('🏪', `Ponto Extra (limite: ${isB ? '3,10' : '5,00'} pts)`, sc.pe)}
+          ${bdRow('🛒', 'Mix e Preços', sc.mix)}
+          <div class="bd-row total-row">
+            <span class="bd-lbl">SCORE FINAL <small style="font-weight:400;color:#999">(máx. 10,00)</small></span>
+            <span class="bd-val" style="color:#1B3F70">${sc.total.toFixed(2)}</span>
+          </div>
         </div>
-      </div>
-      ${sc.total >= 10 ? `<div class="info-box orange">🏆 Score máximo de 10,00 pontos atingido!</div>` : ''}
+        ${sc.total >= 10 ? `<div class="info-box orange">🏆 Score máximo de 10,00 pontos atingido!</div>` : ''}
 
-      <div class="info-box">
-        🏬 Tipo PDV: <strong>${tipo}</strong><br>
-        📋 Negócio: <strong>${S.tipoNegocio || '–'}</strong><br>
-        🏪 PDV: <strong>${S.pdv.codigo ? S.pdv.codigo + ' – ' : ''}${S.pdv.nome || '–'}</strong>
+        <div class="info-box">
+          🏬 Tipo PDV: <strong>${tipo}</strong><br>
+          📋 Negócio: <strong>${S.tipoNegocio || '–'}</strong><br>
+          🏪 PDV: <strong>${S.pdv.codigo ? S.pdv.codigo + ' – ' : ''}${S.pdv.nome || '–'}</strong>
+        </div>
+
+        ${comResumo}${peResumo}${mixResumo}
       </div>
     </div>
-    <div class="bottom-actions">
-      <button class="btn-ghost"    onclick="go('dashboard')">← Dashboard</button>
-      <button class="btn-primary"  onclick="novaColeta()">📋 Nova Coleta</button>
+    <div class="bottom-actions" style="flex-direction:column;gap:8px">
+      <button id="btn-exportar" class="btn-primary" style="width:100%" onclick="exportarResultado()">
+        📤 Exportar / Compartilhar
+      </button>
+      <div style="display:flex;gap:8px;width:100%">
+        <button class="btn-ghost"   style="flex:1" onclick="go('dashboard')">← Dashboard</button>
+        <button class="btn-primary" style="flex:1" onclick="novaColeta()">📋 Nova Coleta</button>
+      </div>
     </div>`;
 }
 
@@ -908,6 +977,44 @@ function nextLinha(linha) {
 function novaColeta() {
   S = resetState();
   render();
+}
+
+async function exportarResultado() {
+  const btn = document.getElementById('btn-exportar');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Gerando imagem…'; }
+  try {
+    const el = document.getElementById('resultado-card');
+    const canvas = await html2canvas(el, {
+      scale: 2,
+      backgroundColor: '#F2F2F2',
+      logging: false,
+      useCORS: true,
+    });
+    const filename = `pdv-score-${S.pdv.codigo || 'resultado'}.png`;
+    if (navigator.share) {
+      canvas.toBlob(async blob => {
+        try {
+          const file = new File([blob], filename, { type: 'image/png' });
+          await navigator.share({ files: [file], title: `PDV Score – ${S.pdv.nome || S.pdv.codigo}` });
+        } catch {
+          _dlCanvas(canvas, filename);
+        }
+      }, 'image/png');
+    } else {
+      _dlCanvas(canvas, filename);
+    }
+  } catch (e) {
+    alert('Não foi possível gerar a imagem.');
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = '📤 Exportar / Compartilhar'; }
+  }
+}
+
+function _dlCanvas(canvas, filename) {
+  const a = document.createElement('a');
+  a.download = filename;
+  a.href = canvas.toDataURL('image/png');
+  a.click();
 }
 
 function syncBtn() {
