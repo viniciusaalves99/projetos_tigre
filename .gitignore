@@ -1,1 +1,16 @@
+# Arquivos de referência local (não vão ao repositório)
+PDV_Score_2.0/referencias/
+PDV_Score_2.0/web/bases/
+
+# Claude
 .claude/
+
+# Python / Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Logs e temporários
+*.log
+Thumbs.db
+.DS_Store

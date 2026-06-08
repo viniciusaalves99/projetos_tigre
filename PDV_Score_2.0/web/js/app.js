@@ -1,6 +1,64 @@
 'use strict';
 
 // ===========================
+// LOJAS (carregado do JSON)
+// ===========================
+
+let LOJAS = null;
+
+async function loadLojas() {
+  try {
+    const res = await fetch('dados/lojas.json');
+    LOJAS = await res.json();
+  } catch (e) {
+    LOJAS = {};
+  }
+}
+
+function buscarLoja(cod) {
+  if (!LOJAS) return null;
+  return LOJAS[String(cod).trim()] || null;
+}
+
+function sugestoesLoja(prefix, max = 6) {
+  if (!LOJAS || !prefix || prefix.length < 1) return [];
+  const p = String(prefix).trim();
+  return Object.entries(LOJAS)
+    .filter(([k]) => k.startsWith(p))
+    .slice(0, max)
+    .map(([k, v]) => ({ cod: k, ...v }));
+}
+
+function onCodLojaInput(val) {
+  S.pdv.codigo = val;
+  const loja = buscarLoja(val);
+  if (loja) {
+    S.pdv.nome     = loja.nome;
+    S.pdv.cidade   = loja.cidade;
+    S.pdv.uf       = loja.uf;
+    S.pdv.endereco = loja.endereco;
+    S.pdv.cnpj     = loja.cnpj;
+    S._sugestoes   = [];
+  } else {
+    S._sugestoes = sugestoesLoja(val);
+  }
+  render();
+}
+
+function selecionarSugestao(cod) {
+  const loja = buscarLoja(cod);
+  if (!loja) return;
+  S.pdv.codigo   = cod;
+  S.pdv.nome     = loja.nome;
+  S.pdv.cidade   = loja.cidade;
+  S.pdv.uf       = loja.uf;
+  S.pdv.endereco = loja.endereco;
+  S.pdv.cnpj     = loja.cnpj;
+  S._sugestoes   = [];
+  render();
+}
+
+// ===========================
 // DATA
 // ===========================
 
@@ -99,6 +157,7 @@ function resetState() {
     peConcluido:  false,
     mixConcluido: false,
     fotos: { q2: null, q3: null, q4: null, q5: null, q6: null, q7: {} },
+    _sugestoes: [],
   };
 }
 
@@ -208,6 +267,30 @@ function moduloStatus(concluido, prog, total) {
 
 function scrPDVInfo() {
   const pode = S.pdv.codigo.trim() !== '' && S.pdv.nome.trim() !== '';
+  const sugs  = S._sugestoes || [];
+  const lojaOk = buscarLoja(S.pdv.codigo) !== null;
+
+  const sugHtml = sugs.length ? `
+    <div class="sug-list">
+      ${sugs.map(s => `
+        <div class="sug-item" onclick="selecionarSugestao('${s.cod}')">
+          <span class="sug-cod">${s.cod}</span>
+          <span class="sug-nome">${s.nome || s.razao || ''}</span>
+          <span class="sug-loc">${s.cidade || ''}${s.uf ? ' – ' + s.uf : ''}</span>
+        </div>`).join('')}
+    </div>` : '';
+
+  const lojaInfoHtml = lojaOk ? `
+    <div class="loja-info-box">
+      <div class="loja-info-row"><span class="loja-info-label">Nome:</span> ${S.pdv.nome}</div>
+      ${S.pdv.endereco ? `<div class="loja-info-row"><span class="loja-info-label">End.:</span> ${S.pdv.endereco}</div>` : ''}
+      ${S.pdv.cidade   ? `<div class="loja-info-row"><span class="loja-info-label">Cidade:</span> ${S.pdv.cidade}${S.pdv.uf ? ' – ' + S.pdv.uf : ''}</div>` : ''}
+      ${S.pdv.cnpj     ? `<div class="loja-info-row"><span class="loja-info-label">CNPJ:</span> ${S.pdv.cnpj}</div>` : ''}
+    </div>` : '';
+
+  const loadingHtml = LOJAS === null
+    ? `<div class="info-box" style="color:#888">⏳ Carregando base de lojas…</div>` : '';
+
   return `
     ${header('PDV Score 2.0', 'Identificação do PDV')}
     <div class="content">
@@ -216,19 +299,22 @@ function scrPDVInfo() {
         <h1>PDV Score 2.0</h1>
         <p>Sistema de Avaliação – Loja Perfeita</p>
       </div>
+      ${loadingHtml}
       <div class="q-card">
-        <div class="form-group">
+        <div class="form-group" style="position:relative">
           <label class="form-label">Cód. Loja</label>
-          <input class="form-input" type="text" placeholder="Ex: 1132221"
+          <input class="form-input" type="text" inputmode="numeric" placeholder="Ex: 1132221"
                  value="${S.pdv.codigo}"
-                 oninput="S.pdv.codigo=this.value; syncBtn()">
+                 oninput="onCodLojaInput(this.value)" autocomplete="off">
+          ${sugHtml}
         </div>
+        ${lojaOk ? lojaInfoHtml : `
         <div class="form-group" style="margin-bottom:0">
           <label class="form-label">Nome / Razão Social</label>
           <input class="form-input" type="text" placeholder="Ex: CASAS DA ÁGUA"
                  value="${S.pdv.nome}"
                  oninput="S.pdv.nome=this.value; syncBtn()">
-        </div>
+        </div>`}
       </div>
       <div class="info-box">
         📍 Confirme que está no PDV correto antes de iniciar a coleta.
@@ -846,3 +932,4 @@ function render() {
 }
 
 render();
+loadLojas().then(() => { if (S.screen === 'pdv_info') render(); });
