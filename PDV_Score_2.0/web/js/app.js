@@ -30,15 +30,30 @@ function sugestoesLoja(prefix, max = 6) {
 }
 
 function onCodLojaInput(val) {
-  S.pdv.codigo       = val;
-  S._lojaConfirmada  = false;
-  S.pdv.nome         = '';
-  S.pdv.cidade       = '';
-  S.pdv.uf           = '';
-  S.pdv.endereco     = '';
-  S.pdv.cnpj         = '';
-  S._sugestoes       = sugestoesLoja(val);
-  render();
+  S.pdv.codigo      = val;
+  S._lojaConfirmada = false;
+  S.pdv.nome        = '';
+  S.pdv.cidade      = '';
+  S.pdv.uf          = '';
+  S.pdv.endereco    = '';
+  S.pdv.cnpj        = '';
+  S._sugestoes      = sugestoesLoja(val);
+
+  // Atualiza só o dropdown — sem re-renderizar o input (evita perda de foco)
+  const container = document.querySelector('.sug-list-container');
+  if (container) {
+    const sugs = S._sugestoes;
+    container.innerHTML = sugs.length
+      ? `<div class="sug-list">${sugs.map(s =>
+          `<div class="sug-item" onclick="selecionarSugestao('${s.cod}')">
+             <span class="sug-cod">${s.cod}</span>
+             <span class="sug-nome">${s.nome || s.razao || ''}</span>
+             <span class="sug-loc">${s.cidade || ''}${s.uf ? ' – ' + s.uf : ''}</span>
+           </div>`).join('')}
+        </div>`
+      : '';
+  }
+  syncBtn();
 }
 
 function selecionarSugestao(cod) {
@@ -265,18 +280,7 @@ function moduloStatus(concluido, prog, total) {
 
 function scrPDVInfo() {
   const pode  = S.pdv.codigo.trim() !== '' && S.pdv.nome.trim() !== '';
-  const sugs  = S._sugestoes || [];
   const lojaOk = S._lojaConfirmada === true;
-
-  const sugHtml = sugs.length ? `
-    <div class="sug-list">
-      ${sugs.map(s => `
-        <div class="sug-item" onclick="selecionarSugestao('${s.cod}')">
-          <span class="sug-cod">${s.cod}</span>
-          <span class="sug-nome">${s.nome || s.razao || ''}</span>
-          <span class="sug-loc">${s.cidade || ''}${s.uf ? ' – ' + s.uf : ''}</span>
-        </div>`).join('')}
-    </div>` : '';
 
   const lojaInfoHtml = lojaOk ? `
     <div class="loja-info-box">
@@ -304,7 +308,7 @@ function scrPDVInfo() {
           <input class="form-input" type="text" inputmode="numeric" placeholder="Ex: 1132221"
                  value="${S.pdv.codigo}"
                  oninput="onCodLojaInput(this.value)" autocomplete="off">
-          ${sugHtml}
+          <div class="sug-list-container"></div>
         </div>
         ${lojaOk ? lojaInfoHtml : `
         <div class="form-group" style="margin-bottom:0">
