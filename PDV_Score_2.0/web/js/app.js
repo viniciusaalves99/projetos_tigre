@@ -30,31 +30,28 @@ function sugestoesLoja(prefix, max = 6) {
 }
 
 function onCodLojaInput(val) {
-  S.pdv.codigo = val;
-  const loja = buscarLoja(val);
-  if (loja) {
-    S.pdv.nome     = loja.nome;
-    S.pdv.cidade   = loja.cidade;
-    S.pdv.uf       = loja.uf;
-    S.pdv.endereco = loja.endereco;
-    S.pdv.cnpj     = loja.cnpj;
-    S._sugestoes   = [];
-  } else {
-    S._sugestoes = sugestoesLoja(val);
-  }
+  S.pdv.codigo       = val;
+  S._lojaConfirmada  = false;
+  S.pdv.nome         = '';
+  S.pdv.cidade       = '';
+  S.pdv.uf           = '';
+  S.pdv.endereco     = '';
+  S.pdv.cnpj         = '';
+  S._sugestoes       = sugestoesLoja(val);
   render();
 }
 
 function selecionarSugestao(cod) {
   const loja = buscarLoja(cod);
   if (!loja) return;
-  S.pdv.codigo   = cod;
-  S.pdv.nome     = loja.nome;
-  S.pdv.cidade   = loja.cidade;
-  S.pdv.uf       = loja.uf;
-  S.pdv.endereco = loja.endereco;
-  S.pdv.cnpj     = loja.cnpj;
-  S._sugestoes   = [];
+  S.pdv.codigo      = cod;
+  S.pdv.nome        = loja.nome;
+  S.pdv.cidade      = loja.cidade;
+  S.pdv.uf          = loja.uf;
+  S.pdv.endereco    = loja.endereco;
+  S.pdv.cnpj        = loja.cnpj;
+  S._sugestoes      = [];
+  S._lojaConfirmada = true;
   render();
 }
 
@@ -158,6 +155,7 @@ function resetState() {
     mixConcluido: false,
     fotos: { q2: null, q3: null, q4: null, q5: null, q6: null, q7: {} },
     _sugestoes: [],
+    _lojaConfirmada: false,
   };
 }
 
@@ -266,9 +264,9 @@ function moduloStatus(concluido, prog, total) {
 // ===========================
 
 function scrPDVInfo() {
-  const pode = S.pdv.codigo.trim() !== '' && S.pdv.nome.trim() !== '';
+  const pode  = S.pdv.codigo.trim() !== '' && S.pdv.nome.trim() !== '';
   const sugs  = S._sugestoes || [];
-  const lojaOk = buscarLoja(S.pdv.codigo) !== null;
+  const lojaOk = S._lojaConfirmada === true;
 
   const sugHtml = sugs.length ? `
     <div class="sug-list">
