@@ -402,21 +402,46 @@ body {
 .qty-pts { font-size: 11px; color: #27AE60; font-weight: 700; }
 
 /* ===========================
-   FOTO AREA
+   FOTO UPLOAD
 =========================== */
-.foto-area {
+.foto-upload { margin-top: 12px; }
+
+.foto-upload input[type="file"] { display: none; }
+
+.foto-upload label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   border: 2px dashed #D0D0D0;
   border-radius: 12px;
   padding: 18px;
-  text-align: center;
   cursor: pointer;
-  margin-top: 12px;
   color: #AAAAAA;
   font-size: 12px;
+  text-align: center;
   transition: all 0.15s;
+  min-height: 88px;
+  gap: 4px;
 }
-.foto-area:hover { border-color: #E87722; color: #E87722; }
-.foto-icon { font-size: 28px; margin-bottom: 6px; }
+.foto-upload label:hover { border-color: #E87722; color: #E87722; }
+
+.foto-upload label.has-foto {
+  border: 2px solid #27AE60;
+  border-style: solid;
+  padding: 8px;
+  color: #27AE60;
+}
+.foto-upload label.has-foto img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.foto-icon { font-size: 28px; }
+.foto-req  { font-size: 10px; color: #E53935; font-weight: 600; }
+.foto-ok   { font-size: 11px; color: #27AE60; font-weight: 600; margin-top: 4px; }
 
 /* ===========================
    STEP DOTS

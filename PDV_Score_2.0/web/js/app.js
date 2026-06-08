@@ -98,6 +98,7 @@ function resetState() {
     comConcluido: false,
     peConcluido:  false,
     mixConcluido: false,
+    fotos: { q2: null, q3: null, q4: null, q5: null, q6: null, q7: {} },
   };
 }
 
@@ -338,7 +339,7 @@ function scrComQ2() {
         <div class="q-text">2. Na fachada possui alguma comunicação que identifique que o PDV trabalha com a marca Tigre?</div>
         <button class="opt-btn ${S.q2 === 'sim' ? 'sel' : ''}" onclick="S.q2='sim'; render()">✅ Sim</button>
         <button class="opt-btn ${S.q2 === 'nao' ? 'sel' : ''}" onclick="S.q2='nao'; render()">❌ Não</button>
-        ${S.q2 === 'sim' ? fotoArea() : ''}
+        ${S.q2 === 'sim' ? fotoInput('q2') : ''}
       </div>
       <div class="info-box">
         💡 Peso: Sim = <strong>+${isB ? '1,25' : '0,50'}</strong> &nbsp;|&nbsp; Não = <strong>${isB ? '–0,50' : '–0,25'}</strong>
@@ -346,7 +347,8 @@ function scrComQ2() {
     </div>
     <div class="bottom-actions">
       <button class="btn-ghost"   onclick="go('dashboard')">← Voltar</button>
-      <button class="btn-primary" onclick="go('com_q3')" ${!S.q2 ? 'disabled' : ''}>Próximo →</button>
+      <button class="btn-primary" onclick="go('com_q3')"
+        ${!S.q2 || (S.q2 === 'sim' && !S.fotos.q2) ? 'disabled' : ''}>Próximo →</button>
     </div>`;
 }
 
@@ -360,7 +362,7 @@ function scrComQ3() {
         <div class="q-text">3. Ao entrar no PDV consegui visualizar alguma comunicação com a marca Tigre?</div>
         <button class="opt-btn ${S.q3 === 'sim' ? 'sel' : ''}" onclick="S.q3='sim'; render()">✅ Sim</button>
         <button class="opt-btn ${S.q3 === 'nao' ? 'sel' : ''}" onclick="S.q3='nao'; render()">❌ Não</button>
-        ${S.q3 === 'sim' ? fotoArea() : ''}
+        ${S.q3 === 'sim' ? fotoInput('q3') : ''}
       </div>
       <div class="info-box">
         💡 Peso: Sim = <strong>+${isB ? '1,25' : '0,50'}</strong> &nbsp;|&nbsp; Não = <strong>${isB ? '–0,50' : '–0,25'}</strong>
@@ -368,7 +370,8 @@ function scrComQ3() {
     </div>
     <div class="bottom-actions">
       <button class="btn-ghost"   onclick="go('com_q2')">← Voltar</button>
-      <button class="btn-primary" onclick="go('com_q4')" ${!S.q3 ? 'disabled' : ''}>Próximo →</button>
+      <button class="btn-primary" onclick="go('com_q4')"
+        ${!S.q3 || (S.q3 === 'sim' && !S.fotos.q3) ? 'disabled' : ''}>Próximo →</button>
     </div>`;
 }
 
@@ -382,7 +385,7 @@ function scrComQ4() {
         <div class="q-text">4. Existe alguma comunicação aplicada no setor Tigre?</div>
         <button class="opt-btn ${S.q4 === 'sim' ? 'sel' : ''}" onclick="S.q4='sim'; render()">✅ Sim</button>
         <button class="opt-btn ${S.q4 === 'nao' ? 'sel' : ''}" onclick="S.q4='nao'; render()">❌ Não</button>
-        ${S.q4 === 'sim' ? fotoArea() : ''}
+        ${S.q4 === 'sim' ? fotoInput('q4') : ''}
       </div>
       <div class="info-box">
         💡 Peso: Sim = <strong>+${isB ? '1,25' : '1,00'}</strong> &nbsp;|&nbsp; Não = <strong>–0,50</strong>
@@ -390,7 +393,8 @@ function scrComQ4() {
     </div>
     <div class="bottom-actions">
       <button class="btn-ghost"   onclick="go('com_q3')">← Voltar</button>
-      <button class="btn-primary" onclick="afterQ4()" ${!S.q4 ? 'disabled' : ''}>Próximo →</button>
+      <button class="btn-primary" onclick="afterQ4()"
+        ${!S.q4 || (S.q4 === 'sim' && !S.fotos.q4) ? 'disabled' : ''}>Próximo →</button>
     </div>`;
 }
 
@@ -409,12 +413,12 @@ function scrComQ5() {
               <span class="check-peso">+${it.peso.toFixed(2)}</span>
             </div>`).join('')}
         </div>
-        ${fotoArea()}
+        ${fotoInput('q5')}
       </div>
     </div>
     <div class="bottom-actions">
       <button class="btn-ghost"   onclick="go('com_q4')">← Voltar</button>
-      <button class="btn-primary" onclick="concluirCom()">Concluir Comunicação ✓</button>
+      <button class="btn-primary" onclick="concluirCom()" ${!S.fotos.q5 ? 'disabled' : ''}>Concluir Comunicação ✓</button>
     </div>`;
 }
 
@@ -429,7 +433,7 @@ function scrPEQ6() {
         <div class="q-text">6. Existe algum ponto extra executado no PDV?</div>
         <button class="opt-btn ${S.q6 === 'sim' ? 'sel' : ''}" onclick="S.q6='sim'; render()">✅ Sim</button>
         <button class="opt-btn ${S.q6 === 'nao' ? 'sel' : ''}" onclick="S.q6='nao'; render()">❌ Não</button>
-        ${S.q6 === 'sim' ? fotoArea() : ''}
+        ${S.q6 === 'sim' ? fotoInput('q6') : ''}
       </div>
       <div class="info-box">
         💡 Peso: Sim = <strong>0 pts</strong> (detalhado na próxima etapa) &nbsp;|&nbsp; Não = <strong>–0,50</strong>
@@ -437,7 +441,8 @@ function scrPEQ6() {
     </div>
     <div class="bottom-actions">
       <button class="btn-ghost"   onclick="go('dashboard')">← Voltar</button>
-      <button class="btn-primary" onclick="afterQ6()" ${!S.q6 ? 'disabled' : ''}>Próximo →</button>
+      <button class="btn-primary" onclick="afterQ6()"
+        ${!S.q6 || (S.q6 === 'sim' && !S.fotos.q6) ? 'disabled' : ''}>Próximo →</button>
     </div>`;
 }
 
@@ -485,6 +490,7 @@ function scrPEQ7() {
                 <button class="qty-btn" onclick="changeQty('${pe.id}', 1)">+</button>
                 ${qty > 0 ? `<span class="qty-pts">= ${pts} pts &nbsp;(${dica})</span>` : ''}
               </div>
+              ${qty > 0 ? fotoInput('q7', pe.id) : ''}
             </div>`;
         }).join('')}
       </div>
@@ -495,7 +501,10 @@ function scrPEQ7() {
     </div>
     <div class="bottom-actions">
       <button class="btn-ghost"   onclick="go('pe_q6')">← Voltar</button>
-      <button class="btn-primary" onclick="concluirPE()">Concluir Ponto Extra ✓</button>
+      <button class="btn-primary" onclick="concluirPE()"
+        ${Object.keys(S.q7).some(id => (S.q7[id] > 0) && !(S.fotos.q7 && S.fotos.q7[id])) ? 'disabled' : ''}>
+        Concluir Ponto Extra ✓
+      </button>
     </div>`;
 }
 
@@ -627,14 +636,42 @@ function scrResultado() {
 }
 
 // ===========================
-// HELPER HTML
+// FOTO HELPERS
 // ===========================
 
-function fotoArea() {
+function setFoto(key, inputEl, subkey) {
+  const file = inputEl.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    if (subkey !== undefined) {
+      if (!S.fotos[key]) S.fotos[key] = {};
+      S.fotos[key][subkey] = e.target.result;
+    } else {
+      S.fotos[key] = e.target.result;
+    }
+    render();
+  };
+  reader.readAsDataURL(file);
+}
+
+function fotoInput(key, subkey) {
+  const data = subkey !== undefined
+    ? (S.fotos[key] && S.fotos[key][subkey])
+    : S.fotos[key];
+  const id = subkey !== undefined ? `foto-${key}-${subkey}` : `foto-${key}`;
+  const onchange = subkey !== undefined
+    ? `setFoto('${key}', this, '${subkey}')`
+    : `setFoto('${key}', this)`;
+
   return `
-    <div class="foto-area" onclick="alert('Simulação: upload de foto não disponível nesta versão.')">
-      <div class="foto-icon">📷</div>
-      <div>Anexar Foto</div>
+    <div class="foto-upload">
+      <input type="file" accept="image/*" capture="environment" id="${id}" onchange="${onchange}">
+      <label for="${id}" class="${data ? 'has-foto' : ''}">
+        ${data
+          ? `<img src="${data}" alt="Foto"><span class="foto-ok">✅ Foto anexada — toque para alterar</span>`
+          : `<div class="foto-icon">📷</div><div>Tirar / Anexar Foto</div><div class="foto-req">Obrigatório</div>`}
+      </label>
     </div>`;
 }
 
