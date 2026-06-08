@@ -254,7 +254,7 @@ function scrTipoSel() {
     <div class="content">
 
       <div class="q-card">
-        <div class="q-text">Tipo de PDV</div>
+        <div class="q-text">Qual o perfil da Loja?</div>
         ${tipoPDVBtn('balcao',       '🏬', 'Balcão')}
         ${tipoPDVBtn('misto',        '🏪', 'Misto')}
         ${tipoPDVBtn('autosservico', '🛒', 'Autosserviço')}
