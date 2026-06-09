@@ -249,7 +249,7 @@ function calcScore() {
     });
   }
 
-  const total = Math.min(com + pe + mix, 10.00);
+  const total = Math.max(0, Math.min(com + pe + mix, 10.00));
   return { com, pe, mix, total };
 }
 
