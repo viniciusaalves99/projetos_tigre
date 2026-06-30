@@ -678,7 +678,25 @@ function scrMixDetalhe() {
     return `<div class="linha-pip ${cls}"></div>`;
   }).join('');
 
-  const podeAvancar = d.trabalha === false || (d.trabalha === true && d.ruptura !== undefined && d.ruptura !== null);
+  const precoOk = d.preco === 'nao' || (d.preco === 'sim' && !!d.fotoPreco);
+  const podeAvancar = d.trabalha === false || (
+    d.trabalha === true && d.ruptura != null && d.preco != null && precoOk
+  );
+
+  const fotoPrecoHtml = d.preco === 'sim' ? (() => {
+    const fid = `foto-preco-${idx}`;
+    const data = d.fotoPreco;
+    return `
+      <div class="foto-upload" style="margin-top:12px">
+        <input type="file" accept="image/*" capture="environment" id="${fid}"
+               onchange="setFotoPreco(${idx}, this)">
+        <label for="${fid}" class="${data ? 'has-foto' : ''}">
+          ${data
+            ? `<img src="${data}" alt="Foto"><span class="foto-ok">✅ Foto anexada — toque para alterar</span>`
+            : `<div class="foto-icon">📷</div><div>Tirar / Anexar Foto do Preço</div><div class="foto-req">Obrigatório</div>`}
+        </label>
+      </div>`;
+  })() : '';
 
   return `
     ${header(pdvLine(), 'Mix e Preços', '')}
@@ -698,12 +716,20 @@ function scrMixDetalhe() {
             <div class="q-text" style="font-size:13px">Há ruptura de produtos Tigre nesta linha?</div>
             <button class="opt-btn ${d.ruptura === true  ? 'sel' : ''}" onclick="setRuptura('${linha}', true)">⚠️ Sim, há ruptura</button>
             <button class="opt-btn ${d.ruptura === false ? 'sel' : ''}" onclick="setRuptura('${linha}', false)">✅ Sem ruptura</button>
+            <div class="info-box ${d.ruptura === false ? 'green' : d.ruptura === true ? 'orange' : ''}" style="margin-top:10px">
+              ${d.ruptura === false ? '✅ Sem ruptura: <strong>+1,00</strong> na nota geral'
+                : d.ruptura === true  ? '⚠️ Com ruptura: <strong>–0,10</strong> na nota geral'
+                : '💡 Informe se há ruptura para calcular o score.'}
+            </div>
           </div>
-          <div class="info-box ${d.ruptura === false ? 'green' : d.ruptura === true ? 'orange' : ''}" style="margin-top:10px">
-            ${d.ruptura === false ? '✅ Sem ruptura: <strong>+1,00</strong> na nota geral'
-              : d.ruptura === true  ? '⚠️ Com ruptura: <strong>–0,10</strong> na nota geral'
-              : '💡 Informe se há ruptura para calcular o score.'}
-          </div>
+
+          ${d.ruptura != null ? `
+          <div style="margin-top:16px;padding-top:14px;border-top:1px solid #EEE">
+            <div class="q-text" style="font-size:13px">Há preço aplicado nas gôndolas desta linha?</div>
+            <button class="opt-btn ${d.preco === 'sim' ? 'sel' : ''}" onclick="setPreco('${linha}', 'sim')">🏷️ Sim, há preço</button>
+            <button class="opt-btn ${d.preco === 'nao' ? 'sel' : ''}" onclick="setPreco('${linha}', 'nao')">❌ Sem preço nas gôndolas</button>
+            ${fotoPrecoHtml}
+          </div>` : ''}
         ` : ''}
       </div>
     </div>
@@ -772,7 +798,9 @@ function scrResultado() {
       ${S.linhas.map(l => {
         const d = S.mixData[l] || {};
         if (!d.trabalha) return `<div class="resumo-item neutral">➖ ${l}: não trabalha</div>`;
-        return `<div class="resumo-item ${d.ruptura ? 'neg' : 'ok'}">${d.ruptura ? '⚠️' : '✅'} ${l}: ${d.ruptura ? 'com ruptura' : 'sem ruptura'}</div>`;
+        const precoTag = d.preco === 'sim' ? ' · <span style="color:#1B3F70">🏷️ preço aplicado</span>'
+                       : d.preco === 'nao' ? ' · <span style="color:#888">sem preço</span>' : '';
+        return `<div class="resumo-item ${d.ruptura ? 'neg' : 'ok'}">${d.ruptura ? '⚠️' : '✅'} ${l}: ${d.ruptura ? 'com ruptura' : 'sem ruptura'}${precoTag}</div>`;
       }).join('')}
     </div>` : '';
 
@@ -949,7 +977,7 @@ function iniciarLinhaDetalhe() {
 function setTrabalha(linha, val) {
   if (!S.mixData[linha]) S.mixData[linha] = {};
   S.mixData[linha].trabalha = val;
-  if (!val) S.mixData[linha].ruptura = null;
+  if (!val) { S.mixData[linha].ruptura = null; S.mixData[linha].preco = null; S.mixData[linha].fotoPreco = null; }
   render();
 }
 
@@ -957,6 +985,26 @@ function setRuptura(linha, val) {
   if (!S.mixData[linha]) S.mixData[linha] = { trabalha: true };
   S.mixData[linha].ruptura = val;
   render();
+}
+
+function setPreco(linha, val) {
+  if (!S.mixData[linha]) S.mixData[linha] = { trabalha: true };
+  S.mixData[linha].preco = val;
+  if (val === 'nao') S.mixData[linha].fotoPreco = null;
+  render();
+}
+
+function setFotoPreco(linhaIdx, inputEl) {
+  const linha = S.linhas[linhaIdx];
+  const file = inputEl.files[0];
+  if (!file || !linha) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    if (!S.mixData[linha]) S.mixData[linha] = {};
+    S.mixData[linha].fotoPreco = e.target.result;
+    render();
+  };
+  reader.readAsDataURL(file);
 }
 
 function prevLinha() {
