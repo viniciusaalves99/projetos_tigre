@@ -183,6 +183,7 @@ function resetState() {
     pdv: { codigo: '', nome: '' },
     tipoPDV: null,            // 'balcao' | 'misto' | 'autosservico'
     tipoNegocio: null,        // tipo de negócio selecionado
+    tamanhoLoja: null,        // 'P' | 'M' | 'G'
     q2: null, q3: null, q4: null,
     q5: [],                   // checked comunicacao ids
     q6: null,                 // 'sim' | 'nao'
@@ -357,7 +358,7 @@ function scrPDVInfo() {
 }
 
 function scrTipoSel() {
-  const pode = S.tipoPDV !== null && S.tipoNegocio !== null;
+  const pode = S.tipoPDV !== null && S.tipoNegocio !== null && S.tamanhoLoja !== null;
 
   function tipoPDVBtn(id, emoji, label) {
     return `<button class="opt-btn ${S.tipoPDV === id ? 'sel' : ''}"
@@ -383,6 +384,21 @@ function scrTipoSel() {
             <div class="radio-dot"></div>
             <span class="radio-lbl">${t}</span>
           </div>`).join('')}
+      </div>
+
+      <div class="q-card">
+        <div class="q-text">Qual o tamanho da loja?</div>
+        <div style="display:flex;gap:10px">
+          ${[['P','Pequeno'],['M','Médio'],['G','Grande']].map(([val, label]) => `
+            <button class="opt-btn tamanho-btn ${S.tamanhoLoja === val ? 'sel' : ''}"
+                    onclick="S.tamanhoLoja='${val}'; render()" style="flex:1;justify-content:center">
+              <span style="font-size:18px;font-weight:900">${val}</span>
+              <span style="font-size:10px;opacity:.75">${label}</span>
+            </button>`).join('')}
+        </div>
+        <div class="info-box" style="margin-top:12px;margin-bottom:0">
+          💡 Esta informação será usada futuramente para carregar o mix de produtos adequado.
+        </div>
       </div>
 
     </div>
@@ -829,7 +845,7 @@ function scrResultado() {
         ${sc.total >= 10 ? `<div class="info-box orange">🏆 Score máximo de 10,00 pontos atingido!</div>` : ''}
 
         <div class="info-box">
-          🏬 Tipo PDV: <strong>${tipo}</strong><br>
+          🏬 Tipo PDV: <strong>${tipo}</strong> &nbsp;|&nbsp; Tamanho: <strong>${S.tamanhoLoja || '–'}</strong><br>
           📋 Negócio: <strong>${S.tipoNegocio || '–'}</strong><br>
           🏪 PDV: <strong>${S.pdv.codigo ? S.pdv.codigo + ' – ' : ''}${S.pdv.nome || '–'}</strong>
         </div>

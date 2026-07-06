@@ -602,6 +602,15 @@ body {
 }
 
 /* ===========================
+   TAMANHO LOJA
+=========================== */
+.tamanho-btn {
+  flex-direction: column !important;
+  gap: 2px !important;
+  padding: 14px 8px !important;
+}
+
+/* ===========================
    RESUMO DETALHADO
 =========================== */
 .resumo-section {
