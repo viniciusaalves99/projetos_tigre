@@ -25,14 +25,12 @@ function sugestoesLoja(prefix, max = 6) {
   const p = String(prefix).trim();
 
   if (/^\d+$/.test(p)) {
-    // busca por prefixo de código numérico
     return Object.entries(LOJAS)
       .filter(([k]) => k.startsWith(p))
       .slice(0, max)
       .map(([k, v]) => ({ cod: k, ...v }));
   }
 
-  // busca por nome (mín. 3 letras para evitar resultados demais)
   if (p.length < 3) return [];
   const pUp = p.toUpperCase();
   const results = [];
@@ -74,7 +72,6 @@ function onCodLojaInput(val) {
   }
   syncBtn();
 
-  // Garante que o foco e o cursor voltam ao input caso o browser tenha deslocado
   if (inputEl) {
     inputEl.focus();
     inputEl.setSelectionRange(cursorPos, cursorPos);
@@ -96,60 +93,160 @@ function selecionarSugestao(cod) {
 }
 
 // ===========================
-// DATA
+// MIX DIRECIONADO (carregado do JSON)
 // ===========================
 
-const COMUNICACOES = {
-  balcao: [
-    { id: 'adesivo_balcao', label: 'Adesivo de Balcão',               peso: 0.65 },
-    { id: 'adesivo_chao',   label: 'Adesivo de Chão / Pares de Pata', peso: 0.30 },
-    { id: 'bandeirola',     label: 'Bandeirola',                       peso: 0.30 },
-    { id: 'bobina',         label: 'Bobina de Forração',               peso: 0.10 },
-    { id: 'cesto',          label: 'Cesto ou Box Promocional',         peso: 0.10 },
-    { id: 'personalizada',  label: 'Comunicação Personalizada',        peso: 0.20 },
-    { id: 'cubos',          label: 'Cubos',                            peso: 0.10 },
-    { id: 'display_aereo',  label: 'Display Aéreo',                    peso: 0.20 },
-    { id: 'expositor',      label: 'Expositor Padronizado',            peso: 0.10 },
-    { id: 'totem',          label: 'Totem',                            peso: 0.10 },
-  ],
-  misto: [
-    { id: 'adesivo_balcao',   label: 'Adesivo de Balcão',               peso: 0.10 },
-    { id: 'adesivo_chao',     label: 'Adesivo de Chão / Pares de Pata', peso: 0.20 },
-    { id: 'bandeirola',       label: 'Bandeirola',                       peso: 0.10 },
-    { id: 'bobina',           label: 'Bobina de Forração',               peso: 0.05 },
-    { id: 'cesto',            label: 'Cesto ou Box Promocional',         peso: 0.05 },
-    { id: 'personalizada',    label: 'Comunicação Personalizada',        peso: 0.05 },
-    { id: 'cubos',            label: 'Cubos',                            peso: 0.05 },
-    { id: 'display_aereo',    label: 'Display Aéreo',                    peso: 0.10 },
-    { id: 'expositor_custom', label: 'Expositor Customizado',            peso: 0.10 },
-    { id: 'expositor',        label: 'Expositor Padronizado',            peso: 0.10 },
-    { id: 'faixa_gondola',    label: 'Faixa de Gôndola',                peso: 0.30 },
-    { id: 'ficha_produto',    label: 'Ficha de Produto',                 peso: 0.30 },
-    { id: 'fita_cross',       label: 'Fita Cross',                       peso: 0.10 },
-    { id: 'stopper',          label: 'Stopper',                          peso: 0.10 },
-    { id: 'testeira',         label: 'Testeira',                         peso: 0.10 },
-    { id: 'totem',            label: 'Totem',                            peso: 0.10 },
-    { id: 'wobbler',          label: 'Wobbler',                          peso: 0.10 },
-  ],
+let MIX = null;
+
+async function loadMix() {
+  try {
+    const res = await fetch('dados/mix_direcionado.json');
+    MIX = await res.json();
+  } catch (e) {
+    MIX = {};
+  }
+}
+
+// mapeia tipo de negócio -> grupo de mix
+const GRUPO_NEGOCIO = {
+  'Varejo Generalista':                              'generalista',
+  'Especializado Hidráulica':                        'hidr_elet',
+  'Especializado Elétrica':                          'hidr_elet',
+  'Especializado em Tintas':                         'tintas',
+  'Especializado em Ferramentas e Ferragens':        'ferr_mat_rev',
+  'Especializado em Materiais Básicos / Pesados':    'ferr_mat_rev',
+  'Especializado em Revestimentos':                  'ferr_mat_rev',
 };
 
-const PONTOS_EXTRA = {
-  balcao: [
-    { id: 'display', label: 'Display',  peso: 0.50, bonus: true  },
-    { id: 'ilha',    label: 'Ilha',     peso: 1.00, bonus: false },
-    { id: 'pilha',   label: 'Pilha',    peso: 1.00, bonus: false },
-    { id: 'vitrine', label: 'Vitrine',  peso: 0.60, bonus: false },
-  ],
-  misto: [
-    { id: 'checkout',      label: 'Check Out',       peso: 0.50, bonus: true  },
-    { id: 'display',       label: 'Display',         peso: 0.10, bonus: false },
-    { id: 'expositor',     label: 'Expositor',       peso: 0.30, bonus: false },
-    { id: 'fita_cross',    label: 'Fita Cross',      peso: 0.10, bonus: false },
-    { id: 'ilha',          label: 'Ilha',            peso: 1.00, bonus: false },
-    { id: 'pilha',         label: 'Pilha',           peso: 0.50, bonus: false },
-    { id: 'ponta_gondola', label: 'Ponta de Gôndola',peso: 2.00, bonus: false },
-    { id: 'vitrine',       label: 'Vitrine',         peso: 0.50, bonus: false },
-  ],
+// retorna { LINHA: [produtos...] } para o PDV atual
+function getMixList() {
+  if (!MIX) return {};
+  if (S.tipoPDV === 'balcao') return (MIX.balcao && MIX.balcao.mix && MIX.balcao.mix.unico) || {};
+  const grupo = GRUPO_NEGOCIO[S.tipoNegocio];
+  const bloco = MIX[S.tipoPDV] && MIX[S.tipoPDV].mix && MIX[S.tipoPDV].mix[grupo];
+  if (!bloco) return {};
+  return bloco[S.tamanhoLoja] || {};
+}
+
+// ===========================
+// MODELO DE PONTUAÇÃO
+// (loja começa em 10 e perde pontos)
+// ===========================
+
+const MODELO = {
+  balcao: {
+    label: 'Balcão',
+    descricao: 'Loja de atendimento por balcão: o cliente não circula entre os produtos; o vendedor busca o item solicitado.',
+    pesos: { visibilidade: 4, pontoExtra: 2, mix: 4 },
+    visibilidade: {
+      q1: { txt: 'Na fachada possui algum tipo de comunicação que identifique que o PDV trabalha com a marca Tigre?', penalNao: 1.0, foto: true },
+      q2: { txt: 'Ao entrar no PDV consegui visualizar algum tipo de comunicação que traga a marca Tigre?',           penalNao: 1.0, foto: true },
+      q3: { txt: 'Existe alguma comunicação aplicada acima ou no balcão com a marca Tigre?',                          penalNao: 2.0 },
+      checklist: [ // perde a penalidade quando o item está AUSENTE
+        { id: 'adesivo_balcao', label: 'Adesivo de Balcão',               penal: 0.60 },
+        { id: 'adesivo_chao',   label: 'Adesivo de Chão / Pares de Pata', penal: 0.60 },
+        { id: 'bandeirola',     label: 'Bandeirola',                       penal: 0.25 },
+        { id: 'cesto',          label: 'Cesto ou Box Promocional',         penal: 0.25 },
+        { id: 'personalizada',  label: 'Comunicação Personalizada',        penal: 0.00 },
+        { id: 'display_aereo',  label: 'Display Aéreo',                    penal: 0.20 },
+        { id: 'totem',          label: 'Totem',                            penal: 0.10 },
+      ],
+    },
+    pontoExtra: {
+      penalNao: 2.0,
+      tipos: [ // perde a penalidade quando o tipo está AUSENTE
+        { id: 'display', label: 'Display', penal: 0 },
+        { id: 'ilha',    label: 'Ilha',    penal: 0 },
+        { id: 'pilha',   label: 'Pilha',   penal: 0 },
+        { id: 'vitrine', label: 'Vitrine', penal: 0 },
+      ],
+    },
+  },
+
+  misto: {
+    label: 'Misto',
+    descricao: 'Combina atendimento por balcão com área de autosserviço, onde parte dos produtos fica em gôndolas acessíveis ao cliente.',
+    pesos: { visibilidade: 4, pontoExtra: 3, mix: 3 },
+    visibilidade: {
+      q1: { txt: 'Na fachada possui algum tipo de comunicação que identifique que o PDV trabalha com a marca Tigre?', penalNao: 0.5, foto: true },
+      q2: { txt: 'Ao entrar no PDV consegui visualizar algum tipo de comunicação que traga a marca Tigre?',           penalNao: 1.0, foto: true },
+      q3: { txt: 'Existe alguma comunicação aplicada no setor Tigre?',                                                penalNao: 2.5 },
+      checklist: [
+        { id: 'adesivo_balcao',   label: 'Adesivo de Balcão',               penal: 0.10 },
+        { id: 'adesivo_chao',     label: 'Adesivo de Chão / Pares de Pata', penal: 0.25 },
+        { id: 'bandeirola',       label: 'Bandeirola',                       penal: 0.10 },
+        { id: 'bobina',           label: 'Bobina de Forração',               penal: 0.10 },
+        { id: 'cesto',            label: 'Cesto ou Box Promocional',         penal: 0.10 },
+        { id: 'personalizada',    label: 'Comunicação Personalizada',        penal: 0.10 },
+        { id: 'cubos',            label: 'Cubos',                            penal: 0.10 },
+        { id: 'display_aereo',    label: 'Display Aéreo',                    penal: 0.10 },
+        { id: 'expositor_custom', label: 'Expositor Customizado',            penal: 0.10 },
+        { id: 'expositor',        label: 'Expositor Padronizado',            penal: 0.10 },
+        { id: 'faixa_gondola',    label: 'Faixa de Gôndola',                penal: 0.25 },
+        { id: 'ficha_produto',    label: 'Ficha de Produto',                 penal: 0.30 },
+        { id: 'fita_cross',       label: 'Fita Cross',                       penal: 0.25 },
+        { id: 'stopper',          label: 'Stopper',                          penal: 0.25 },
+        { id: 'testeira',         label: 'Testeira',                         penal: 0.10 },
+        { id: 'totem',            label: 'Totem',                            penal: 0.10 },
+        { id: 'wobbler',          label: 'Wobbler',                          penal: 0.10 },
+      ],
+    },
+    pontoExtra: {
+      penalNao: 3.0,
+      tipos: [
+        { id: 'checkout',      label: 'Check Out',        penal: 0.25 },
+        { id: 'display',       label: 'Display',          penal: 0 },
+        { id: 'expositor',     label: 'Expositor',        penal: 0 },
+        { id: 'fita_cross',    label: 'Fita Cross',       penal: 0.25 },
+        { id: 'ilha',          label: 'Ilha',             penal: 0 },
+        { id: 'pilha',         label: 'Pilha',            penal: 0 },
+        { id: 'ponta_gondola', label: 'Ponta de Gôndola', penal: 0.25 },
+        { id: 'vitrine',       label: 'Vitrine',          penal: 0 },
+      ],
+    },
+  },
+
+  autosservico: {
+    label: 'Autosserviço',
+    descricao: 'O cliente circula livremente e se serve dos produtos nas gôndolas (modelo supermercado / home center).',
+    pesos: { visibilidade: 4, pontoExtra: 3, mix: 3 },
+    visibilidade: {
+      q1: { txt: 'Na fachada possui algum tipo de comunicação que identifique que o PDV trabalha com a marca Tigre?', penalNao: 0, foto: true },
+      q2: { txt: 'Ao entrar no PDV consegui visualizar algum tipo de comunicação que traga a marca Tigre?',           penalNao: 1.5, foto: true },
+      q3: { txt: 'Existe alguma comunicação aplicada no setor Tigre?',                                                penalNao: 2.5 },
+      checklist: [
+        { id: 'adesivo_chao',     label: 'Adesivo de Chão / Pares de Pata', penal: 0.30 },
+        { id: 'bandeirola',       label: 'Bandeirola',                       penal: 0.10 },
+        { id: 'bobina',           label: 'Bobina de Forração',               penal: 0.10 },
+        { id: 'cesto',            label: 'Cesto ou Box Promocional',         penal: 0.10 },
+        { id: 'personalizada',    label: 'Comunicação Personalizada',        penal: 0.10 },
+        { id: 'cubos',            label: 'Cubos',                            penal: 0.10 },
+        { id: 'display_aereo',    label: 'Display Aéreo',                    penal: 0.10 },
+        { id: 'expositor_custom', label: 'Expositor Customizado',            penal: 0.10 },
+        { id: 'expositor',        label: 'Expositor Padronizado',            penal: 0.10 },
+        { id: 'faixa_gondola',    label: 'Faixa de Gôndola',                penal: 0.30 },
+        { id: 'ficha_produto',    label: 'Ficha de Produto',                 penal: 0.30 },
+        { id: 'fita_cross',       label: 'Fita Cross',                       penal: 0.25 },
+        { id: 'stopper',          label: 'Stopper',                          penal: 0.25 },
+        { id: 'testeira',         label: 'Testeira',                         penal: 0.10 },
+        { id: 'totem',            label: 'Totem',                            penal: 0.10 },
+        { id: 'wobbler',          label: 'Wobbler',                          penal: 0.10 },
+      ],
+    },
+    pontoExtra: {
+      penalNao: 3.0,
+      tipos: [
+        { id: 'checkout',      label: 'Check Out',        penal: 0.25 },
+        { id: 'display',       label: 'Display',          penal: 0 },
+        { id: 'expositor',     label: 'Expositor',        penal: 0 },
+        { id: 'fita_cross',    label: 'Fita Cross',       penal: 0.25 },
+        { id: 'ilha',          label: 'Ilha',             penal: 0 },
+        { id: 'pilha',         label: 'Pilha',            penal: 0 },
+        { id: 'ponta_gondola', label: 'Ponta de Gôndola', penal: 0.25 },
+        { id: 'vitrine',       label: 'Vitrine',          penal: 0 },
+      ],
+    },
+  },
 };
 
 const TIPOS_NEGOCIO = [
@@ -162,14 +259,7 @@ const TIPOS_NEGOCIO = [
   'Especializado em Revestimentos',
 ];
 
-const LINHAS = [
-  'Esgoto SN',
-  'Água Fria',
-  'Água Quente',
-  'Elétrica',
-  'Acessórios e Torneiras',
-  'Imobiliária',
-];
+function modelo() { return MODELO[S.tipoPDV]; }
 
 // ===========================
 // STATE
@@ -182,21 +272,19 @@ function resetState() {
     screen: 'pdv_info',
     pdv: { codigo: '', nome: '' },
     tipoPDV: null,            // 'balcao' | 'misto' | 'autosservico'
-    tipoNegocio: null,        // tipo de negócio selecionado
+    tipoNegocio: null,
     tamanhoLoja: null,        // 'P' | 'M' | 'G'
-    q2: null, q3: null, q4: null,
-    q5: [],                   // checked comunicacao ids
-    q6: null,                 // 'sim' | 'nao'
-    q7: {},                   // { peId: qty }
-    linhas: [],               // selected linhas
-    mixData: {},              // { linha: { trabalha: bool, ruptura: bool|null } }
-    _linhaIdx: 0,
-    comConcluido: false,
-    peConcluido:  false,
-    mixConcluido: false,
-    fotos: { q2: null, q3: null, q4: null, q5: null, q6: null, q7: {} },
+
+    // módulo Visibilidade
+    vis: { q1: null, q2: null, q3: null, presentes: [], done: false, foto1: null, foto2: null },
+    // módulo Ponto Extra
+    pe:  { existe: null, tipos: {}, fotos: {}, done: false }, // tipos: {id: qty}; fotos: {id: [dataURL]}
+    // módulo Mix Direcionado
+    mix: { lines: [], prod: {}, done: false, _idx: 0 },       // prod: { 'LINHA::PROD': {trabalha,ruptura,preco,foto} }
+
     _sugestoes: [],
     _lojaConfirmada: false,
+    _infoTipo: null,          // tipo cujo texto informativo está aberto
   };
 }
 
@@ -213,45 +301,65 @@ function go(screen) {
 // SCORING
 // ===========================
 
-function calcScore() {
-  const isB = S.tipoPDV === 'balcao';
-  let com = 0, pe = 0, mix = 0;
+function prodKey(linha, prod) { return linha + '::' + prod; }
 
-  if (S.comConcluido) {
-    com += S.q2 === 'sim' ? (isB ? 1.25 : 0.50) : (S.q2 === 'nao' ? (isB ? -0.50 : -0.25) : 0);
-    com += S.q3 === 'sim' ? (isB ? 1.25 : 0.50) : (S.q3 === 'nao' ? (isB ? -0.50 : -0.25) : 0);
-    com += S.q4 === 'sim' ? (isB ? 1.25 : 1.00) : (S.q4 === 'nao' ? -0.50 : 0);
-    const list = (isB ? COMUNICACOES.balcao : COMUNICACOES.misto);
-    S.q5.forEach(id => { const it = list.find(c => c.id === id); if (it) com += it.peso; });
-  }
-
-  if (S.peConcluido) {
-    if (S.q6 === 'nao') pe -= 0.50;
-    if (S.q6 === 'sim') {
-      const list = isB ? PONTOS_EXTRA.balcao : PONTOS_EXTRA.misto;
-      Object.entries(S.q7).forEach(([id, qty]) => {
-        if (qty < 1) return;
-        const it = list.find(p => p.id === id);
-        if (!it) return;
-        pe += it.peso;                        // 1ª unidade = peso cheio
-        if (qty > 1) pe += 0.25 * (qty - 1); // unidades adicionais = 0,25 cada
-      });
-      const peCap = isB ? 3.10 : 5.00;
-      pe = Math.min(pe, peCap);
-    }
-  }
-
-  if (S.mixConcluido) {
-    S.linhas.forEach(l => {
-      const d = S.mixData[l];
-      if (!d || !d.trabalha) return;
-      if (d.ruptura === false) mix += 1.00;
-      if (d.ruptura === true)  mix -= 0.10;
+// perda do módulo Visibilidade
+function calcVisLoss() {
+  const m = modelo().visibilidade;
+  let loss = 0;
+  if (S.vis.q1 === 'nao') loss += m.q1.penalNao;
+  if (S.vis.q2 === 'nao') loss += m.q2.penalNao;
+  if (S.vis.q3 === 'nao') {
+    loss += m.q3.penalNao;
+  } else if (S.vis.q3 === 'sim') {
+    // perde a penalidade de cada comunicação AUSENTE
+    m.checklist.forEach(it => {
+      if (!S.vis.presentes.includes(it.id)) loss += it.penal;
     });
   }
+  return loss;
+}
 
-  const total = Math.max(0, Math.min(com + pe + mix, 10.00));
-  return { com, pe, mix, total };
+// perda do módulo Ponto Extra
+function calcPeLoss() {
+  const m = modelo().pontoExtra;
+  if (S.pe.existe === 'nao') return m.penalNao;
+  if (S.pe.existe === 'sim') {
+    let loss = 0;
+    m.tipos.forEach(t => {
+      const presente = (S.pe.tipos[t.id] || 0) > 0;
+      if (!presente) loss += t.penal; // perde se AUSENTE
+    });
+    return loss;
+  }
+  return 0;
+}
+
+// perda do módulo Mix (pontos divididos igualmente entre os produtos direcionados)
+function calcMixLoss() {
+  const dir = getMixList();
+  const produtos = [];
+  Object.entries(dir).forEach(([linha, ps]) => ps.forEach(p => produtos.push([linha, p])));
+  const total = produtos.length;
+  if (total === 0) return { loss: 0, total: 0, faltantes: 0, frac: 0 };
+  const frac = modelo().pesos.mix / total;
+  let faltantes = 0;
+  produtos.forEach(([linha, p]) => {
+    const d = S.mix.prod[prodKey(linha, p)];
+    const ok = d && d.trabalha === true && d.ruptura !== true;
+    if (!ok) faltantes++;      // não trabalha OU em ruptura => perde a fração
+  });
+  return { loss: faltantes * frac, total, faltantes, frac };
+}
+
+function calcScore() {
+  const pesos = modelo().pesos;
+  const vis = S.vis.done ? Math.max(0, pesos.visibilidade - calcVisLoss()) : pesos.visibilidade;
+  const pe  = S.pe.done  ? Math.max(0, pesos.pontoExtra  - calcPeLoss())  : pesos.pontoExtra;
+  const mixInfo = calcMixLoss();
+  const mix = S.mix.done ? Math.max(0, pesos.mix - mixInfo.loss) : pesos.mix;
+  const total = Math.max(0, Math.min(vis + pe + mix, 10.00));
+  return { vis, pe, mix, total, pesos, mixInfo };
 }
 
 function classificacao(total) {
@@ -285,20 +393,13 @@ function header(subtitle, title, backScreen) {
     </div>`;
 }
 
-function stepDots(total, current) {
-  return '<div class="steps">' +
-    Array.from({ length: total }, (_, i) => {
-      const cls = i < current ? 'done' : i === current ? 'active' : '';
-      return `<div class="sdot ${cls}"></div>`;
-    }).join('') +
-    '</div>';
+function moduloStatus(concluido, prog, total) {
+  if (concluido)  return { card: 'concluido', stCls: 'st-concluido', stLbl: 'Concluído',    bar: ''          };
+  if (prog > 0)   return { card: 'andamento', stCls: 'st-andamento', stLbl: 'Em andamento',  bar: 'andamento' };
+  return               { card: 'pendente',  stCls: 'st-pendente',  stLbl: 'Pendente',      bar: 'pendente'  };
 }
 
-function moduloStatus(concluido, prog, total) {
-  if (concluido)  return { card: 'concluido', stCls: 'st-concluido', stLbl: 'Concluído',   bar: ''         };
-  if (prog > 0)   return { card: 'andamento', stCls: 'st-andamento', stLbl: 'Em andamento', bar: 'andamento' };
-  return               { card: 'pendente',  stCls: 'st-pendente',  stLbl: 'Pendente',     bar: 'pendente'  };
-}
+function fmt(v) { return (v >= 0 ? '' : '–') + Math.abs(v).toFixed(2); }
 
 // ===========================
 // SCREENS
@@ -361,8 +462,16 @@ function scrTipoSel() {
   const pode = S.tipoPDV !== null && S.tipoNegocio !== null && S.tamanhoLoja !== null;
 
   function tipoPDVBtn(id, emoji, label) {
-    return `<button class="opt-btn ${S.tipoPDV === id ? 'sel' : ''}"
-                    onclick="setTipo('${id}')">${emoji} ${label}</button>`;
+    const sel = S.tipoPDV === id;
+    const aberto = S._infoTipo === id;
+    return `
+      <div class="tipo-wrap">
+        <button class="opt-btn ${sel ? 'sel' : ''}" onclick="setTipo('${id}')">
+          ${emoji} ${label}
+          <span class="tipo-info-btn" onclick="event.stopPropagation(); toggleInfoTipo('${id}')">ⓘ</span>
+        </button>
+        ${aberto ? `<div class="tipo-info-box">${MODELO[id].descricao}</div>` : ''}
+      </div>`;
   }
 
   return `
@@ -397,7 +506,7 @@ function scrTipoSel() {
             </button>`).join('')}
         </div>
         <div class="info-box" style="margin-top:12px;margin-bottom:0">
-          💡 Esta informação será usada futuramente para carregar o mix de produtos adequado.
+          💡 O tamanho e o tipo de negócio definem o mix de produtos direcionado que será avaliado.
         </div>
       </div>
 
@@ -411,42 +520,41 @@ function scrTipoSel() {
 }
 
 function scrDashboard() {
-  const allDone = S.comConcluido && S.peConcluido && S.mixConcluido;
+  const pesos = modelo().pesos;
+  const sc = calcScore();
+  const allDone = S.vis.done && S.pe.done && S.mix.done;
 
-  const comProg = S.comConcluido ? 3 : [S.q2, S.q3, S.q4].filter(Boolean).length;
-  const peProg  = S.peConcluido  ? 2 : (S.q6 ? 1 : 0);
-  const mixProg = S.mixConcluido ? 1 : 0;
+  const visProg = S.vis.done ? 1 : ([S.vis.q1, S.vis.q2, S.vis.q3].some(Boolean) ? 0.5 : 0);
+  const peProg  = S.pe.done  ? 1 : (S.pe.existe ? 0.5 : 0);
+  const mixProg = S.mix.done ? 1 : (S.mix.lines.length ? 0.5 : 0);
 
-  const com = moduloStatus(S.comConcluido, comProg, 3);
-  const pe  = moduloStatus(S.peConcluido,  peProg,  2);
-  const mix = moduloStatus(S.mixConcluido, mixProg, 1);
+  const vis = moduloStatus(S.vis.done, visProg, 1);
+  const pe  = moduloStatus(S.pe.done,  peProg,  1);
+  const mix = moduloStatus(S.mix.done, mixProg, 1);
 
-  function card(icon, name, prog, total, st, screen) {
-    const pct = total > 0 ? Math.round((prog / total) * 100) : 0;
+  function card(icon, name, peso, valor, done, st, screen) {
     return `
       <div class="module-card ${st.card}" onclick="go('${screen}')">
         <div class="module-icon">${icon}</div>
         <div class="module-info">
           <div class="module-name">${name}</div>
-          <div class="module-prog-txt">Progresso &nbsp; ${prog} / ${total}</div>
-          <div class="prog-track">
-            <div class="prog-fill ${st.bar}" style="width:${pct}%"></div>
-          </div>
+          <div class="module-prog-txt">Peso máximo: ${peso.toFixed(2)} pts${done ? ` &nbsp;·&nbsp; atual: <strong>${valor.toFixed(2)}</strong>` : ''}</div>
+          <div class="prog-track"><div class="prog-fill ${st.bar}" style="width:${done ? 100 : (st.card==='andamento'?50:0)}%"></div></div>
         </div>
         <div class="module-status ${st.stCls}">${st.stLbl}</div>
       </div>`;
   }
 
   return `
-    ${header(pdvLine(), 'Módulos de Coleta', 'pdv_info')}
+    ${header(pdvLine(), 'Módulos de Coleta', 'tipo_sel')}
     <div class="content">
       <div class="info-box" style="margin-bottom:14px">
-        🏷️ <strong>${S.tipoPDV === 'balcao' ? 'Balcão' : S.tipoPDV === 'misto' ? 'Misto' : 'Autosserviço'}</strong>
-        &nbsp;·&nbsp; ${S.tipoNegocio || ''}
+        🏷️ <strong>${modelo().label}</strong> &nbsp;·&nbsp; ${S.tipoNegocio || ''} &nbsp;·&nbsp; Tam. <strong>${S.tamanhoLoja}</strong><br>
+        <span style="font-size:11px;color:#666">A loja começa com <strong>10,00</strong> e perde pontos conforme o que falta.</span>
       </div>
-      ${card('📢', 'Comunicação', comProg, 3, com, 'com_q2')}
-      ${card('🏪', 'Ponto Extra',  peProg,  2, pe,  'pe_q6')}
-      ${card('🛒', 'Mix e Preços', mixProg, 1, mix, 'mix_linhas')}
+      ${card('👁️', 'Visibilidade',        pesos.visibilidade, sc.vis, S.vis.done, vis, 'vis')}
+      ${card('🏪', 'Ponto Extra',          pesos.pontoExtra,   sc.pe,  S.pe.done,  pe,  'pe')}
+      ${card('🛒', 'Mix e Preço Direcionado', pesos.mix,       sc.mix, S.mix.done, mix, 'mix_linhas')}
       ${allDone ? `<div class="info-box green">✅ Todos os módulos concluídos! Finalize a pesquisa.</div>` : ''}
     </div>
     <div class="bottom-actions">
@@ -457,301 +565,243 @@ function scrDashboard() {
     </div>`;
 }
 
-/* ---- COMUNICAÇÃO ---- */
+/* ---- VISIBILIDADE ---- */
 
-function scrComQ2() {
-  const isB = S.tipoPDV === 'balcao';
-  return `
-    ${header(pdvLine(), 'Comunicação', 'dashboard')}
-    <div class="content">
-      ${stepDots(3, 0)}
+function scrVis() {
+  const m = modelo().visibilidade;
+
+  function simNao(q, key, foto) {
+    const val = S.vis[key];
+    const fotoData = key === 'q1' ? S.vis.foto1 : key === 'q2' ? S.vis.foto2 : null;
+    const fotoId = `foto-vis-${key}`;
+    const fotoHtml = (foto && val === 'sim') ? `
+      <div class="foto-upload" style="margin-top:10px">
+        <input type="file" accept="image/*" capture="environment" id="${fotoId}" onchange="setFotoVis('${key}', this)">
+        <label for="${fotoId}" class="${fotoData ? 'has-foto' : ''}">
+          ${fotoData
+            ? `<img src="${fotoData}" alt="Foto"><span class="foto-ok">✅ Foto anexada — toque para alterar</span>`
+            : `<div class="foto-icon">📷</div><div>Tirar / Anexar Foto</div><div class="foto-req">Obrigatório</div>`}
+        </label>
+      </div>` : '';
+    return `
       <div class="q-card">
-        <div class="q-text">2. Na fachada possui alguma comunicação que identifique que o PDV trabalha com a marca Tigre?</div>
-        <button class="opt-btn ${S.q2 === 'sim' ? 'sel' : ''}" onclick="S.q2='sim'; render()">✅ Sim</button>
-        <button class="opt-btn ${S.q2 === 'nao' ? 'sel' : ''}" onclick="S.q2='nao'; render()">❌ Não</button>
-        ${S.q2 === 'sim' ? fotoInput('q2') : ''}
+        <div class="q-text">${q.txt}</div>
+        <button class="opt-btn ${val === 'sim' ? 'sel' : ''}" onclick="setVis('${key}','sim')">✅ Sim</button>
+        <button class="opt-btn ${val === 'nao' ? 'sel' : ''}" onclick="setVis('${key}','nao')">❌ Não</button>
+        <div class="pen-hint">Não responder <strong>Sim</strong> penaliza <strong>${fmt(-q.penalNao)}</strong> pt${q.penalNao === 1 ? '' : 's'}.</div>
+        ${fotoHtml}
+      </div>`;
+  }
+
+  // checklist (Q3.1) só quando Q3 = sim
+  const checklistHtml = S.vis.q3 === 'sim' ? `
+    <div class="q-card">
+      <div class="q-text">3.1. Quais comunicações estão aplicadas? (marque as presentes)</div>
+      <div class="check-list">
+        ${m.checklist.map(it => `
+          <div class="check-item ${S.vis.presentes.includes(it.id) ? 'chk' : ''}" onclick="toggleVisItem('${it.id}')">
+            <input type="checkbox" ${S.vis.presentes.includes(it.id) ? 'checked' : ''} onclick="event.stopPropagation()">
+            <span class="check-lbl">${it.label}</span>
+            ${it.penal > 0 ? `<span class="check-peso neg">ausente ${fmt(-it.penal)}</span>` : ''}
+          </div>`).join('')}
       </div>
-      <div class="info-box">
-        💡 Peso: Sim = <strong>+${isB ? '1,25' : '0,50'}</strong> &nbsp;|&nbsp; Não = <strong>${isB ? '–0,50' : '–0,25'}</strong>
-      </div>
+      <div class="pen-hint">Cada comunicação <strong>ausente</strong> desconta a penalidade indicada.</div>
+    </div>` : '';
+
+  // validação: q1,q2,q3 respondidas; fotos obrigatórias quando sim
+  const foto1Ok = !(m.q1.foto && S.vis.q1 === 'sim') || !!S.vis.foto1;
+  const foto2Ok = !(m.q2.foto && S.vis.q2 === 'sim') || !!S.vis.foto2;
+  const pode = S.vis.q1 && S.vis.q2 && S.vis.q3 && foto1Ok && foto2Ok;
+
+  return `
+    ${header(pdvLine(), 'Visibilidade', 'dashboard')}
+    <div class="content">
+      <div class="info-box orange">👁️ Módulo Visibilidade — peso máximo ${modelo().pesos.visibilidade.toFixed(2)} pts</div>
+      ${simNao(m.q1, 'q1', m.q1.foto)}
+      ${simNao(m.q2, 'q2', m.q2.foto)}
+      ${simNao(m.q3, 'q3', false)}
+      ${checklistHtml}
     </div>
     <div class="bottom-actions">
       <button class="btn-ghost"   onclick="go('dashboard')">← Voltar</button>
-      <button class="btn-primary" onclick="go('com_q3')"
-        ${!S.q2 || (S.q2 === 'sim' && !S.fotos.q2) ? 'disabled' : ''}>Próximo →</button>
-    </div>`;
-}
-
-function scrComQ3() {
-  const isB = S.tipoPDV === 'balcao';
-  return `
-    ${header(pdvLine(), 'Comunicação', 'com_q2')}
-    <div class="content">
-      ${stepDots(3, 1)}
-      <div class="q-card">
-        <div class="q-text">3. Ao entrar no PDV consegui visualizar alguma comunicação com a marca Tigre?</div>
-        <button class="opt-btn ${S.q3 === 'sim' ? 'sel' : ''}" onclick="S.q3='sim'; render()">✅ Sim</button>
-        <button class="opt-btn ${S.q3 === 'nao' ? 'sel' : ''}" onclick="S.q3='nao'; render()">❌ Não</button>
-        ${S.q3 === 'sim' ? fotoInput('q3') : ''}
-      </div>
-      <div class="info-box">
-        💡 Peso: Sim = <strong>+${isB ? '1,25' : '0,50'}</strong> &nbsp;|&nbsp; Não = <strong>${isB ? '–0,50' : '–0,25'}</strong>
-      </div>
-    </div>
-    <div class="bottom-actions">
-      <button class="btn-ghost"   onclick="go('com_q2')">← Voltar</button>
-      <button class="btn-primary" onclick="go('com_q4')"
-        ${!S.q3 || (S.q3 === 'sim' && !S.fotos.q3) ? 'disabled' : ''}>Próximo →</button>
-    </div>`;
-}
-
-function scrComQ4() {
-  const isB = S.tipoPDV === 'balcao';
-  return `
-    ${header(pdvLine(), 'Comunicação', 'com_q3')}
-    <div class="content">
-      ${stepDots(3, 2)}
-      <div class="q-card">
-        <div class="q-text">4. Existe alguma comunicação aplicada no setor Tigre?</div>
-        <button class="opt-btn ${S.q4 === 'sim' ? 'sel' : ''}" onclick="S.q4='sim'; render()">✅ Sim</button>
-        <button class="opt-btn ${S.q4 === 'nao' ? 'sel' : ''}" onclick="S.q4='nao'; render()">❌ Não</button>
-        ${S.q4 === 'sim' ? fotoInput('q4') : ''}
-      </div>
-      <div class="info-box">
-        💡 Peso: Sim = <strong>+${isB ? '1,25' : '1,00'}</strong> &nbsp;|&nbsp; Não = <strong>–0,50</strong>
-      </div>
-    </div>
-    <div class="bottom-actions">
-      <button class="btn-ghost"   onclick="go('com_q3')">← Voltar</button>
-      <button class="btn-primary" onclick="afterQ4()"
-        ${!S.q4 || (S.q4 === 'sim' && !S.fotos.q4) ? 'disabled' : ''}>Próximo →</button>
-    </div>`;
-}
-
-function scrComQ5() {
-  const list = S.tipoPDV === 'balcao' ? COMUNICACOES.balcao : COMUNICACOES.misto;
-  return `
-    ${header(pdvLine(), 'Comunicação', 'com_q4')}
-    <div class="content">
-      <div class="q-card">
-        <div class="q-text">5. Quais comunicações estão aplicadas? (selecione todas)</div>
-        <div class="check-list">
-          ${list.map(it => `
-            <div class="check-item ${S.q5.includes(it.id) ? 'chk' : ''}" onclick="toggleQ5('${it.id}')">
-              <input type="checkbox" ${S.q5.includes(it.id) ? 'checked' : ''} onclick="event.stopPropagation()">
-              <span class="check-lbl">${it.label}</span>
-              <span class="check-peso">+${it.peso.toFixed(2)}</span>
-            </div>`).join('')}
-        </div>
-        ${fotoInput('q5')}
-      </div>
-    </div>
-    <div class="bottom-actions">
-      <button class="btn-ghost"   onclick="go('com_q4')">← Voltar</button>
-      <button class="btn-primary" onclick="concluirCom()" ${!S.fotos.q5 ? 'disabled' : ''}>Concluir Comunicação ✓</button>
+      <button class="btn-primary" onclick="concluirVis()" ${!pode ? 'disabled' : ''}>Concluir Visibilidade ✓</button>
     </div>`;
 }
 
 /* ---- PONTO EXTRA ---- */
 
-function scrPEQ6() {
+function scrPE() {
+  const m = modelo().pontoExtra;
+
+  const tiposHtml = S.pe.existe === 'sim' ? `
+    <div class="q-card">
+      <div class="q-text">Qual o tipo e quantidade de pontos extras? (marque os presentes)</div>
+      ${m.tipos.map(t => {
+        const qty = S.pe.tipos[t.id] || 0;
+        const fotosArr = S.pe.fotos[t.id] || [];
+        const fotosOk = fotosArr.filter(Boolean).length;
+        const fotosHtml = qty > 0 ? Array.from({ length: qty }, (_, i) => {
+          const data = fotosArr[i];
+          const fid = `foto-pe-${t.id}-${i}`;
+          return `
+            <div class="foto-upload" style="margin-top:8px">
+              <input type="file" accept="image/*" capture="environment" id="${fid}" onchange="setFotoPE('${t.id}', ${i}, this)">
+              <label for="${fid}" class="${data ? 'has-foto' : ''}">
+                ${data
+                  ? `<img src="${data}" alt="Foto ${i+1}"><span class="foto-ok">✅ Foto ${i+1} de ${qty} — toque para alterar</span>`
+                  : `<div class="foto-icon">📷</div><div>Foto ${i+1} de ${qty}</div><div class="foto-req">Obrigatório</div>`}
+              </label>
+            </div>`;
+        }).join('') : '';
+        return `
+          <div class="pe-row ${qty > 0 ? 'active' : ''}">
+            <div class="pe-row-top">
+              <span class="pe-lbl">${t.label}</span>
+              ${t.penal > 0 ? `<span class="pe-peso neg">ausente ${fmt(-t.penal)}</span>` : `<span class="pe-peso">opcional</span>`}
+            </div>
+            <div class="qty-group">
+              <button class="qty-btn" onclick="changePEQty('${t.id}', -1)">−</button>
+              <span class="qty-val">${qty}</span>
+              <button class="qty-btn" onclick="changePEQty('${t.id}', 1)">+</button>
+            </div>
+            ${qty > 0 ? `<div style="font-size:11px;color:${fotosOk >= qty ? '#27AE60' : '#E53935'};margin-top:6px;font-weight:700">📷 ${fotosOk} de ${qty} foto${qty>1?'s':''}</div>` : ''}
+            ${fotosHtml}
+          </div>`;
+      }).join('')}
+    </div>` : '';
+
+  const pode = S.pe.existe === 'nao' || (S.pe.existe === 'sim' && peFotosOk());
+
   return `
     ${header(pdvLine(), 'Ponto Extra', 'dashboard')}
     <div class="content">
-      ${stepDots(2, 0)}
+      <div class="info-box orange">🏪 Módulo Ponto Extra — peso máximo ${modelo().pesos.pontoExtra.toFixed(2)} pts</div>
       <div class="q-card">
-        <div class="q-text">6. Existe algum ponto extra executado no PDV?</div>
-        <button class="opt-btn ${S.q6 === 'sim' ? 'sel' : ''}" onclick="S.q6='sim'; render()">✅ Sim</button>
-        <button class="opt-btn ${S.q6 === 'nao' ? 'sel' : ''}" onclick="S.q6='nao'; render()">❌ Não</button>
+        <div class="q-text">Existe algum ponto extra executado no PDV?</div>
+        <button class="opt-btn ${S.pe.existe === 'sim' ? 'sel' : ''}" onclick="setPEExiste('sim')">✅ Sim</button>
+        <button class="opt-btn ${S.pe.existe === 'nao' ? 'sel' : ''}" onclick="setPEExiste('nao')">❌ Não</button>
+        <div class="pen-hint">Responder <strong>Não</strong> penaliza <strong>${fmt(-m.penalNao)}</strong> pts (todo o módulo).</div>
       </div>
-      <div class="info-box">
-        💡 Peso: Sim = <strong>0 pts</strong> (detalhado na próxima etapa) &nbsp;|&nbsp; Não = <strong>–0,50</strong>
-      </div>
+      ${tiposHtml}
     </div>
     <div class="bottom-actions">
       <button class="btn-ghost"   onclick="go('dashboard')">← Voltar</button>
-      <button class="btn-primary" onclick="afterQ6()" ${!S.q6 ? 'disabled' : ''}>Próximo →</button>
+      <button class="btn-primary" onclick="concluirPE()" ${!pode ? 'disabled' : ''}>Concluir Ponto Extra ✓</button>
     </div>`;
 }
 
-function calcPEItem(peso, qty) {
-  if (qty < 1) return 0;
-  return peso + (qty > 1 ? 0.25 * (qty - 1) : 0);
-}
-
-function scrPEQ7() {
-  const isB = S.tipoPDV === 'balcao';
-  const list = isB ? PONTOS_EXTRA.balcao : PONTOS_EXTRA.misto;
-  const peCap = isB ? 3.10 : 5.00;
-
-  // calcula subtotal corrente para mostrar progresso vs cap
-  let subtotal = 0;
-  Object.entries(S.q7).forEach(([id, qty]) => {
-    const it = list.find(p => p.id === id);
-    if (it && qty > 0) subtotal += calcPEItem(it.peso, qty);
-  });
-  subtotal = Math.min(subtotal, peCap);
-
-  return `
-    ${header(pdvLine(), 'Ponto Extra', 'pe_q6')}
-    <div class="content">
-      ${stepDots(2, 1)}
-      <div class="info-box orange">
-        🏷️ 1ª unidade = peso completo &nbsp;|&nbsp; unidades adicionais = <strong>+0,25 pts</strong> cada
-        &nbsp;·&nbsp; Limite do módulo: <strong>${peCap.toFixed(2)} pts</strong>
-      </div>
-      <div class="q-card">
-        <div class="q-text">7. Qual o tipo e quantidade de pontos extras?</div>
-        ${list.map(pe => {
-          const qty = S.q7[pe.id] || 0;
-          const pts = calcPEItem(pe.peso, qty).toFixed(2);
-          const dica = qty > 1 ? `${pe.peso.toFixed(2)} + ${(0.25*(qty-1)).toFixed(2)}` : pe.peso.toFixed(2);
-          const fotosArr = S.fotos.q7[pe.id] || [];
-          const fotosOk = fotosArr.filter(Boolean).length;
-
-          const fotosHtml = qty > 0 ? Array.from({ length: qty }, (_, i) => {
-            const data = fotosArr[i];
-            const id = `foto-q7-${pe.id}-${i}`;
-            return `
-              <div class="foto-upload" style="margin-top:8px">
-                <input type="file" accept="image/*" capture="environment" id="${id}"
-                       onchange="setFotoQ7('${pe.id}', ${i}, this)">
-                <label for="${id}" class="${data ? 'has-foto' : ''}">
-                  ${data
-                    ? `<img src="${data}" alt="Foto ${i+1}"><span class="foto-ok">✅ Foto ${i+1} de ${qty} — toque para alterar</span>`
-                    : `<div class="foto-icon">📷</div><div>Foto ${i+1} de ${qty}</div><div class="foto-req">Obrigatório</div>`}
-                </label>
-              </div>`;
-          }).join('') : '';
-
-          return `
-            <div class="pe-row ${qty > 0 ? 'active' : ''}">
-              <div class="pe-row-top">
-                <span class="pe-lbl">${pe.label}</span>
-                <span class="pe-peso">1ª uni: +${pe.peso.toFixed(2)} &nbsp;|&nbsp; extra: +0,25</span>
-              </div>
-              <div class="qty-group">
-                <button class="qty-btn" onclick="changeQty('${pe.id}', -1)">−</button>
-                <span class="qty-val">${qty}</span>
-                <button class="qty-btn" onclick="changeQty('${pe.id}', 1)">+</button>
-                ${qty > 0 ? `<span class="qty-pts">= ${pts} pts &nbsp;(${dica})</span>` : ''}
-              </div>
-              ${qty > 0 ? `<div style="font-size:11px;color:${fotosOk >= qty ? '#27AE60' : '#E53935'};margin-top:6px;font-weight:700">
-                📷 ${fotosOk} de ${qty} foto${qty > 1 ? 's' : ''} anexada${qty > 1 ? 's' : ''}
-              </div>` : ''}
-              ${fotosHtml}
-            </div>`;
-        }).join('')}
-      </div>
-      <div class="info-box ${subtotal >= peCap ? 'orange' : 'green'}" style="margin-top:0">
-        Subtotal Ponto Extra: <strong>${subtotal.toFixed(2)} / ${peCap.toFixed(2)} pts</strong>
-        ${subtotal >= peCap ? ' &nbsp;⚠️ Limite atingido' : ''}
-      </div>
-    </div>
-    <div class="bottom-actions">
-      <button class="btn-ghost"   onclick="go('pe_q6')">← Voltar</button>
-      <button class="btn-primary" onclick="concluirPE()" ${!fotosQ7Ok() ? 'disabled' : ''}>
-        Concluir Ponto Extra ✓
-      </button>
-    </div>`;
-}
-
-/* ---- MIX E PREÇOS ---- */
+/* ---- MIX E PREÇO DIRECIONADO ---- */
 
 function scrMixLinhas() {
+  const dir = getMixList();
+  const linhas = Object.keys(dir);
+
+  if (linhas.length === 0) {
+    return `
+      ${header(pdvLine(), 'Mix e Preço Direcionado', 'dashboard')}
+      <div class="content">
+        <div class="info-box orange">
+          ⚠️ Ainda não há lista de mix direcionado cadastrada para
+          <strong>${modelo().label} · ${S.tipoNegocio} · Tam. ${S.tamanhoLoja}</strong>.
+          O módulo será pontuado com o peso máximo.
+        </div>
+      </div>
+      <div class="bottom-actions">
+        <button class="btn-ghost"   onclick="go('dashboard')">← Voltar</button>
+        <button class="btn-primary" onclick="concluirMixVazio()">Concluir Mix ✓</button>
+      </div>`;
+  }
+
   return `
-    ${header(pdvLine(), 'Mix e Preços', 'dashboard')}
+    ${header(pdvLine(), 'Mix e Preço Direcionado', 'dashboard')}
     <div class="content">
+      <div class="info-box orange">🛒 Peso máximo ${modelo().pesos.mix.toFixed(2)} pts — dividido entre todos os produtos direcionados.</div>
       <div class="q-card">
-        <div class="q-text">Quais linhas de produtos o PDV trabalha?</div>
+        <div class="q-text">Quais linhas o PDV trabalha? (abra para avaliar os produtos)</div>
         <div class="check-list">
-          ${LINHAS.map(l => `
-            <div class="check-item ${S.linhas.includes(l) ? 'chk' : ''}" onclick="toggleLinha('${l}')">
-              <input type="checkbox" ${S.linhas.includes(l) ? 'checked' : ''} onclick="event.stopPropagation()">
-              <span class="check-lbl">${l}</span>
+          ${linhas.map(l => `
+            <div class="check-item ${S.mix.lines.includes(l) ? 'chk' : ''}" onclick="toggleMixLine('${escAttr(l)}')">
+              <input type="checkbox" ${S.mix.lines.includes(l) ? 'checked' : ''} onclick="event.stopPropagation()">
+              <span class="check-lbl">${l} <span style="color:#999;font-weight:400">(${dir[l].length} produtos)</span></span>
             </div>`).join('')}
         </div>
       </div>
       <div class="info-box">
-        💡 Selecione todas as linhas presentes no PDV. Será avaliada a ruptura por linha.
+        💡 Produtos de linhas não abertas contam como <strong>não trabalhadas</strong> e descontam pontos.
       </div>
     </div>
     <div class="bottom-actions">
       <button class="btn-ghost"   onclick="go('dashboard')">← Voltar</button>
-      <button class="btn-primary" onclick="iniciarLinhaDetalhe()" ${S.linhas.length === 0 ? 'disabled' : ''}>Próximo →</button>
+      <button class="btn-primary" onclick="iniciarMixDetalhe()" ${S.mix.lines.length === 0 ? 'disabled' : ''}>Avaliar Produtos →</button>
     </div>`;
 }
 
 function scrMixDetalhe() {
-  if (S.linhas.length === 0) { go('mix_linhas'); return ''; }
-  const idx   = S._linhaIdx;
-  const linha = S.linhas[idx];
-  const total = S.linhas.length;
-  const d     = S.mixData[linha] || {};
+  const dir = getMixList();
+  if (S.mix.lines.length === 0) { go('mix_linhas'); return ''; }
+  const idx   = S.mix._idx;
+  const linha = S.mix.lines[idx];
+  const total = S.mix.lines.length;
+  const produtos = dir[linha] || [];
 
-  const pips = S.linhas.map((_, i) => {
+  const pips = S.mix.lines.map((_, i) => {
     const cls = i < idx ? 'done' : i === idx ? 'current' : '';
     return `<div class="linha-pip ${cls}"></div>`;
   }).join('');
 
-  const precoOk = d.preco === 'nao' || (d.preco === 'sim' && !!d.fotoPreco);
-  const podeAvancar = d.trabalha === false || (
-    d.trabalha === true && d.ruptura != null && d.preco != null && precoOk
-  );
-
-  const fotoPrecoHtml = d.preco === 'sim' ? (() => {
-    const fid = `foto-preco-${idx}`;
-    const data = d.fotoPreco;
+  const prodHtml = produtos.map((p, i) => {
+    const key = prodKey(linha, p);
+    const d = S.mix.prod[key] || {};
+    const fotoId = `foto-mix-${idx}-${i}`;
+    const detalhe = d.trabalha === true ? `
+      <div class="mix-sub">
+        <div class="mix-sub-q">Ruptura de estoque?</div>
+        <div class="mix-mini-group">
+          <button class="mini-btn ${d.ruptura === true  ? 'sel-neg' : ''}" onclick="setMixRuptura('${escAttr(key)}', true)">⚠️ Sim</button>
+          <button class="mini-btn ${d.ruptura === false ? 'sel-ok'  : ''}" onclick="setMixRuptura('${escAttr(key)}', false)">✅ Não</button>
+        </div>
+        <input class="form-input mix-preco" type="text" inputmode="decimal" placeholder="Preço na gôndola (R$) — opcional"
+               value="${d.preco || ''}" oninput="setMixPreco('${escAttr(key)}', this.value)">
+        <div class="foto-upload" style="margin-top:8px">
+          <input type="file" accept="image/*" capture="environment" id="${fotoId}" onchange="setFotoMix('${escAttr(key)}', this)">
+          <label for="${fotoId}" class="${d.foto ? 'has-foto' : ''}">
+            ${d.foto
+              ? `<img src="${d.foto}" alt="Foto"><span class="foto-ok">✅ Foto anexada</span>`
+              : `<div class="foto-icon">📷</div><div>Foto do produto/preço (opcional)</div>`}
+          </label>
+        </div>
+      </div>` : '';
     return `
-      <div class="foto-upload" style="margin-top:12px">
-        <input type="file" accept="image/*" capture="environment" id="${fid}"
-               onchange="setFotoPreco(${idx}, this)">
-        <label for="${fid}" class="${data ? 'has-foto' : ''}">
-          ${data
-            ? `<img src="${data}" alt="Foto"><span class="foto-ok">✅ Foto anexada — toque para alterar</span>`
-            : `<div class="foto-icon">📷</div><div>Tirar / Anexar Foto do Preço</div><div class="foto-req">Obrigatório</div>`}
-        </label>
+      <div class="mix-prod ${d.trabalha === true ? 'active' : d.trabalha === false ? 'off' : ''}">
+        <div class="mix-prod-name">${p}</div>
+        <div class="mix-mini-group">
+          <button class="mini-btn ${d.trabalha === true  ? 'sel-ok'  : ''}" onclick="setMixTrabalha('${escAttr(key)}', true)">Trabalha</button>
+          <button class="mini-btn ${d.trabalha === false ? 'sel-neg' : ''}" onclick="setMixTrabalha('${escAttr(key)}', false)">Não trabalha</button>
+        </div>
+        ${detalhe}
       </div>`;
-  })() : '';
+  }).join('');
+
+  const respondidos = produtos.every(p => {
+    const d = S.mix.prod[prodKey(linha, p)];
+    if (!d || d.trabalha == null) return false;
+    if (d.trabalha === true && d.ruptura == null) return false;
+    return true;
+  });
 
   return `
-    ${header(pdvLine(), 'Mix e Preços', '')}
+    ${header(pdvLine(), 'Mix e Preço Direcionado', '')}
     <div class="content">
       <div class="linha-progress">${pips}</div>
-      <div style="text-align:center;font-size:11px;color:#999;margin-bottom:12px">
-        Linha ${idx + 1} de ${total}
-      </div>
+      <div style="text-align:center;font-size:11px;color:#999;margin-bottom:10px">Linha ${idx + 1} de ${total}</div>
       <div class="q-card">
-        <div style="font-size:15px;font-weight:800;color:#E87722;margin-bottom:16px">📦 ${linha}</div>
-        <div class="q-text" style="font-size:13px">O PDV trabalha com produtos desta linha?</div>
-        <button class="opt-btn ${d.trabalha === true  ? 'sel' : ''}" onclick="setTrabalha('${linha}', true)">✅ Sim, trabalha</button>
-        <button class="opt-btn ${d.trabalha === false ? 'sel' : ''}" onclick="setTrabalha('${linha}', false)">❌ Não trabalha esta linha</button>
-
-        ${d.trabalha === true ? `
-          <div style="margin-top:16px;padding-top:14px;border-top:1px solid #EEE">
-            <div class="q-text" style="font-size:13px">Há ruptura de produtos Tigre nesta linha?</div>
-            <button class="opt-btn ${d.ruptura === true  ? 'sel' : ''}" onclick="setRuptura('${linha}', true)">⚠️ Sim, há ruptura</button>
-            <button class="opt-btn ${d.ruptura === false ? 'sel' : ''}" onclick="setRuptura('${linha}', false)">✅ Sem ruptura</button>
-            <div class="info-box ${d.ruptura === false ? 'green' : d.ruptura === true ? 'orange' : ''}" style="margin-top:10px">
-              ${d.ruptura === false ? '✅ Sem ruptura: <strong>+1,00</strong> na nota geral'
-                : d.ruptura === true  ? '⚠️ Com ruptura: <strong>–0,10</strong> na nota geral'
-                : '💡 Informe se há ruptura para calcular o score.'}
-            </div>
-          </div>
-
-          ${d.ruptura != null ? `
-          <div style="margin-top:16px;padding-top:14px;border-top:1px solid #EEE">
-            <div class="q-text" style="font-size:13px">Há preço aplicado nas gôndolas desta linha?</div>
-            <button class="opt-btn ${d.preco === 'sim' ? 'sel' : ''}" onclick="setPreco('${linha}', 'sim')">🏷️ Sim, há preço</button>
-            <button class="opt-btn ${d.preco === 'nao' ? 'sel' : ''}" onclick="setPreco('${linha}', 'nao')">❌ Sem preço nas gôndolas</button>
-            ${fotoPrecoHtml}
-          </div>` : ''}
-        ` : ''}
+        <div style="font-size:15px;font-weight:800;color:#E87722;margin-bottom:14px">📦 ${linha}</div>
+        ${prodHtml}
       </div>
     </div>
     <div class="bottom-actions">
-      <button class="btn-ghost"   onclick="prevLinha()">← Voltar</button>
-      <button class="btn-primary" onclick="nextLinha('${linha}')" ${!podeAvancar ? 'disabled' : ''}>
+      <button class="btn-ghost"   onclick="prevMixLinha()">← Voltar</button>
+      <button class="btn-primary" onclick="nextMixLinha()" ${!respondidos ? 'disabled' : ''}>
         ${idx === total - 1 ? 'Concluir Mix ✓' : 'Próxima Linha →'}
       </button>
     </div>`;
@@ -760,65 +810,57 @@ function scrMixDetalhe() {
 /* ---- RESULTADO ---- */
 
 function scrResultado() {
-  const sc    = calcScore();
-  const cl    = classificacao(sc.total);
-  const isB   = S.tipoPDV === 'balcao';
-  const tipo  = isB ? 'Balcão' : S.tipoPDV === 'misto' ? 'Misto' : 'Autosserviço';
-  const comList = isB ? COMUNICACOES.balcao : COMUNICACOES.misto;
-  const peList  = isB ? PONTOS_EXTRA.balcao : PONTOS_EXTRA.misto;
+  const sc = calcScore();
+  const cl = classificacao(sc.total);
+  const m  = modelo();
 
-  function bdRow(icon, label, val) {
-    const v = typeof val === 'number' ? val : 0;
+  function bdRow(icon, label, val, peso) {
     return `<div class="bd-row">
-      <span class="bd-lbl">${icon} ${label}</span>
-      <span class="bd-val ${v >= 0 ? 'pos' : 'neg'}">${v >= 0 ? '+' : ''}${v.toFixed(2)}</span>
+      <span class="bd-lbl">${icon} ${label} <small style="color:#999">/ ${peso.toFixed(2)}</small></span>
+      <span class="bd-val ${val >= peso ? 'pos' : 'neg'}">${val.toFixed(2)}</span>
     </div>`;
   }
 
-  // --- Resumo Comunicação ---
-  const comChecked = S.q5.map(id => comList.find(c => c.id === id)).filter(Boolean);
-  const comResumo = S.comConcluido ? `
+  // resumo Visibilidade
+  const vm = m.visibilidade;
+  const ausentes = S.vis.q3 === 'sim'
+    ? vm.checklist.filter(it => it.penal > 0 && !S.vis.presentes.includes(it.id))
+    : [];
+  const visResumo = S.vis.done ? `
     <div class="resumo-section">
-      <div class="resumo-title">📢 Comunicação – itens encontrados</div>
-      ${comChecked.length
-        ? comChecked.map(it => `<div class="resumo-item ok">✅ ${it.label}</div>`).join('')
-        : '<div class="resumo-item neutral">Nenhum material de comunicação encontrado</div>'}
+      <div class="resumo-title">👁️ Visibilidade</div>
+      <div class="resumo-item ${S.vis.q1==='nao'?'neg':'ok'}">${S.vis.q1==='nao'?'❌':'✅'} Comunicação na fachada</div>
+      <div class="resumo-item ${S.vis.q2==='nao'?'neg':'ok'}">${S.vis.q2==='nao'?'❌':'✅'} Comunicação no interior</div>
+      <div class="resumo-item ${S.vis.q3==='nao'?'neg':'ok'}">${S.vis.q3==='nao'?'❌':'✅'} Comunicação no setor/balcão</div>
+      ${ausentes.map(it => `<div class="resumo-item neg">➖ Ausente: ${it.label} (${fmt(-it.penal)})</div>`).join('')}
     </div>` : '';
 
-  // --- Resumo Ponto Extra ---
+  // resumo Ponto Extra
   let peResumo = '';
-  if (S.peConcluido) {
-    if (S.q6 === 'nao') {
-      peResumo = `<div class="resumo-section">
-        <div class="resumo-title">🏪 Ponto Extra</div>
-        <div class="resumo-item neg">❌ Sem ponto extra executado</div>
-      </div>`;
+  if (S.pe.done) {
+    if (S.pe.existe === 'nao') {
+      peResumo = `<div class="resumo-section"><div class="resumo-title">🏪 Ponto Extra</div>
+        <div class="resumo-item neg">❌ Sem ponto extra executado (${fmt(-m.pontoExtra.penalNao)})</div></div>`;
     } else {
-      const entries = Object.entries(S.q7).filter(([, qty]) => qty > 0);
-      peResumo = `<div class="resumo-section">
-        <div class="resumo-title">🏪 Ponto Extra – tipos executados</div>
-        ${entries.length
-          ? entries.map(([id, qty]) => {
-              const it = peList.find(p => p.id === id);
-              return `<div class="resumo-item ok">✅ ${it ? it.label : id}<span class="resumo-qty">×${qty}</span></div>`;
-            }).join('')
-          : '<div class="resumo-item neutral">Nenhum tipo informado</div>'}
+      const presentes = m.pontoExtra.tipos.filter(t => (S.pe.tipos[t.id]||0) > 0);
+      const faltantes = m.pontoExtra.tipos.filter(t => t.penal>0 && !((S.pe.tipos[t.id]||0)>0));
+      peResumo = `<div class="resumo-section"><div class="resumo-title">🏪 Ponto Extra – tipos presentes</div>
+        ${presentes.length ? presentes.map(t => `<div class="resumo-item ok">✅ ${t.label}<span class="resumo-qty">×${S.pe.tipos[t.id]}</span></div>`).join('') : '<div class="resumo-item neutral">Nenhum tipo marcado</div>'}
+        ${faltantes.map(t => `<div class="resumo-item neg">➖ Ausente: ${t.label} (${fmt(-t.penal)})</div>`).join('')}
       </div>`;
     }
   }
 
-  // --- Resumo Mix ---
-  const mixResumo = S.mixConcluido ? `
-    <div class="resumo-section">
-      <div class="resumo-title">🛒 Mix e Preços – linhas avaliadas</div>
-      ${S.linhas.map(l => {
-        const d = S.mixData[l] || {};
-        if (!d.trabalha) return `<div class="resumo-item neutral">➖ ${l}: não trabalha</div>`;
-        const precoTag = d.preco === 'sim' ? ' · <span style="color:#1B3F70">🏷️ preço aplicado</span>'
-                       : d.preco === 'nao' ? ' · <span style="color:#888">sem preço</span>' : '';
-        return `<div class="resumo-item ${d.ruptura ? 'neg' : 'ok'}">${d.ruptura ? '⚠️' : '✅'} ${l}: ${d.ruptura ? 'com ruptura' : 'sem ruptura'}${precoTag}</div>`;
-      }).join('')}
-    </div>` : '';
+  // resumo Mix
+  let mixResumo = '';
+  if (S.mix.done) {
+    const info = sc.mixInfo;
+    mixResumo = `<div class="resumo-section"><div class="resumo-title">🛒 Mix e Preço Direcionado</div>
+      ${info.total > 0
+        ? `<div class="resumo-item ${info.faltantes ? 'neg' : 'ok'}">${info.faltantes ? '⚠️' : '✅'} ${info.total - info.faltantes} de ${info.total} produtos OK &nbsp;·&nbsp; ${info.faltantes} faltando/ruptura</div>`
+        : '<div class="resumo-item neutral">Sem lista direcionada cadastrada</div>'}
+    </div>`;
+  }
 
   return `
     ${header(pdvLine(), 'Resultado da Avaliação', 'dashboard')}
@@ -834,29 +876,27 @@ function scrResultado() {
 
         <div class="breakdown">
           <div class="bd-title">📊 Detalhamento por módulo</div>
-          ${bdRow('📢', 'Comunicação', sc.com)}
-          ${bdRow('🏪', `Ponto Extra (limite: ${isB ? '3,10' : '5,00'} pts)`, sc.pe)}
-          ${bdRow('🛒', 'Mix e Preços', sc.mix)}
+          ${bdRow('👁️', 'Visibilidade',            sc.vis, sc.pesos.visibilidade)}
+          ${bdRow('🏪', 'Ponto Extra',              sc.pe,  sc.pesos.pontoExtra)}
+          ${bdRow('🛒', 'Mix e Preço Direcionado',  sc.mix, sc.pesos.mix)}
           <div class="bd-row total-row">
             <span class="bd-lbl">SCORE FINAL <small style="font-weight:400;color:#999">(máx. 10,00)</small></span>
             <span class="bd-val" style="color:#1B3F70">${sc.total.toFixed(2)}</span>
           </div>
         </div>
-        ${sc.total >= 10 ? `<div class="info-box orange">🏆 Score máximo de 10,00 pontos atingido!</div>` : ''}
+        ${sc.total >= 10 ? `<div class="info-box orange">🏆 Loja perfeita! Score máximo de 10,00 pontos.</div>` : ''}
 
         <div class="info-box">
-          🏬 Tipo PDV: <strong>${tipo}</strong> &nbsp;|&nbsp; Tamanho: <strong>${S.tamanhoLoja || '–'}</strong><br>
+          🏬 Perfil: <strong>${m.label}</strong> &nbsp;|&nbsp; Tamanho: <strong>${S.tamanhoLoja || '–'}</strong><br>
           📋 Negócio: <strong>${S.tipoNegocio || '–'}</strong><br>
           🏪 PDV: <strong>${S.pdv.codigo ? S.pdv.codigo + ' – ' : ''}${S.pdv.nome || '–'}</strong>
         </div>
 
-        ${comResumo}${peResumo}${mixResumo}
+        ${visResumo}${peResumo}${mixResumo}
       </div>
     </div>
     <div class="bottom-actions" style="flex-direction:column;gap:8px">
-      <button id="btn-exportar" class="btn-primary" style="width:100%" onclick="exportarResultado()">
-        📤 Exportar / Compartilhar
-      </button>
+      <button id="btn-exportar" class="btn-primary" style="width:100%" onclick="exportarResultado()">📤 Exportar / Compartilhar</button>
       <div style="display:flex;gap:8px;width:100%">
         <button class="btn-ghost"   style="flex:1" onclick="go('dashboard')">← Voltar à Pesquisa</button>
         <button class="btn-primary" style="flex:1" onclick="novaColeta()">📋 Nova Coleta</button>
@@ -868,212 +908,157 @@ function scrResultado() {
 // FOTO HELPERS
 // ===========================
 
-function setFoto(key, inputEl, subkey) {
+function readFile(inputEl, cb) {
   const file = inputEl.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = e => {
-    if (subkey !== undefined) {
-      if (!S.fotos[key]) S.fotos[key] = {};
-      S.fotos[key][subkey] = e.target.result;
-    } else {
-      S.fotos[key] = e.target.result;
-    }
-    render();
-  };
+  reader.onload = e => { cb(e.target.result); render(); };
   reader.readAsDataURL(file);
 }
 
-function setFotoQ7(peId, idx, inputEl) {
-  const file = inputEl.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    if (!S.fotos.q7[peId]) S.fotos.q7[peId] = [];
-    S.fotos.q7[peId][idx] = e.target.result;
-    render();
-  };
-  reader.readAsDataURL(file);
+function setFotoVis(key, inputEl) {
+  readFile(inputEl, data => { if (key === 'q1') S.vis.foto1 = data; else S.vis.foto2 = data; });
 }
 
-function fotosQ7Ok() {
-  return Object.entries(S.q7).every(([id, qty]) => {
+function setFotoPE(id, idx, inputEl) {
+  readFile(inputEl, data => { if (!S.pe.fotos[id]) S.pe.fotos[id] = []; S.pe.fotos[id][idx] = data; });
+}
+
+function setFotoMix(key, inputEl) {
+  readFile(inputEl, data => { if (!S.mix.prod[key]) S.mix.prod[key] = {}; S.mix.prod[key].foto = data; });
+}
+
+function peFotosOk() {
+  return Object.entries(S.pe.tipos).every(([id, qty]) => {
     if (qty < 1) return true;
-    const arr = S.fotos.q7[id] || [];
+    const arr = S.pe.fotos[id] || [];
     return arr.filter(Boolean).length >= qty;
   });
-}
-
-function fotoInput(key, subkey) {
-  const data = subkey !== undefined
-    ? (S.fotos[key] && S.fotos[key][subkey])
-    : S.fotos[key];
-  const id = subkey !== undefined ? `foto-${key}-${subkey}` : `foto-${key}`;
-  const onchange = subkey !== undefined
-    ? `setFoto('${key}', this, '${subkey}')`
-    : `setFoto('${key}', this)`;
-
-  return `
-    <div class="foto-upload">
-      <input type="file" accept="image/*" capture="environment" id="${id}" onchange="${onchange}">
-      <label for="${id}" class="${data ? 'has-foto' : ''}">
-        ${data
-          ? `<img src="${data}" alt="Foto"><span class="foto-ok">✅ Foto anexada — toque para alterar</span>`
-          : `<div class="foto-icon">📷</div><div>Tirar / Anexar Foto</div><div class="foto-req">Obrigatório</div>`}
-      </label>
-    </div>`;
 }
 
 // ===========================
 // ACTIONS
 // ===========================
 
+// escapa para uso dentro de onclick="fn('AQUI')" — atributo HTML (aspas duplas)
+// + string JS (aspas simples). Nomes de produto contêm " (polegadas) e ' (pés).
+function escAttr(s) {
+  return String(s)
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'")
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 function setTipo(tipo) {
   if (S.tipoPDV !== tipo) {
-    S.q2 = null; S.q3 = null; S.q4 = null; S.q5 = [];
-    S.q6 = null; S.q7 = {};
-    S.comConcluido = false; S.peConcluido = false;
-    S.linhas = []; S.mixData = {}; S.mixConcluido = false;
+    S.vis = { q1: null, q2: null, q3: null, presentes: [], done: false, foto1: null, foto2: null };
+    S.pe  = { existe: null, tipos: {}, fotos: {}, done: false };
+    S.mix = { lines: [], prod: {}, done: false, _idx: 0 };
   }
   S.tipoPDV = tipo;
   render();
 }
 
-function toggleQ5(id) {
-  const i = S.q5.indexOf(id);
-  if (i === -1) S.q5.push(id); else S.q5.splice(i, 1);
+function toggleInfoTipo(id) {
+  S._infoTipo = S._infoTipo === id ? null : id;
   render();
 }
 
-function afterQ4() {
-  if (S.q4 === 'sim') go('com_q5');
-  else concluirCom();
+// Visibilidade
+function setVis(key, val) {
+  S.vis[key] = val;
+  if (key === 'q1' && val === 'nao') S.vis.foto1 = null;
+  if (key === 'q2' && val === 'nao') S.vis.foto2 = null;
+  if (key === 'q3' && val === 'nao') S.vis.presentes = [];
+  render();
 }
-
-function concluirCom() {
-  S.comConcluido = true;
-  go('dashboard');
+function toggleVisItem(id) {
+  const i = S.vis.presentes.indexOf(id);
+  if (i === -1) S.vis.presentes.push(id); else S.vis.presentes.splice(i, 1);
+  render();
 }
+function concluirVis() { S.vis.done = true; go('dashboard'); }
 
-function afterQ6() {
-  if (S.q6 === 'sim') go('pe_q7');
-  else concluirPE();
+// Ponto Extra
+function setPEExiste(val) {
+  S.pe.existe = val;
+  if (val === 'nao') { S.pe.tipos = {}; S.pe.fotos = {}; }
+  render();
 }
-
-function concluirPE() {
-  S.peConcluido = true;
-  go('dashboard');
-}
-
-function changeQty(id, delta) {
-  const cur = S.q7[id] || 0;
+function changePEQty(id, delta) {
+  const cur = S.pe.tipos[id] || 0;
   const nxt = Math.max(0, cur + delta);
-  if (nxt === 0) {
-    delete S.q7[id];
-    delete S.fotos.q7[id];
-  } else {
-    S.q7[id] = nxt;
-    if (S.fotos.q7[id]) S.fotos.q7[id] = S.fotos.q7[id].slice(0, nxt);
-  }
+  if (nxt === 0) { delete S.pe.tipos[id]; delete S.pe.fotos[id]; }
+  else { S.pe.tipos[id] = nxt; if (S.pe.fotos[id]) S.pe.fotos[id] = S.pe.fotos[id].slice(0, nxt); }
   render();
 }
+function concluirPE() { S.pe.done = true; go('dashboard'); }
 
-function toggleLinha(l) {
-  const i = S.linhas.indexOf(l);
-  if (i === -1) S.linhas.push(l);
-  else { S.linhas.splice(i, 1); delete S.mixData[l]; }
+// Mix
+function toggleMixLine(l) {
+  const i = S.mix.lines.indexOf(l);
+  if (i === -1) S.mix.lines.push(l);
+  else S.mix.lines.splice(i, 1);
   render();
 }
-
-function iniciarLinhaDetalhe() {
-  S._linhaIdx = 0;
+function iniciarMixDetalhe() {
+  // ordena as linhas selecionadas na ordem do mix
+  const ordem = Object.keys(getMixList());
+  S.mix.lines.sort((a, b) => ordem.indexOf(a) - ordem.indexOf(b));
+  S.mix._idx = 0;
   go('mix_detalhe');
 }
-
-function setTrabalha(linha, val) {
-  if (!S.mixData[linha]) S.mixData[linha] = {};
-  S.mixData[linha].trabalha = val;
-  if (!val) { S.mixData[linha].ruptura = null; S.mixData[linha].preco = null; S.mixData[linha].fotoPreco = null; }
+function setMixTrabalha(key, val) {
+  if (!S.mix.prod[key]) S.mix.prod[key] = {};
+  S.mix.prod[key].trabalha = val;
+  if (!val) { S.mix.prod[key].ruptura = null; S.mix.prod[key].preco = ''; S.mix.prod[key].foto = null; }
   render();
 }
-
-function setRuptura(linha, val) {
-  if (!S.mixData[linha]) S.mixData[linha] = { trabalha: true };
-  S.mixData[linha].ruptura = val;
+function setMixRuptura(key, val) {
+  if (!S.mix.prod[key]) S.mix.prod[key] = { trabalha: true };
+  S.mix.prod[key].ruptura = val;
   render();
 }
-
-function setPreco(linha, val) {
-  if (!S.mixData[linha]) S.mixData[linha] = { trabalha: true };
-  S.mixData[linha].preco = val;
-  if (val === 'nao') S.mixData[linha].fotoPreco = null;
-  render();
+function setMixPreco(key, val) {
+  if (!S.mix.prod[key]) S.mix.prod[key] = { trabalha: true };
+  S.mix.prod[key].preco = val;
 }
-
-function setFotoPreco(linhaIdx, inputEl) {
-  const linha = S.linhas[linhaIdx];
-  const file = inputEl.files[0];
-  if (!file || !linha) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    if (!S.mixData[linha]) S.mixData[linha] = {};
-    S.mixData[linha].fotoPreco = e.target.result;
-    render();
-  };
-  reader.readAsDataURL(file);
-}
-
-function prevLinha() {
-  if (S._linhaIdx > 0) { S._linhaIdx--; render(); }
+function prevMixLinha() {
+  if (S.mix._idx > 0) { S.mix._idx--; render(); }
   else go('mix_linhas');
 }
-
-function nextLinha(linha) {
-  if (S._linhaIdx < S.linhas.length - 1) {
-    S._linhaIdx++;
-    render();
-  } else {
-    S.mixConcluido = true;
-    go('dashboard');
-  }
+function nextMixLinha() {
+  if (S.mix._idx < S.mix.lines.length - 1) { S.mix._idx++; render(); }
+  else { S.mix.done = true; go('dashboard'); }
 }
+function concluirMixVazio() { S.mix.done = true; go('dashboard'); }
 
-function novaColeta() {
-  S = resetState();
-  render();
-}
+function novaColeta() { S = resetState(); render(); }
 
 async function exportarResultado() {
   const btn = document.getElementById('btn-exportar');
   if (btn) { btn.disabled = true; btn.textContent = '⏳ Gerando imagem…'; }
   try {
     const el = document.getElementById('resultado-card');
-    const canvas = await html2canvas(el, {
-      scale: 2,
-      backgroundColor: '#F2F2F2',
-      logging: false,
-      useCORS: true,
-    });
+    const canvas = await html2canvas(el, { scale: 2, backgroundColor: '#F2F2F2', logging: false, useCORS: true });
     const filename = `pdv-score-${S.pdv.codigo || 'resultado'}.png`;
     if (navigator.share) {
       canvas.toBlob(async blob => {
         try {
           const file = new File([blob], filename, { type: 'image/png' });
           await navigator.share({ files: [file], title: `PDV Score – ${S.pdv.nome || S.pdv.codigo}` });
-        } catch {
-          _dlCanvas(canvas, filename);
-        }
+        } catch { _dlCanvas(canvas, filename); }
       }, 'image/png');
-    } else {
-      _dlCanvas(canvas, filename);
-    }
+    } else { _dlCanvas(canvas, filename); }
   } catch (e) {
     alert('Não foi possível gerar a imagem.');
   } finally {
     if (btn) { btn.disabled = false; btn.innerHTML = '📤 Exportar / Compartilhar'; }
   }
 }
-
 function _dlCanvas(canvas, filename) {
   const a = document.createElement('a');
   a.download = filename;
@@ -1094,12 +1079,8 @@ const SCREENS = {
   pdv_info:    scrPDVInfo,
   tipo_sel:    scrTipoSel,
   dashboard:   scrDashboard,
-  com_q2:      scrComQ2,
-  com_q3:      scrComQ3,
-  com_q4:      scrComQ4,
-  com_q5:      scrComQ5,
-  pe_q6:       scrPEQ6,
-  pe_q7:       scrPEQ7,
+  vis:         scrVis,
+  pe:          scrPE,
   mix_linhas:  scrMixLinhas,
   mix_detalhe: scrMixDetalhe,
   resultado:   scrResultado,
@@ -1116,3 +1097,4 @@ function render() {
 
 render();
 loadLojas().then(() => { if (S.screen === 'pdv_info') render(); });
+loadMix();
