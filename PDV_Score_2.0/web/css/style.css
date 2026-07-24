@@ -733,6 +733,18 @@ body {
 .check-peso.neg { color: #C62828; font-weight: 700; font-size: 11px; margin-left: auto; }
 .pe-peso.neg    { color: #C62828; }
 
+/* item coringa/bônus */
+.check-peso.bonus {
+  color: #1B7A3D;
+  background: #E4F5EA;
+  font-weight: 700;
+  font-size: 10px;
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.pen-hint.ok { color: #1B5E20; background: #E8F5E9; }
+
 /* mix direcionado — produtos */
 .mix-prod {
   border: 1px solid #E6E6E6;

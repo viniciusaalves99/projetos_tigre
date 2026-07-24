@@ -147,7 +147,7 @@ const MODELO = {
         { id: 'adesivo_chao',   label: 'Adesivo de Chão / Pares de Pata', penal: 0.60 },
         { id: 'bandeirola',     label: 'Bandeirola',                       penal: 0.25 },
         { id: 'cesto',          label: 'Cesto ou Box Promocional',         penal: 0.25 },
-        { id: 'personalizada',  label: 'Comunicação Personalizada',        penal: 0.00 },
+        { id: 'personalizada',  label: 'Comunicação Personalizada',        penal: 0.00, bonus: true },
         { id: 'display_aereo',  label: 'Display Aéreo',                    penal: 0.20 },
         { id: 'totem',          label: 'Totem',                            penal: 0.10 },
       ],
@@ -312,10 +312,14 @@ function calcVisLoss() {
   if (S.vis.q3 === 'nao') {
     loss += m.q3.penalNao;
   } else if (S.vis.q3 === 'sim') {
-    // perde a penalidade de cada comunicação AUSENTE
-    m.checklist.forEach(it => {
-      if (!S.vis.presentes.includes(it.id)) loss += it.penal;
-    });
+    // item bônus (coringa) presente supre os materiais faltantes → sem perda no checklist
+    const temBonus = m.checklist.some(it => it.bonus && S.vis.presentes.includes(it.id));
+    if (!temBonus) {
+      // perde a penalidade de cada comunicação AUSENTE
+      m.checklist.forEach(it => {
+        if (!it.bonus && !S.vis.presentes.includes(it.id)) loss += it.penal;
+      });
+    }
   }
   return loss;
 }
@@ -594,6 +598,7 @@ function scrVis() {
   }
 
   // checklist (Q3.1) só quando Q3 = sim
+  const temBonusVis = m.checklist.some(it => it.bonus && S.vis.presentes.includes(it.id));
   const checklistHtml = S.vis.q3 === 'sim' ? `
     <div class="q-card">
       <div class="q-text">3.1. Quais comunicações estão aplicadas? (marque as presentes)</div>
@@ -602,10 +607,15 @@ function scrVis() {
           <div class="check-item ${S.vis.presentes.includes(it.id) ? 'chk' : ''}" onclick="toggleVisItem('${it.id}')">
             <input type="checkbox" ${S.vis.presentes.includes(it.id) ? 'checked' : ''} onclick="event.stopPropagation()">
             <span class="check-lbl">${it.label}</span>
-            ${it.penal > 0 ? `<span class="check-peso neg">ausente ${fmt(-it.penal)}</span>` : ''}
+            ${it.bonus ? `<span class="check-peso bonus">🎁 coringa</span>`
+              : (it.penal > 0 ? `<span class="check-peso neg">ausente ${fmt(-it.penal)}</span>` : '')}
           </div>`).join('')}
       </div>
-      <div class="pen-hint">Cada comunicação <strong>ausente</strong> desconta a penalidade indicada.</div>
+      <div class="pen-hint ${temBonusVis ? 'ok' : ''}">
+        ${temBonusVis
+          ? '🎁 <strong>Comunicação Personalizada</strong> presente: supre os materiais faltantes — sub-módulo completo.'
+          : 'Cada comunicação <strong>ausente</strong> desconta a penalidade indicada. A <strong>Comunicação Personalizada</strong> é coringa: se presente, cobre os demais.'}
+      </div>
     </div>` : '';
 
   // validação: q1,q2,q3 respondidas; fotos obrigatórias quando sim
@@ -823,7 +833,8 @@ function scrResultado() {
 
   // resumo Visibilidade
   const vm = m.visibilidade;
-  const ausentes = S.vis.q3 === 'sim'
+  const temBonusRes = S.vis.q3 === 'sim' && vm.checklist.some(it => it.bonus && S.vis.presentes.includes(it.id));
+  const ausentes = (S.vis.q3 === 'sim' && !temBonusRes)
     ? vm.checklist.filter(it => it.penal > 0 && !S.vis.presentes.includes(it.id))
     : [];
   const visResumo = S.vis.done ? `
@@ -832,6 +843,7 @@ function scrResultado() {
       <div class="resumo-item ${S.vis.q1==='nao'?'neg':'ok'}">${S.vis.q1==='nao'?'❌':'✅'} Comunicação na fachada</div>
       <div class="resumo-item ${S.vis.q2==='nao'?'neg':'ok'}">${S.vis.q2==='nao'?'❌':'✅'} Comunicação no interior</div>
       <div class="resumo-item ${S.vis.q3==='nao'?'neg':'ok'}">${S.vis.q3==='nao'?'❌':'✅'} Comunicação no setor/balcão</div>
+      ${temBonusRes ? `<div class="resumo-item ok">🎁 Comunicação Personalizada supriu os materiais faltantes</div>` : ''}
       ${ausentes.map(it => `<div class="resumo-item neg">➖ Ausente: ${it.label} (${fmt(-it.penal)})</div>`).join('')}
     </div>` : '';
 
