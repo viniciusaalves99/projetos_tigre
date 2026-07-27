@@ -275,8 +275,8 @@ function resetState() {
     tipoNegocio: null,
     tamanhoLoja: null,        // 'P' | 'M' | 'G'
 
-    // módulo Visibilidade
-    vis: { q1: null, q2: null, q3: null, presentes: [], done: false, foto1: null, foto2: null },
+    // módulo Visibilidade  (itens: {id: qty}; fotos: {id: [dataURL]})
+    vis: { q1: null, q2: null, q3: null, itens: {}, fotos: {}, done: false, foto1: null, foto2: null },
     // módulo Ponto Extra
     pe:  { existe: null, tipos: {}, fotos: {}, done: false }, // tipos: {id: qty}; fotos: {id: [dataURL]}
     // módulo Mix Direcionado
@@ -303,6 +303,16 @@ function go(screen) {
 
 function prodKey(linha, prod) { return linha + '::' + prod; }
 
+function visPresente(id) { return (S.vis.itens[id] || 0) > 0; }
+
+function visFotosOk() {
+  return Object.entries(S.vis.itens).every(([id, qty]) => {
+    if (qty < 1) return true;
+    const arr = S.vis.fotos[id] || [];
+    return arr.filter(Boolean).length >= qty;
+  });
+}
+
 // perda do módulo Visibilidade
 function calcVisLoss() {
   const m = modelo().visibilidade;
@@ -313,11 +323,11 @@ function calcVisLoss() {
     loss += m.q3.penalNao;
   } else if (S.vis.q3 === 'sim') {
     // item bônus (coringa) presente supre os materiais faltantes → sem perda no checklist
-    const temBonus = m.checklist.some(it => it.bonus && S.vis.presentes.includes(it.id));
+    const temBonus = m.checklist.some(it => it.bonus && visPresente(it.id));
     if (!temBonus) {
       // perde a penalidade de cada comunicação AUSENTE
       m.checklist.forEach(it => {
-        if (!it.bonus && !S.vis.presentes.includes(it.id)) loss += it.penal;
+        if (!it.bonus && !visPresente(it.id)) loss += it.penal;
       });
     }
   }
@@ -598,30 +608,55 @@ function scrVis() {
   }
 
   // checklist (Q3.1) só quando Q3 = sim
-  const temBonusVis = m.checklist.some(it => it.bonus && S.vis.presentes.includes(it.id));
+  const temBonusVis = m.checklist.some(it => it.bonus && visPresente(it.id));
   const checklistHtml = S.vis.q3 === 'sim' ? `
     <div class="q-card">
-      <div class="q-text">3.1. Quais comunicações estão aplicadas? (marque as presentes)</div>
-      <div class="check-list">
-        ${m.checklist.map(it => `
-          <div class="check-item ${S.vis.presentes.includes(it.id) ? 'chk' : ''}" onclick="toggleVisItem('${it.id}')">
-            <input type="checkbox" ${S.vis.presentes.includes(it.id) ? 'checked' : ''} onclick="event.stopPropagation()">
-            <span class="check-lbl">${it.label}</span>
-            ${it.bonus ? `<span class="check-peso bonus">🎁 coringa</span>`
-              : (it.penal > 0 ? `<span class="check-peso neg">ausente ${fmt(-it.penal)}</span>` : '')}
-          </div>`).join('')}
-      </div>
+      <div class="q-text">3.1. Quais comunicações estão aplicadas e em que quantidade?</div>
+      ${m.checklist.map(it => {
+        const qty = S.vis.itens[it.id] || 0;
+        const fotosArr = S.vis.fotos[it.id] || [];
+        const fotosOk = fotosArr.filter(Boolean).length;
+        const fotosHtml = qty > 0 ? Array.from({ length: qty }, (_, i) => {
+          const data = fotosArr[i];
+          const fid = `foto-vis-item-${it.id}-${i}`;
+          return `
+            <div class="foto-upload" style="margin-top:8px">
+              <input type="file" accept="image/*" capture="environment" id="${fid}" onchange="setFotoVisItem('${it.id}', ${i}, this)">
+              <label for="${fid}" class="${data ? 'has-foto' : ''}">
+                ${data
+                  ? `<img src="${data}" alt="Foto ${i+1}"><span class="foto-ok">✅ Foto ${i+1} de ${qty} — toque para alterar</span>`
+                  : `<div class="foto-icon">📷</div><div>Foto ${i+1} de ${qty}</div><div class="foto-req">Obrigatório</div>`}
+              </label>
+            </div>`;
+        }).join('') : '';
+        return `
+          <div class="pe-row ${qty > 0 ? 'active' : ''}">
+            <div class="pe-row-top">
+              <span class="pe-lbl">${it.label}</span>
+              ${it.bonus ? `<span class="pe-peso bonus">🎁 coringa</span>`
+                : (it.penal > 0 ? `<span class="pe-peso neg">ausente ${fmt(-it.penal)}</span>` : '')}
+            </div>
+            <div class="qty-group">
+              <button class="qty-btn" onclick="changeVisQty('${it.id}', -1)">−</button>
+              <span class="qty-val">${qty}</span>
+              <button class="qty-btn" onclick="changeVisQty('${it.id}', 1)">+</button>
+            </div>
+            ${qty > 0 ? `<div style="font-size:11px;color:${fotosOk >= qty ? '#27AE60' : '#E53935'};margin-top:6px;font-weight:700">📷 ${fotosOk} de ${qty} foto${qty>1?'s':''}</div>` : ''}
+            ${fotosHtml}
+          </div>`;
+      }).join('')}
       <div class="pen-hint ${temBonusVis ? 'ok' : ''}">
         ${temBonusVis
           ? '🎁 <strong>Comunicação Personalizada</strong> presente: supre os materiais faltantes — sub-módulo completo.'
-          : 'Cada comunicação <strong>ausente</strong> desconta a penalidade indicada. A <strong>Comunicação Personalizada</strong> é coringa: se presente, cobre os demais.'}
+          : 'Cada comunicação <strong>ausente</strong> (quantidade 0) desconta a penalidade indicada. A <strong>Comunicação Personalizada</strong> é coringa: se presente, cobre os demais.'}
       </div>
     </div>` : '';
 
   // validação: q1,q2,q3 respondidas; fotos obrigatórias quando sim
   const foto1Ok = !(m.q1.foto && S.vis.q1 === 'sim') || !!S.vis.foto1;
   const foto2Ok = !(m.q2.foto && S.vis.q2 === 'sim') || !!S.vis.foto2;
-  const pode = S.vis.q1 && S.vis.q2 && S.vis.q3 && foto1Ok && foto2Ok;
+  const itensFotoOk = S.vis.q3 !== 'sim' || visFotosOk();
+  const pode = S.vis.q1 && S.vis.q2 && S.vis.q3 && foto1Ok && foto2Ok && itensFotoOk;
 
   return `
     ${header(pdvLine(), 'Visibilidade', 'dashboard')}
@@ -833,9 +868,12 @@ function scrResultado() {
 
   // resumo Visibilidade
   const vm = m.visibilidade;
-  const temBonusRes = S.vis.q3 === 'sim' && vm.checklist.some(it => it.bonus && S.vis.presentes.includes(it.id));
+  const temBonusRes = S.vis.q3 === 'sim' && vm.checklist.some(it => it.bonus && visPresente(it.id));
+  const presentesVis = S.vis.q3 === 'sim'
+    ? vm.checklist.filter(it => visPresente(it.id))
+    : [];
   const ausentes = (S.vis.q3 === 'sim' && !temBonusRes)
-    ? vm.checklist.filter(it => it.penal > 0 && !S.vis.presentes.includes(it.id))
+    ? vm.checklist.filter(it => it.penal > 0 && !visPresente(it.id))
     : [];
   const visResumo = S.vis.done ? `
     <div class="resumo-section">
@@ -843,6 +881,7 @@ function scrResultado() {
       <div class="resumo-item ${S.vis.q1==='nao'?'neg':'ok'}">${S.vis.q1==='nao'?'❌':'✅'} Comunicação na fachada</div>
       <div class="resumo-item ${S.vis.q2==='nao'?'neg':'ok'}">${S.vis.q2==='nao'?'❌':'✅'} Comunicação no interior</div>
       <div class="resumo-item ${S.vis.q3==='nao'?'neg':'ok'}">${S.vis.q3==='nao'?'❌':'✅'} Comunicação no setor/balcão</div>
+      ${presentesVis.map(it => `<div class="resumo-item ok">✅ ${it.label}<span class="resumo-qty">×${S.vis.itens[it.id]}</span></div>`).join('')}
       ${temBonusRes ? `<div class="resumo-item ok">🎁 Comunicação Personalizada supriu os materiais faltantes</div>` : ''}
       ${ausentes.map(it => `<div class="resumo-item neg">➖ Ausente: ${it.label} (${fmt(-it.penal)})</div>`).join('')}
     </div>` : '';
@@ -932,6 +971,10 @@ function setFotoVis(key, inputEl) {
   readFile(inputEl, data => { if (key === 'q1') S.vis.foto1 = data; else S.vis.foto2 = data; });
 }
 
+function setFotoVisItem(id, idx, inputEl) {
+  readFile(inputEl, data => { if (!S.vis.fotos[id]) S.vis.fotos[id] = []; S.vis.fotos[id][idx] = data; });
+}
+
 function setFotoPE(id, idx, inputEl) {
   readFile(inputEl, data => { if (!S.pe.fotos[id]) S.pe.fotos[id] = []; S.pe.fotos[id][idx] = data; });
 }
@@ -966,7 +1009,7 @@ function escAttr(s) {
 
 function setTipo(tipo) {
   if (S.tipoPDV !== tipo) {
-    S.vis = { q1: null, q2: null, q3: null, presentes: [], done: false, foto1: null, foto2: null };
+    S.vis = { q1: null, q2: null, q3: null, itens: {}, fotos: {}, done: false, foto1: null, foto2: null };
     S.pe  = { existe: null, tipos: {}, fotos: {}, done: false };
     S.mix = { lines: [], prod: {}, done: false, _idx: 0 };
   }
@@ -984,12 +1027,14 @@ function setVis(key, val) {
   S.vis[key] = val;
   if (key === 'q1' && val === 'nao') S.vis.foto1 = null;
   if (key === 'q2' && val === 'nao') S.vis.foto2 = null;
-  if (key === 'q3' && val === 'nao') S.vis.presentes = [];
+  if (key === 'q3' && val === 'nao') { S.vis.itens = {}; S.vis.fotos = {}; }
   render();
 }
-function toggleVisItem(id) {
-  const i = S.vis.presentes.indexOf(id);
-  if (i === -1) S.vis.presentes.push(id); else S.vis.presentes.splice(i, 1);
+function changeVisQty(id, delta) {
+  const cur = S.vis.itens[id] || 0;
+  const nxt = Math.max(0, cur + delta);
+  if (nxt === 0) { delete S.vis.itens[id]; delete S.vis.fotos[id]; }
+  else { S.vis.itens[id] = nxt; if (S.vis.fotos[id]) S.vis.fotos[id] = S.vis.fotos[id].slice(0, nxt); }
   render();
 }
 function concluirVis() { S.vis.done = true; go('dashboard'); }
