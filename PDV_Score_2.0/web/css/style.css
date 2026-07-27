@@ -785,3 +785,5 @@ body {
 }
 .mix-sub-q { font-size: 12px; font-weight: 700; color: #444; margin-bottom: 7px; }
 .mix-preco { margin-top: 10px; font-size: 13px; }
+.mix-preco.req { border-color: #E53935; background: #FFF6F6; }
+.mix-preco.req::placeholder { color: #E53935; }

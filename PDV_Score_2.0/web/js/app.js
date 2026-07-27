@@ -570,7 +570,7 @@ function scrDashboard() {
       </div>
       ${card('👁️', 'Visibilidade',        pesos.visibilidade, sc.vis, S.vis.done, vis, 'vis')}
       ${card('🏪', 'Ponto Extra',          pesos.pontoExtra,   sc.pe,  S.pe.done,  pe,  'pe')}
-      ${card('🛒', 'Mix e Preço Direcionado', pesos.mix,       sc.mix, S.mix.done, mix, 'mix_linhas')}
+      ${card('🛒', 'Mix e Preço', pesos.mix,       sc.mix, S.mix.done, mix, 'mix_linhas')}
       ${allDone ? `<div class="info-box green">✅ Todos os módulos concluídos! Finalize a pesquisa.</div>` : ''}
     </div>
     <div class="bottom-actions">
@@ -745,7 +745,7 @@ function scrMixLinhas() {
 
   if (linhas.length === 0) {
     return `
-      ${header(pdvLine(), 'Mix e Preço Direcionado', 'dashboard')}
+      ${header(pdvLine(), 'Mix e Preço', 'dashboard')}
       <div class="content">
         <div class="info-box orange">
           ⚠️ Ainda não há lista de mix direcionado cadastrada para
@@ -760,7 +760,7 @@ function scrMixLinhas() {
   }
 
   return `
-    ${header(pdvLine(), 'Mix e Preço Direcionado', 'dashboard')}
+    ${header(pdvLine(), 'Mix e Preço', 'dashboard')}
     <div class="content">
       <div class="info-box orange">🛒 Peso máximo ${modelo().pesos.mix.toFixed(2)} pts — dividido entre todos os produtos direcionados.</div>
       <div class="q-card">
@@ -807,7 +807,8 @@ function scrMixDetalhe() {
           <button class="mini-btn ${d.ruptura === true  ? 'sel-neg' : ''}" onclick="setMixRuptura('${escAttr(key)}', true)">⚠️ Sim</button>
           <button class="mini-btn ${d.ruptura === false ? 'sel-ok'  : ''}" onclick="setMixRuptura('${escAttr(key)}', false)">✅ Não</button>
         </div>
-        <input class="form-input mix-preco" type="text" inputmode="decimal" placeholder="Preço na gôndola (R$) — opcional"
+        <input class="form-input mix-preco ${!d.preco ? 'req' : ''}" type="text" inputmode="decimal"
+               placeholder="Preço na gôndola (R$) — obrigatório"
                value="${d.preco || ''}" oninput="setMixPreco('${escAttr(key)}', this.value)">
         <div class="foto-upload" style="margin-top:8px">
           <input type="file" accept="image/*" capture="environment" id="${fotoId}" onchange="setFotoMix('${escAttr(key)}', this)">
@@ -832,12 +833,15 @@ function scrMixDetalhe() {
   const respondidos = produtos.every(p => {
     const d = S.mix.prod[prodKey(linha, p)];
     if (!d || d.trabalha == null) return false;
-    if (d.trabalha === true && d.ruptura == null) return false;
+    if (d.trabalha === true) {
+      if (d.ruptura == null) return false;
+      if (!d.preco || !String(d.preco).trim()) return false; // preço obrigatório se trabalha
+    }
     return true;
   });
 
   return `
-    ${header(pdvLine(), 'Mix e Preço Direcionado', '')}
+    ${header(pdvLine(), 'Mix e Preço', '')}
     <div class="content">
       <div class="linha-progress">${pips}</div>
       <div style="text-align:center;font-size:11px;color:#999;margin-bottom:10px">Linha ${idx + 1} de ${total}</div>
@@ -848,7 +852,7 @@ function scrMixDetalhe() {
     </div>
     <div class="bottom-actions">
       <button class="btn-ghost"   onclick="prevMixLinha()">← Voltar</button>
-      <button class="btn-primary" onclick="nextMixLinha()" ${!respondidos ? 'disabled' : ''}>
+      <button id="btn-mix-next" class="btn-primary" onclick="nextMixLinha()" ${!respondidos ? 'disabled' : ''}>
         ${idx === total - 1 ? 'Concluir Mix ✓' : 'Próxima Linha →'}
       </button>
     </div>`;
@@ -908,7 +912,7 @@ function scrResultado() {
   let mixResumo = '';
   if (S.mix.done) {
     const info = sc.mixInfo;
-    mixResumo = `<div class="resumo-section"><div class="resumo-title">🛒 Mix e Preço Direcionado</div>
+    mixResumo = `<div class="resumo-section"><div class="resumo-title">🛒 Mix e Preço</div>
       ${info.total > 0
         ? `<div class="resumo-item ${info.faltantes ? 'neg' : 'ok'}">${info.faltantes ? '⚠️' : '✅'} ${info.total - info.faltantes} de ${info.total} produtos OK &nbsp;·&nbsp; ${info.faltantes} faltando/ruptura</div>`
         : '<div class="resumo-item neutral">Sem lista direcionada cadastrada</div>'}
@@ -931,7 +935,7 @@ function scrResultado() {
           <div class="bd-title">📊 Detalhamento por módulo</div>
           ${bdRow('👁️', 'Visibilidade',            sc.vis, sc.pesos.visibilidade)}
           ${bdRow('🏪', 'Ponto Extra',              sc.pe,  sc.pesos.pontoExtra)}
-          ${bdRow('🛒', 'Mix e Preço Direcionado',  sc.mix, sc.pesos.mix)}
+          ${bdRow('🛒', 'Mix e Preço',  sc.mix, sc.pesos.mix)}
           <div class="bd-row total-row">
             <span class="bd-lbl">SCORE FINAL <small style="font-weight:400;color:#999">(máx. 10,00)</small></span>
             <span class="bd-val" style="color:#1B3F70">${sc.total.toFixed(2)}</span>
@@ -1084,6 +1088,30 @@ function setMixRuptura(key, val) {
 function setMixPreco(key, val) {
   if (!S.mix.prod[key]) S.mix.prod[key] = { trabalha: true };
   S.mix.prod[key].preco = val;
+  syncMixNext(); // atualiza o botão sem re-render (preserva foco/cursor no input)
+}
+
+// recalcula se a linha atual está completa e ativa/desativa o botão "Próxima Linha"
+function syncMixNext() {
+  const btn = document.getElementById('btn-mix-next');
+  if (!btn) return;
+  const dir = getMixList();
+  const linha = S.mix.lines[S.mix._idx];
+  const produtos = dir[linha] || [];
+  const ok = produtos.every(p => {
+    const d = S.mix.prod[prodKey(linha, p)];
+    if (!d || d.trabalha == null) return false;
+    if (d.trabalha === true) {
+      if (d.ruptura == null) return false;
+      if (!d.preco || !String(d.preco).trim()) return false;
+    }
+    return true;
+  });
+  btn.disabled = !ok;
+  // atualiza o destaque "obrigatório" dos campos de preço sem re-render
+  document.querySelectorAll('.mix-preco').forEach(inp => {
+    inp.classList.toggle('req', !inp.value.trim());
+  });
 }
 function prevMixLinha() {
   if (S.mix._idx > 0) { S.mix._idx--; render(); }
