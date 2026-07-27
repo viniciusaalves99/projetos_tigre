@@ -512,14 +512,16 @@ function scrTipoSel() {
       <div class="q-card">
         <div class="q-text">Qual o tamanho da loja?</div>
         <div style="display:flex;gap:10px">
-          ${[['P','Pequeno'],['M','Médio'],['G','Grande']].map(([val, label]) => `
+          ${[['P','Pequeno','5–9 func.'],['M','Médio','10–49 func.'],['G','Grande','50+ func.']].map(([val, label, faixa]) => `
             <button class="opt-btn tamanho-btn ${S.tamanhoLoja === val ? 'sel' : ''}"
                     onclick="S.tamanhoLoja='${val}'; render()" style="flex:1;justify-content:center">
               <span style="font-size:18px;font-weight:900">${val}</span>
               <span style="font-size:10px;opacity:.75">${label}</span>
+              <span style="font-size:10px;font-weight:700;opacity:.9">${faixa}</span>
             </button>`).join('')}
         </div>
         <div class="info-box" style="margin-top:12px;margin-bottom:0">
+          👥 Porte por nº de funcionários: <strong>P</strong> = 5 a 9 &nbsp;·&nbsp; <strong>M</strong> = 10 a 49 &nbsp;·&nbsp; <strong>G</strong> = 50 ou mais.<br>
           💡 O tamanho e o tipo de negócio definem o mix de produtos direcionado que será avaliado.
         </div>
       </div>
