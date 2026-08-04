@@ -118,12 +118,15 @@ const GRUPO_NEGOCIO = {
   'Especializado em Revestimentos':                  'ferr_mat_rev',
 };
 
-// retorna { LINHA: [produtos...] } para o PDV atual
+// retorna { LINHA: [{p, w, foco?}, ...] } para o PDV atual
 function getMixList() {
   if (!MIX) return {};
-  if (S.tipoPDV === 'balcao') return (MIX.balcao && MIX.balcao.mix && MIX.balcao.mix.unico) || {};
   const grupo = GRUPO_NEGOCIO[S.tipoNegocio];
-  const bloco = MIX[S.tipoPDV] && MIX[S.tipoPDV].mix && MIX[S.tipoPDV].mix[grupo];
+  if (S.tipoPDV === 'balcao') {
+    // Balcão: lista única por grupo de negócio (mesma para P/M/G)
+    return (MIX.balcao && MIX.balcao[grupo]) || {};
+  }
+  const bloco = MIX[S.tipoPDV] && MIX[S.tipoPDV][grupo];
   if (!bloco) return {};
   return bloco[S.tamanhoLoja] || {};
 }
@@ -140,16 +143,17 @@ const MODELO = {
     pesos: { visibilidade: 4, pontoExtra: 2, mix: 4 },
     visibilidade: {
       q1: { txt: 'Na fachada possui algum tipo de comunicação que identifique que o PDV trabalha com a marca Tigre?', penalNao: 1.0, foto: true },
-      q2: { txt: 'Ao entrar no PDV consegui visualizar algum tipo de comunicação que traga a marca Tigre?',           penalNao: 1.0, foto: true },
-      q3: { txt: 'Existe alguma comunicação aplicada acima ou no balcão com a marca Tigre?',                          penalNao: 2.0 },
+      q2: { txt: 'Ao entrar no PDV consegui visualizar algum tipo de comunicação que traga a marca Tigre?',           penalNao: 3.0, foto: true },
+      q3: null,
+      checklistGate: 'q2',
       checklist: [ // perde a penalidade quando o item está AUSENTE
-        { id: 'adesivo_balcao', label: 'Adesivo de Balcão',               penal: 0.60 },
-        { id: 'adesivo_chao',   label: 'Adesivo de Chão / Pares de Pata', penal: 0.60 },
-        { id: 'bandeirola',     label: 'Bandeirola',                       penal: 0.25 },
-        { id: 'cesto',          label: 'Cesto ou Box Promocional',         penal: 0.25 },
-        { id: 'personalizada',  label: 'Comunicação Personalizada',        penal: 0.00, bonus: true },
-        { id: 'display_aereo',  label: 'Display Aéreo',                    penal: 0.20 },
-        { id: 'totem',          label: 'Totem',                            penal: 0.10 },
+        { id: 'adesivo_balcao', label: 'Adesivo de Balcão',               penal: 1.00 },
+        { id: 'adesivo_chao',   label: 'Adesivo de Chão / Pares de Pata', penal: 1.00 },
+        { id: 'bandeirola',     label: 'Bandeirola',                       penal: 0.50 },
+        { id: 'cesto',          label: 'Cesto ou Box Promocional',         penal: 0.30 },
+        { id: 'personalizada',  label: 'Comunicação Personalizada',        penal: 0.00, bonus: true, cap: 3.00 },
+        { id: 'display_aereo',  label: 'Display Aéreo',                    penal: 0.15 },
+        { id: 'totem',          label: 'Totem',                            penal: 0.05 },
       ],
     },
     pontoExtra: {
@@ -171,13 +175,14 @@ const MODELO = {
       q1: { txt: 'Na fachada possui algum tipo de comunicação que identifique que o PDV trabalha com a marca Tigre?', penalNao: 0.5, foto: true },
       q2: { txt: 'Ao entrar no PDV consegui visualizar algum tipo de comunicação que traga a marca Tigre?',           penalNao: 1.0, foto: true },
       q3: { txt: 'Existe alguma comunicação aplicada no setor Tigre?',                                                penalNao: 2.5 },
+      checklistGate: 'q3',
       checklist: [
         { id: 'adesivo_balcao',   label: 'Adesivo de Balcão',               penal: 0.10 },
         { id: 'adesivo_chao',     label: 'Adesivo de Chão / Pares de Pata', penal: 0.25 },
         { id: 'bandeirola',       label: 'Bandeirola',                       penal: 0.10 },
         { id: 'bobina',           label: 'Bobina de Forração',               penal: 0.10 },
         { id: 'cesto',            label: 'Cesto ou Box Promocional',         penal: 0.10 },
-        { id: 'personalizada',    label: 'Comunicação Personalizada',        penal: 0.10 },
+        { id: 'personalizada',    label: 'Comunicação Personalizada',        penal: 0.00, bonus: true, cap: 2.50 },
         { id: 'cubos',            label: 'Cubos',                            penal: 0.10 },
         { id: 'display_aereo',    label: 'Display Aéreo',                    penal: 0.10 },
         { id: 'expositor_custom', label: 'Expositor Customizado',            penal: 0.10 },
@@ -212,22 +217,23 @@ const MODELO = {
     pesos: { visibilidade: 4, pontoExtra: 3, mix: 3 },
     visibilidade: {
       q1: { txt: 'Na fachada possui algum tipo de comunicação que identifique que o PDV trabalha com a marca Tigre?', penalNao: 0, foto: true },
-      q2: { txt: 'Ao entrar no PDV consegui visualizar algum tipo de comunicação que traga a marca Tigre?',           penalNao: 1.5, foto: true },
-      q3: { txt: 'Existe alguma comunicação aplicada no setor Tigre?',                                                penalNao: 2.5 },
+      q2: { txt: 'Ao entrar no PDV consegui visualizar algum tipo de comunicação que traga a marca Tigre?',           penalNao: 1.0, foto: true },
+      q3: { txt: 'Existe alguma comunicação aplicada no setor Tigre?',                                                penalNao: 3.0 },
+      checklistGate: 'q3',
       checklist: [
         { id: 'adesivo_chao',     label: 'Adesivo de Chão / Pares de Pata', penal: 0.30 },
-        { id: 'bandeirola',       label: 'Bandeirola',                       penal: 0.10 },
+        { id: 'bandeirola',       label: 'Bandeirola',                       penal: 0.15 },
         { id: 'bobina',           label: 'Bobina de Forração',               penal: 0.10 },
         { id: 'cesto',            label: 'Cesto ou Box Promocional',         penal: 0.10 },
-        { id: 'personalizada',    label: 'Comunicação Personalizada',        penal: 0.10 },
+        { id: 'personalizada',    label: 'Comunicação Personalizada',        penal: 0.00, bonus: true, cap: 2.50 },
         { id: 'cubos',            label: 'Cubos',                            penal: 0.10 },
         { id: 'display_aereo',    label: 'Display Aéreo',                    penal: 0.10 },
         { id: 'expositor_custom', label: 'Expositor Customizado',            penal: 0.10 },
         { id: 'expositor',        label: 'Expositor Padronizado',            penal: 0.10 },
-        { id: 'faixa_gondola',    label: 'Faixa de Gôndola',                penal: 0.30 },
-        { id: 'ficha_produto',    label: 'Ficha de Produto',                 penal: 0.30 },
-        { id: 'fita_cross',       label: 'Fita Cross',                       penal: 0.25 },
-        { id: 'stopper',          label: 'Stopper',                          penal: 0.25 },
+        { id: 'faixa_gondola',    label: 'Faixa de Gôndola',                penal: 0.50 },
+        { id: 'ficha_produto',    label: 'Ficha de Produto',                 penal: 0.50 },
+        { id: 'fita_cross',       label: 'Fita Cross',                       penal: 0.35 },
+        { id: 'stopper',          label: 'Stopper',                          penal: 0.30 },
         { id: 'testeira',         label: 'Testeira',                         penal: 0.10 },
         { id: 'totem',            label: 'Totem',                            penal: 0.10 },
         { id: 'wobbler',          label: 'Wobbler',                          penal: 0.10 },
@@ -316,20 +322,20 @@ function visFotosOk() {
 // perda do módulo Visibilidade
 function calcVisLoss() {
   const m = modelo().visibilidade;
+  const gate = m.checklistGate;
   let loss = 0;
   if (S.vis.q1 === 'nao') loss += m.q1.penalNao;
   if (S.vis.q2 === 'nao') loss += m.q2.penalNao;
-  if (S.vis.q3 === 'nao') {
-    loss += m.q3.penalNao;
-  } else if (S.vis.q3 === 'sim') {
-    // item bônus (coringa) presente supre os materiais faltantes → sem perda no checklist
-    const temBonus = m.checklist.some(it => it.bonus && visPresente(it.id));
-    if (!temBonus) {
-      // perde a penalidade de cada comunicação AUSENTE
-      m.checklist.forEach(it => {
-        if (!it.bonus && !visPresente(it.id)) loss += it.penal;
-      });
-    }
+  if (m.q3 && S.vis.q3 === 'nao') loss += m.q3.penalNao;
+
+  // checklist habilitado quando a pergunta-gate for "Sim"
+  if (S.vis[gate] === 'sim') {
+    let raw = 0;
+    m.checklist.forEach(it => { if (!it.bonus && !visPresente(it.id)) raw += it.penal; });
+    // coringa (Comunicação Personalizada) presente supre os faltantes até o teto (cap)
+    const bonus = m.checklist.find(it => it.bonus && visPresente(it.id));
+    if (bonus) raw = Math.max(0, raw - (bonus.cap || 0));
+    loss += raw;
   }
   return loss;
 }
@@ -349,21 +355,17 @@ function calcPeLoss() {
   return 0;
 }
 
-// perda do módulo Mix (pontos divididos igualmente entre os produtos direcionados)
+// perda do módulo Mix (peso próprio de cada produto, definido na planilha)
 function calcMixLoss() {
   const dir = getMixList();
-  const produtos = [];
-  Object.entries(dir).forEach(([linha, ps]) => ps.forEach(p => produtos.push([linha, p])));
-  const total = produtos.length;
-  if (total === 0) return { loss: 0, total: 0, faltantes: 0, frac: 0 };
-  const frac = modelo().pesos.mix / total;
-  let faltantes = 0;
-  produtos.forEach(([linha, p]) => {
-    const d = S.mix.prod[prodKey(linha, p)];
+  let total = 0, faltantes = 0, loss = 0;
+  Object.entries(dir).forEach(([linha, ps]) => ps.forEach(prod => {
+    total++;
+    const d = S.mix.prod[prodKey(linha, prod.p)];
     const ok = d && d.trabalha === true && d.ruptura !== true;
-    if (!ok) faltantes++;      // não trabalha OU em ruptura => perde a fração
-  });
-  return { loss: faltantes * frac, total, faltantes, frac };
+    if (!ok) { faltantes++; loss += (prod.w || 0); } // não trabalha OU em ruptura => perde o peso do produto
+  }));
+  return { loss, total, faltantes };
 }
 
 function calcScore() {
@@ -604,16 +606,18 @@ function scrVis() {
         <div class="q-text">${q.txt}</div>
         <button class="opt-btn ${val === 'sim' ? 'sel' : ''}" onclick="setVis('${key}','sim')">✅ Sim</button>
         <button class="opt-btn ${val === 'nao' ? 'sel' : ''}" onclick="setVis('${key}','nao')">❌ Não</button>
-        <div class="pen-hint">Não responder <strong>Sim</strong> penaliza <strong>${fmt(-q.penalNao)}</strong> pt${q.penalNao === 1 ? '' : 's'}.</div>
+        <div class="pen-hint">${q.penalNao > 0 ? `Não responder <strong>Sim</strong> penaliza <strong>${fmt(-q.penalNao)}</strong> pt${q.penalNao === 1 ? '' : 's'}.` : 'Sem penalidade para esta pergunta.'}</div>
         ${fotoHtml}
       </div>`;
   }
 
-  // checklist (Q3.1) só quando Q3 = sim
+  // checklist só quando a pergunta-gate for "Sim" (Q2 no Balcão, Q3 nos demais)
+  const gate = m.checklistGate;
+  const gNum = gate === 'q2' ? '2.1' : '3.1';
   const temBonusVis = m.checklist.some(it => it.bonus && visPresente(it.id));
-  const checklistHtml = S.vis.q3 === 'sim' ? `
+  const checklistHtml = S.vis[gate] === 'sim' ? `
     <div class="q-card">
-      <div class="q-text">3.1. Quais comunicações estão aplicadas e em que quantidade?</div>
+      <div class="q-text">${gNum}. Quais comunicações estão aplicadas e em que quantidade?</div>
       ${m.checklist.map(it => {
         const qty = S.vis.itens[it.id] || 0;
         const fotosArr = S.vis.fotos[it.id] || [];
@@ -649,16 +653,17 @@ function scrVis() {
       }).join('')}
       <div class="pen-hint ${temBonusVis ? 'ok' : ''}">
         ${temBonusVis
-          ? '🎁 <strong>Comunicação Personalizada</strong> presente: supre os materiais faltantes — sub-módulo completo.'
+          ? `🎁 <strong>Comunicação Personalizada</strong> presente: supre os materiais faltantes até <strong>${fmt(m.checklist.find(it=>it.bonus).cap)}</strong> pts.`
           : 'Cada comunicação <strong>ausente</strong> (quantidade 0) desconta a penalidade indicada. A <strong>Comunicação Personalizada</strong> é coringa: se presente, cobre os demais.'}
       </div>
     </div>` : '';
 
-  // validação: q1,q2,q3 respondidas; fotos obrigatórias quando sim
+  // validação: perguntas respondidas; fotos obrigatórias quando "Sim"
   const foto1Ok = !(m.q1.foto && S.vis.q1 === 'sim') || !!S.vis.foto1;
   const foto2Ok = !(m.q2.foto && S.vis.q2 === 'sim') || !!S.vis.foto2;
-  const itensFotoOk = S.vis.q3 !== 'sim' || visFotosOk();
-  const pode = S.vis.q1 && S.vis.q2 && S.vis.q3 && foto1Ok && foto2Ok && itensFotoOk;
+  const q3Ok = !m.q3 || !!S.vis.q3;
+  const itensFotoOk = S.vis[gate] !== 'sim' || visFotosOk();
+  const pode = S.vis.q1 && S.vis.q2 && q3Ok && foto1Ok && foto2Ok && itensFotoOk;
 
   return `
     ${header(pdvLine(), 'Visibilidade', 'dashboard')}
@@ -666,7 +671,7 @@ function scrVis() {
       <div class="info-box orange">👁️ Módulo Visibilidade — peso máximo ${modelo().pesos.visibilidade.toFixed(2)} pts</div>
       ${simNao(m.q1, 'q1', m.q1.foto)}
       ${simNao(m.q2, 'q2', m.q2.foto)}
-      ${simNao(m.q3, 'q3', false)}
+      ${m.q3 ? simNao(m.q3, 'q3', false) : ''}
       ${checklistHtml}
     </div>
     <div class="bottom-actions">
@@ -796,7 +801,8 @@ function scrMixDetalhe() {
     return `<div class="linha-pip ${cls}"></div>`;
   }).join('');
 
-  const prodHtml = produtos.map((p, i) => {
+  const prodHtml = produtos.map((prod, i) => {
+    const p = prod.p;
     const key = prodKey(linha, p);
     const d = S.mix.prod[key] || {};
     const fotoId = `foto-mix-${idx}-${i}`;
@@ -821,7 +827,7 @@ function scrMixDetalhe() {
       </div>` : '';
     return `
       <div class="mix-prod ${d.trabalha === true ? 'active' : d.trabalha === false ? 'off' : ''}">
-        <div class="mix-prod-name">${p}</div>
+        <div class="mix-prod-name">${p}${prod.foco ? ' <span class="mix-foco-tag">trimestral</span>' : ''}</div>
         <div class="mix-mini-group">
           <button class="mini-btn ${d.trabalha === true  ? 'sel-ok'  : ''}" onclick="setMixTrabalha('${escAttr(key)}', true)">Trabalha</button>
           <button class="mini-btn ${d.trabalha === false ? 'sel-neg' : ''}" onclick="setMixTrabalha('${escAttr(key)}', false)">Não trabalha</button>
@@ -830,8 +836,8 @@ function scrMixDetalhe() {
       </div>`;
   }).join('');
 
-  const respondidos = produtos.every(p => {
-    const d = S.mix.prod[prodKey(linha, p)];
+  const respondidos = produtos.every(prod => {
+    const d = S.mix.prod[prodKey(linha, prod.p)];
     if (!d || d.trabalha == null) return false;
     if (d.trabalha === true) {
       if (d.ruptura == null) return false;
@@ -874,11 +880,11 @@ function scrResultado() {
 
   // resumo Visibilidade
   const vm = m.visibilidade;
-  const temBonusRes = S.vis.q3 === 'sim' && vm.checklist.some(it => it.bonus && visPresente(it.id));
-  const presentesVis = S.vis.q3 === 'sim'
-    ? vm.checklist.filter(it => visPresente(it.id))
-    : [];
-  const ausentes = (S.vis.q3 === 'sim' && !temBonusRes)
+  const vGate = vm.checklistGate;
+  const gateSim = S.vis[vGate] === 'sim';
+  const temBonusRes = gateSim && vm.checklist.some(it => it.bonus && visPresente(it.id));
+  const presentesVis = gateSim ? vm.checklist.filter(it => visPresente(it.id)) : [];
+  const ausentes = (gateSim && !temBonusRes)
     ? vm.checklist.filter(it => it.penal > 0 && !visPresente(it.id))
     : [];
   const visResumo = S.vis.done ? `
@@ -886,7 +892,7 @@ function scrResultado() {
       <div class="resumo-title">👁️ Visibilidade</div>
       <div class="resumo-item ${S.vis.q1==='nao'?'neg':'ok'}">${S.vis.q1==='nao'?'❌':'✅'} Comunicação na fachada</div>
       <div class="resumo-item ${S.vis.q2==='nao'?'neg':'ok'}">${S.vis.q2==='nao'?'❌':'✅'} Comunicação no interior</div>
-      <div class="resumo-item ${S.vis.q3==='nao'?'neg':'ok'}">${S.vis.q3==='nao'?'❌':'✅'} Comunicação no setor/balcão</div>
+      ${vm.q3 ? `<div class="resumo-item ${S.vis.q3==='nao'?'neg':'ok'}">${S.vis.q3==='nao'?'❌':'✅'} Comunicação no setor Tigre</div>` : ''}
       ${presentesVis.map(it => `<div class="resumo-item ok">✅ ${it.label}<span class="resumo-qty">×${S.vis.itens[it.id]}</span></div>`).join('')}
       ${temBonusRes ? `<div class="resumo-item ok">🎁 Comunicação Personalizada supriu os materiais faltantes</div>` : ''}
       ${ausentes.map(it => `<div class="resumo-item neg">➖ Ausente: ${it.label} (${fmt(-it.penal)})</div>`).join('')}
@@ -1033,7 +1039,7 @@ function setVis(key, val) {
   S.vis[key] = val;
   if (key === 'q1' && val === 'nao') S.vis.foto1 = null;
   if (key === 'q2' && val === 'nao') S.vis.foto2 = null;
-  if (key === 'q3' && val === 'nao') { S.vis.itens = {}; S.vis.fotos = {}; }
+  if (key === modelo().visibilidade.checklistGate && val === 'nao') { S.vis.itens = {}; S.vis.fotos = {}; }
   render();
 }
 function changeVisQty(id, delta) {
@@ -1098,8 +1104,8 @@ function syncMixNext() {
   const dir = getMixList();
   const linha = S.mix.lines[S.mix._idx];
   const produtos = dir[linha] || [];
-  const ok = produtos.every(p => {
-    const d = S.mix.prod[prodKey(linha, p)];
+  const ok = produtos.every(prod => {
+    const d = S.mix.prod[prodKey(linha, prod.p)];
     if (!d || d.trabalha == null) return false;
     if (d.trabalha === true) {
       if (d.ruptura == null) return false;

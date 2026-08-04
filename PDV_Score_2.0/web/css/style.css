@@ -785,5 +785,18 @@ body {
 }
 .mix-sub-q { font-size: 12px; font-weight: 700; color: #444; margin-bottom: 7px; }
 .mix-preco { margin-top: 10px; font-size: 13px; }
+.mix-foco-tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #E87722;
+  background: #FFF2E6;
+  border-radius: 6px;
+  padding: 1px 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
 .mix-preco.req { border-color: #E53935; background: #FFF6F6; }
 .mix-preco.req::placeholder { color: #E53935; }

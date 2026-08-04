@@ -1,1064 +1,3487 @@
 {
  "balcao": {
-  "mix": {
-   "unico": {
-    "ESGOTO SN": [
-     "JOELHO 45 ESG 100MM",
-     "JOELHO 90 ESG 100MM",
-     "LUVA SIMP ESG 100MM",
-     "TUBO ESG PRIM TIGRE BV 6M 100MM"
+  "generalista": {
+   "ESGOTO SÉRIE NORMAL": [
+    {
+     "p": "JOELHO 90 ESG 100MM",
+     "w": 0.1364
+    },
+    {
+     "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+     "w": 0.1364
+    }
+   ],
+   "ÁGUA FRIA": [
+    {
+     "p": "JOELHO 90 SOLD 25MM",
+     "w": 0.1364
+    },
+    {
+     "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+     "w": 0.1364
+    }
+   ],
+   "ÁGUA QUENTE": [
+    {
+     "p": "JOELHO 90° AQ 22 7050 CB",
+     "w": 0.1364
+    },
+    {
+     "p": "TUBO CPVC AQ 22 7002",
+     "w": 0.1364
+    }
+   ],
+   "ELÉTRICA": [
+    {
+     "p": "CAIXA RETANG 4X2 TFLEX N",
+     "w": 0.1364
+    },
+    {
+     "p": "ELETR CORR PVC TFLEX 25MM 50M",
+     "w": 0.1364
+    },
+    {
+     "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+     "w": 0.1364
+    },
+    {
+     "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+     "w": 0.1364
+    }
+   ],
+   "ACESSÓRIOS": [
+    {
+     "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+     "w": 0.1364
+    },
+    {
+     "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+     "w": 0.1364
+    },
+    {
+     "p": "ENGATE FLEX DE PVC 1/2X50CM",
+     "w": 0.1364
+    },
+    {
+     "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+     "w": 0.1364
+    }
+   ],
+   "TORNEIRAS ABS": [
+    {
+     "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+     "w": 0.1364
+    },
+    {
+     "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+     "w": 0.1364
+    },
+    {
+     "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+     "w": 0.1364
+    }
+   ],
+   "ROLOS": [
+    {
+     "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+     "w": 0.1364
+    },
+    {
+     "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+     "w": 0.1364
+    },
+    {
+     "p": "ROLO ESPUMA 1341-090 AMARELO",
+     "w": 0.1364
+    }
+   ],
+   "TRINCHAS": [
+    {
+     "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+     "w": 0.1364
+    },
+    {
+     "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+     "w": 0.1364
+    }
+   ],
+   "PRODUTOS FOCO": [
+    {
+     "p": "Produtos Foco (definidos no trimestre)",
+     "w": 1.0,
+     "foco": true
+    }
+   ]
+  },
+  "hidr_elet": {
+   "ESGOTO SÉRIE NORMAL": [
+    {
+     "p": "JOELHO 90 ESG 100MM",
+     "w": 0.1364
+    },
+    {
+     "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+     "w": 0.1364
+    }
+   ],
+   "ÁGUA FRIA": [
+    {
+     "p": "JOELHO 90 SOLD 25MM",
+     "w": 0.1364
+    },
+    {
+     "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+     "w": 0.1364
+    }
+   ],
+   "ÁGUA QUENTE": [
+    {
+     "p": "JOELHO 90° AQ 22 7050 CB",
+     "w": 0.1364
+    },
+    {
+     "p": "TUBO CPVC AQ 22 7002",
+     "w": 0.1364
+    }
+   ],
+   "ELÉTRICA": [
+    {
+     "p": "CAIXA RETANG 4X2 TFLEX N",
+     "w": 0.1364
+    },
+    {
+     "p": "ELETR CORR PVC TFLEX 25MM 50M",
+     "w": 0.1364
+    },
+    {
+     "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+     "w": 0.1364
+    }
+   ],
+   "ACESSÓRIOS": [
+    {
+     "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+     "w": 0.1364
+    },
+    {
+     "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+     "w": 0.1364
+    },
+    {
+     "p": "ENGATE FLEX DE PVC 1/2X50CM",
+     "w": 0.1364
+    },
+    {
+     "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+     "w": 0.1364
+    }
+   ],
+   "TORNEIRAS ABS": [
+    {
+     "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+     "w": 0.1364
+    },
+    {
+     "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+     "w": 0.1364
+    },
+    {
+     "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+     "w": 0.1364
+    }
+   ],
+   "ROLOS": [
+    {
+     "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+     "w": 0.1364
+    },
+    {
+     "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+     "w": 0.1364
+    },
+    {
+     "p": "ROLO ESPUMA 1341-090 AMARELO",
+     "w": 0.1364
+    }
+   ],
+   "TRINCHAS": [
+    {
+     "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+     "w": 0.1364
+    },
+    {
+     "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+     "w": 0.1364
+    }
+   ],
+   "PRODUTOS FOCO": [
+    {
+     "p": "Produtos Foco (definidos no trimestre)",
+     "w": 1.14,
+     "foco": true
+    }
+   ]
+  },
+  "ferr_mat_rev": {
+   "ESGOTO SÉRIE NORMAL": [
+    {
+     "p": "JOELHO 90 ESG 100MM",
+     "w": 0.1364
+    },
+    {
+     "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+     "w": 0.1364
+    }
+   ],
+   "ÁGUA FRIA": [
+    {
+     "p": "JOELHO 90 SOLD 25MM",
+     "w": 0.1364
+    },
+    {
+     "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+     "w": 0.1364
+    }
+   ],
+   "ÁGUA QUENTE": [
+    {
+     "p": "JOELHO 90° AQ 22 7050 CB",
+     "w": 0.1364
+    },
+    {
+     "p": "TUBO CPVC AQ 22 7002",
+     "w": 0.1364
+    }
+   ],
+   "ELÉTRICA": [
+    {
+     "p": "CAIXA RETANG 4X2 TFLEX N",
+     "w": 0.1364
+    },
+    {
+     "p": "ELETR CORR PVC TFLEX 25MM 50M",
+     "w": 0.1364
+    },
+    {
+     "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+     "w": 0.1364
+    }
+   ],
+   "ACESSÓRIOS": [
+    {
+     "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+     "w": 0.1364
+    },
+    {
+     "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+     "w": 0.1364
+    },
+    {
+     "p": "ENGATE FLEX DE PVC 1/2X50CM",
+     "w": 0.1364
+    },
+    {
+     "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+     "w": 0.1364
+    }
+   ],
+   "TORNEIRAS ABS": [
+    {
+     "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+     "w": 0.1364
+    },
+    {
+     "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+     "w": 0.1364
+    },
+    {
+     "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+     "w": 0.1364
+    }
+   ],
+   "ROLOS": [
+    {
+     "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+     "w": 0.1364
+    },
+    {
+     "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+     "w": 0.1364
+    },
+    {
+     "p": "ROLO ESPUMA 1341-090 AMARELO",
+     "w": 0.1364
+    }
+   ],
+   "TRINCHAS": [
+    {
+     "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+     "w": 0.1364
+    },
+    {
+     "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+     "w": 0.1364
+    }
+   ],
+   "PRODUTOS FOCO": [
+    {
+     "p": "Produtos Foco (definidos no trimestre)",
+     "w": 1.14,
+     "foco": true
+    }
+   ]
+  },
+  "tintas": {
+   "ROLOS": [
+    {
+     "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+     "w": 0.6
+    },
+    {
+     "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+     "w": 0.6
+    },
+    {
+     "p": "ROLO ESPUMA 1341-090 AMARELO",
+     "w": 0.6
+    }
+   ],
+   "TRINCHAS": [
+    {
+     "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+     "w": 0.6
+    },
+    {
+     "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+     "w": 0.6
+    }
+   ],
+   "PRODUTOS FOCO": [
+    {
+     "p": "Produtos Foco (definidos no trimestre)",
+     "w": 1.0,
+     "foco": true
+    }
+   ]
+  }
+ },
+ "misto": {
+  "generalista": {
+   "P": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0909
+     }
     ],
     "ÁGUA FRIA": [
-     "CURVA 90 SOLD 25MM",
-     "JOELHO 90 SOLD 25MM",
-     "TE 90 SOLD 25MM",
-     "TUBO SOLD NBR 5648 6,00M 25MM"
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0909
+     }
     ],
     "ÁGUA QUENTE": [
-     "CONECTOR AQ 22MMX3/4\" CB",
-     "JOELHO 90° AQ 22 7050 CB",
-     "LUVA AQ 22 7059 CB",
-     "TUBO CPVC AQ 22 7002"
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0909
+     }
     ],
     "ELÉTRICA": [
-     "CAIXA QDRADA 4X4 TFLEX N CB",
-     "CAIXA RETANG 4X2 TFLEX N",
-     "ELETR CORR PVC TFLEX 25MM 50M",
-     "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-     "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-     "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB"
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0909
+     },
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0909
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0909
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0909
+     }
     ],
     "ACESSÓRIOS": [
-     "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-     "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-     "ENGATE FLEX DE PVC 1/2X50CM",
-     "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0909
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0909
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0909
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0909
+     }
     ],
     "TORNEIRAS ABS": [
-     "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-     "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-     "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0909
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0909
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0909
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0909
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0909
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0909
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0909
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0909
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   },
+   "M": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA SIMP ESG 100MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0588
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TE 90 SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0588
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "CONECTOR AQ 22MMX3/4\" CB",
+      "w": 0.0588
+     },
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0588
+     },
+     {
+      "p": "JOELHO TRANS AQ 22MMX1/2\" CB",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA AQ 22 7059 CB",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0588
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0588
+     },
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0588
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0588
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0588
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0588
+     },
+     {
+      "p": "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
+      "w": 0.0588
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0588
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0588
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X60CM",
+      "w": 0.0588
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0588
+     }
+    ],
+    "TORNEIRAS ABS": [
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0588
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0588
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0588
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.0588
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0588
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0588
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.0588
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.0588
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.0588
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   },
+   "G": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA SIMP ESG 100MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0476
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TE 90 SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0476
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "CONECTOR AQ 22MMX3/4\" CB",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO TRANS AQ 22MMX1/2\" CB",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA AQ 22 7059 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TE 90° AQ 22 7071 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0476
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 32MM 25M",
+      "w": 0.0476
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0476
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0476
+     },
+     {
+      "p": "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
+      "w": 0.0476
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0476
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0476
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X60CM",
+      "w": 0.0476
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORNEIRA LAVATORIO MESA CROSS BC 1/2\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0476
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA PELE CARNEIRO 1320-230",
+      "w": 0.0476
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA PREMIUM 920-2 SINTETICO GRIS",
+      "w": 0.0476
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.0476
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.0476
+     },
+     {
+      "p": "SUPORTE AJUSTE BIG ROLO REF.2108-46",
+      "w": 0.0476
+     },
+     {
+      "p": "DESEMPENADEIRA TIGRE PRO REF. 2190-25",
+      "w": 0.0476
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   }
+  },
+  "hidr_elet": {
+   "P": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0909
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0909
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0909
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0909
+     },
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0909
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0909
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0909
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0909
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0909
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0909
+     }
+    ],
+    "TORNEIRAS ABS": [
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0909
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0909
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0909
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0909
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0909
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0909
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0909
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0909
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.09,
+      "foco": true
+     }
+    ]
+   },
+   "M": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA SIMP ESG 100MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0588
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TE 90 SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0588
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "CONECTOR AQ 22MMX3/4\" CB",
+      "w": 0.0588
+     },
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0588
+     },
+     {
+      "p": "JOELHO TRANS AQ 22MMX1/2\" CB",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA AQ 22 7059 CB",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0588
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0588
+     },
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0588
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0588
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0588
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0588
+     },
+     {
+      "p": "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
+      "w": 0.0588
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0588
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0588
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X60CM",
+      "w": 0.0588
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0588
+     }
+    ],
+    "TORNEIRAS ABS": [
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0588
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0588
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0588
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.0588
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0588
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0588
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.0588
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.0588
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.0588
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   },
+   "G": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA SIMP ESG 100MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0476
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TE 90 SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0476
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "CONECTOR AQ 22MMX3/4\" CB",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO TRANS AQ 22MMX1/2\" CB",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA AQ 22 7059 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TE 90° AQ 22 7071 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0476
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 32MM 25M",
+      "w": 0.0476
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0476
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0476
+     },
+     {
+      "p": "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
+      "w": 0.0476
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0476
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0476
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X60CM",
+      "w": 0.0476
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORNEIRA LAVATORIO MESA CROSS BC 1/2\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0476
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA PELE CARNEIRO 1320-230",
+      "w": 0.0476
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA PREMIUM 920-2 SINTETICO GRIS",
+      "w": 0.0476
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.0476
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.0476
+     },
+     {
+      "p": "SUPORTE AJUSTE BIG ROLO REF.2108-46",
+      "w": 0.0476
+     },
+     {
+      "p": "DESEMPENADEIRA TIGRE PRO REF. 2190-25",
+      "w": 0.0476
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   }
+  },
+  "ferr_mat_rev": {
+   "P": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0909
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0909
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0909
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0909
+     },
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0909
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0909
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0909
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0909
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0909
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0909
+     }
+    ],
+    "TORNEIRAS ABS": [
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0909
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0909
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0909
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0909
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0909
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0909
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0909
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0909
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.09,
+      "foco": true
+     }
+    ]
+   },
+   "M": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA SIMP ESG 100MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0588
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TE 90 SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0588
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "CONECTOR AQ 22MMX3/4\" CB",
+      "w": 0.0588
+     },
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0588
+     },
+     {
+      "p": "JOELHO TRANS AQ 22MMX1/2\" CB",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA AQ 22 7059 CB",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0588
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0588
+     },
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0588
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0588
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0588
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0588
+     },
+     {
+      "p": "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
+      "w": 0.0588
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0588
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0588
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X60CM",
+      "w": 0.0588
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0588
+     }
+    ],
+    "TORNEIRAS ABS": [
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0588
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0588
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0588
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.0588
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0588
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0588
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.0588
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.0588
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.0588
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   },
+   "G": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA SIMP ESG 100MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0476
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TE 90 SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0476
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "CONECTOR AQ 22MMX3/4\" CB",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO TRANS AQ 22MMX1/2\" CB",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA AQ 22 7059 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TE 90° AQ 22 7071 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0476
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 32MM 25M",
+      "w": 0.0476
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0476
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0476
+     },
+     {
+      "p": "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
+      "w": 0.0476
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0476
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0476
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X60CM",
+      "w": 0.0476
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORNEIRA LAVATORIO MESA CROSS BC 1/2\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0476
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA PELE CARNEIRO 1320-230",
+      "w": 0.0476
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA PREMIUM 920-2 SINTETICO GRIS",
+      "w": 0.0476
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.0476
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.0476
+     },
+     {
+      "p": "SUPORTE AJUSTE BIG ROLO REF.2108-46",
+      "w": 0.0476
+     },
+     {
+      "p": "DESEMPENADEIRA TIGRE PRO REF. 2190-25",
+      "w": 0.0476
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   }
+  },
+  "tintas": {
+   "P": {
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.4
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.4
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.4
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.4
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.4
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   },
+   "M": {
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.2222
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.2222
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.2222
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.2222
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.2222
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.2222
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.2222
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.2222
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.2222
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   },
+   "G": {
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.1538
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.1538
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.1538
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.1538
+     },
+     {
+      "p": "ROLO LA PELE CARNEIRO 1320-230",
+      "w": 0.1538
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.1538
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.1538
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.1538
+     },
+     {
+      "p": "TRINCHA PREMIUM 920-2 SINTETICO GRIS",
+      "w": 0.1538
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.1538
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.1538
+     },
+     {
+      "p": "SUPORTE AJUSTE BIG ROLO REF.2108-46",
+      "w": 0.1538
+     },
+     {
+      "p": "DESEMPENADEIRA TIGRE PRO REF. 2190-25",
+      "w": 0.1538
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
     ]
    }
   }
  },
- "misto": {
-  "mix": {
-   "generalista": {
-    "P": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 90 ESG 100MM",
-      "LUVA SIMP ESG 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM"
-     ],
-     "ÁGUA FRIA": [
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "JOELHO 90° AQ 22 7050 CB",
-      "LUVA AQ 22 7059 CB",
-      "TUBO CPVC AQ 22 7002"
-     ],
-     "ELÉTRICA": [
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    },
-    "M": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 45 ESG 50MM",
-      "JOELHO 90 ESG 100MM",
-      "JOELHO 90 ESG 50MM",
-      "LUVA SIMP ESG 100MM",
-      "LUVA SIMP ESG 50MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 50MM"
-     ],
-     "ÁGUA FRIA": [
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 25MM",
-      "JOELHO 90 SOLD 50MM",
-      "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
-      "LUVA SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM",
-      "TUBO SOLD NBR 5648 6,00M 50MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "CONECTOR AQ 28MMX1\" CB NOVO",
-      "JOELHO 90° AQ 22 7050 CB",
-      "JOELHO TRANS AQ 22MMX1/2\" CB",
-      "LUVA AQ 22 7059 CB",
-      "TUBO CPVC AQ 22 7002",
-      "TUBO CPVC AQ 28 7003"
-     ],
-     "ELÉTRICA": [
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
-      "TUBO ELET ROSCA ANTICHAMA 1\" 3M",
-      "TUBO ELET ROSCA ANTICHAMA 3/4 3M"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "ENGATE FLEX DE PVC 1/2X60CM",
-      "SIFAO AJUST COPO MULTIUSO BRANCO",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    },
-    "G": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 45 ESG 50MM",
-      "JOELHO 45° ESG.SEC 40MM",
-      "JOELHO 90 ESG 100MM",
-      "JOELHO 90 ESG 50MM",
-      "JOELHO 90 ESG SEC 40MM",
-      "LUVA SIMP ESG 100MM",
-      "LUVA SIMP ESG 50MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 50MM",
-      "TUBO ESG SEC TIGRE PB 6M 40MM"
-     ],
-     "ÁGUA FRIA": [
-      "ADAP SOLD CT BOL/ROSC 25MMX 3/4'",
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 20MM",
-      "JOELHO 90 SOLD 25MM",
-      "JOELHO 90 SOLD 50MM",
-      "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
-      "LUVA SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TE 90 SOLD 50MM",
-      "TUBO SOLD NBR 5648 6,00M 20MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM",
-      "TUBO SOLD NBR 5648 6,00M 50MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "CONECTOR AQ 28MMX1\" CB NOVO",
-      "JOELHO 90° AQ 15 7049 CB",
-      "JOELHO 90° AQ 22 7050 CB",
-      "JOELHO TRANS AQ 22MMX1/2\" CB",
-      "LUVA AQ 22 7059 CB",
-      "TE 90° AQ 22 7071 CB",
-      "TUBO CPVC AQ 15 7001",
-      "TUBO CPVC AQ 22 7002",
-      "TUBO CPVC AQ 28 7003"
-     ],
-     "ELÉTRICA": [
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "ELETR CORR PVC TFLEX 32MM 25M",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "ELETR REFOR CORR PVC TFLEX 32MM 25M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
-      "QD DIST EMB 18/24 DISJ PTA BR S/BAR CB",
-      "TUBO ELET ROSCA ANTICHAMA 1\" 3M",
-      "TUBO ELET ROSCA ANTICHAMA 3/4 3M"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "ENGATE FLEX DE PVC 1/2X60CM",
-      "SIFAO AJUST COPO MULTIUSO BRANCO",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN 15CM TANQ MANG CROSS BC 1/2\"-3/4\"",
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA COZ MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA LAVATORIO MESA CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    }
-   },
-   "hidr_elet": {
-    "P": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 90 ESG 100MM",
-      "LUVA SIMP ESG 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM"
-     ],
-     "ÁGUA FRIA": [
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "JOELHO 90° AQ 22 7050 CB",
-      "LUVA AQ 22 7059 CB",
-      "TUBO CPVC AQ 22 7002"
-     ],
-     "ELÉTRICA": [
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    },
-    "M": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 45 ESG 50MM",
-      "JOELHO 90 ESG 100MM",
-      "JOELHO 90 ESG 50MM",
-      "LUVA SIMP ESG 100MM",
-      "LUVA SIMP ESG 50MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 50MM"
-     ],
-     "ÁGUA FRIA": [
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 25MM",
-      "JOELHO 90 SOLD 50MM",
-      "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
-      "LUVA SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM",
-      "TUBO SOLD NBR 5648 6,00M 50MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "CONECTOR AQ 28MMX1\" CB NOVO",
-      "JOELHO 90° AQ 22 7050 CB",
-      "JOELHO TRANS AQ 22MMX1/2\" CB",
-      "LUVA AQ 22 7059 CB",
-      "TUBO CPVC AQ 22 7002",
-      "TUBO CPVC AQ 28 7003"
-     ],
-     "ELÉTRICA": [
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
-      "TUBO ELET ROSCA ANTICHAMA 1\" 3M",
-      "TUBO ELET ROSCA ANTICHAMA 3/4 3M"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "ENGATE FLEX DE PVC 1/2X60CM",
-      "SIFAO AJUST COPO MULTIUSO BRANCO",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    },
-    "G": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 45 ESG 50MM",
-      "JOELHO 45° ESG.SEC 40MM",
-      "JOELHO 90 ESG 100MM",
-      "JOELHO 90 ESG 50MM",
-      "JOELHO 90 ESG SEC 40MM",
-      "LUVA SIMP ESG 100MM",
-      "LUVA SIMP ESG 50MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 50MM",
-      "TUBO ESG SEC TIGRE PB 6M 40MM"
-     ],
-     "ÁGUA FRIA": [
-      "ADAP SOLD CT BOL/ROSC 25MMX 3/4'",
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 25MM",
-      "JOELHO 90 SOLD 32MM",
-      "JOELHO 90 SOLD 50MM",
-      "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
-      "LUVA SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TE 90 SOLD 50MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM",
-      "TUBO SOLD NBR 5648 6,00M 32MM",
-      "TUBO SOLD NBR 5648 6,00M 50MM"
-     ],
-     "ÁGUA QUENTE": [
-      "BUCHA RED AQ 28X22 7020 CB",
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "CONECTOR AQ 28MMX1\" CB NOVO",
-      "JOELHO 90° AQ 22 7050 CB",
-      "JOELHO TRANS AQ 22MMX1/2\" CB",
-      "LUVA AQ 22 7059 CB",
-      "LUVA TRANS AQ 22MMX3/4\" 7068 CB",
-      "TE 90° AQ 22 7071 CB",
-      "TUBO CPVC AQ 22 7002",
-      "TUBO CPVC AQ 28 7003"
-     ],
-     "ELÉTRICA": [
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "ELETR CORR PVC TFLEX 32MM 25M",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "ELETR REFOR CORR PVC TFLEX 32MM 25M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
-      "QD DIST EMB 18/24 DISJ PTA BR S/BAR CB",
-      "TUBO ELET ROSCA ANTICHAMA 1\" 3M",
-      "TUBO ELET ROSCA ANTICHAMA 3/4 3M"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "ENGATE FLEX DE PVC 1/2X60CM",
-      "SIFAO AJUST COPO MULTIUSO BRANCO",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN 15CM TANQ MANG CROSS BC 1/2\"-3/4\"",
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA COZ MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA LAVATORIO MESA CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    }
-   },
-   "ferr_mat_rev": {
-    "P": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 90 ESG 100MM",
-      "LUVA SIMP ESG 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM"
-     ],
-     "ÁGUA FRIA": [
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "JOELHO 90° AQ 22 7050 CB",
-      "LUVA AQ 22 7059 CB",
-      "TUBO CPVC AQ 22 7002"
-     ],
-     "ELÉTRICA": [
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    },
-    "M": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 45 ESG 50MM",
-      "JOELHO 90 ESG 100MM",
-      "JOELHO 90 ESG 50MM",
-      "LUVA SIMP ESG 100MM",
-      "LUVA SIMP ESG 50MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 50MM"
-     ],
-     "ÁGUA FRIA": [
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 20MM",
-      "JOELHO 90 SOLD 25MM",
-      "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
-      "LUVA SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TUBO SOLD NBR 5648 6,00M 20MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "CONECTOR AQ 28MMX1\" CB NOVO",
-      "JOELHO 90° AQ 22 7050 CB",
-      "JOELHO TRANS AQ 22MMX1/2\" CB",
-      "LUVA AQ 22 7059 CB",
-      "TUBO CPVC AQ 22 7002",
-      "TUBO CPVC AQ 28 7003"
-     ],
-     "ELÉTRICA": [
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
-      "TUBO ELET ROSCA ANTICHAMA 1\" 3M",
-      "TUBO ELET ROSCA ANTICHAMA 3/4 3M"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "ENGATE FLEX DE PVC 1/2X60CM",
-      "SIFAO AJUST COPO MULTIUSO BRANCO",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    },
-    "G": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 45 ESG 50MM",
-      "JOELHO 45° ESG.SEC 40MM",
-      "JOELHO 90 ESG 100MM",
-      "JOELHO 90 ESG 50MM",
-      "JOELHO 90 ESG SEC 40MM",
-      "LUVA SIMP ESG 100MM",
-      "LUVA SIMP ESG 50MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 50MM",
-      "TUBO ESG SEC TIGRE PB 6M 40MM"
-     ],
-     "ÁGUA FRIA": [
-      "ADAP SOLD CT BOL/ROSC 25MMX 3/4'",
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 20MM",
-      "JOELHO 90 SOLD 25MM",
-      "JOELHO 90 SOLD 50MM",
-      "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
-      "LUVA SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TE RED 90 SOLD BC LT 25MMX 1/2\" CB",
-      "TUBO SOLD NBR 5648 6,00M 20MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM",
-      "TUBO SOLD NBR 5648 6,00M 50MM"
-     ],
-     "ÁGUA QUENTE": [
-      "BUCHA RED AQ 28X22 7020 CB",
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "CONECTOR AQ 28MMX1\" CB NOVO",
-      "JOELHO 90° AQ 22 7050 CB",
-      "JOELHO TRANS AQ 22MMX1/2\" CB",
-      "LUVA AQ 22 7059 CB",
-      "LUVA TRANS AQ 22MMX3/4\" 7068 CB",
-      "TE 90° AQ 22 7071 CB",
-      "TUBO CPVC AQ 22 7002",
-      "TUBO CPVC AQ 28 7003"
-     ],
-     "ELÉTRICA": [
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "ELETR CORR PVC TFLEX 32MM 25M",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "ELETR REFOR CORR PVC TFLEX 32MM 25M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
-      "QD DIST EMB 18/24 DISJ PTA BR S/BAR CB",
-      "TUBO ELET ROSCA ANTICHAMA 1\" 3M",
-      "TUBO ELET ROSCA ANTICHAMA 3/4 3M"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "ENGATE FLEX DE PVC 1/2X60CM",
-      "SIFAO AJUST COPO MULTIUSO BRANCO",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN 15CM TANQ MANG CROSS BC 1/2\"-3/4\"",
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA COZ MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA LAVATORIO MESA CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    }
-   },
-   "tintas": {
-    "P": {},
-    "M": {},
-    "G": {}
-   }
-  }
- },
  "autosservico": {
-  "mix": {
-   "generalista": {
-    "P": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 90 ESG 100MM",
-      "LUVA SIMP ESG 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM"
-     ],
-     "ÁGUA FRIA": [
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "JOELHO 90° AQ 22 7050 CB",
-      "LUVA AQ 22 7059 CB",
-      "TUBO CPVC AQ 22 7002"
-     ],
-     "ELÉTRICA": [
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    },
-    "M": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 45 ESG 50MM",
-      "JOELHO 90 ESG 100MM",
-      "JOELHO 90 ESG 50MM",
-      "LUVA SIMP ESG 100MM",
-      "LUVA SIMP ESG 50MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 50MM"
-     ],
-     "ÁGUA FRIA": [
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 25MM",
-      "JOELHO 90 SOLD 50MM",
-      "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
-      "LUVA SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM",
-      "TUBO SOLD NBR 5648 6,00M 50MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "CONECTOR AQ 28MMX1\" CB NOVO",
-      "JOELHO 90° AQ 22 7050 CB",
-      "JOELHO TRANS AQ 22MMX1/2\" CB",
-      "LUVA AQ 22 7059 CB",
-      "TUBO CPVC AQ 22 7002",
-      "TUBO CPVC AQ 28 7003"
-     ],
-     "ELÉTRICA": [
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
-      "TUBO ELET ROSCA ANTICHAMA 1\" 3M",
-      "TUBO ELET ROSCA ANTICHAMA 3/4 3M"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "ENGATE FLEX DE PVC 1/2X60CM",
-      "SIFAO AJUST COPO MULTIUSO BRANCO",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    },
-    "G": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 45 ESG 50MM",
-      "JOELHO 45° ESG.SEC 40MM",
-      "JOELHO 90 ESG 100MM",
-      "JOELHO 90 ESG 50MM",
-      "JOELHO 90 ESG SEC 40MM",
-      "LUVA SIMP ESG 100MM",
-      "LUVA SIMP ESG 50MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 50MM",
-      "TUBO ESG SEC TIGRE PB 6M 40MM"
-     ],
-     "ÁGUA FRIA": [
-      "ADAP SOLD CT BOL/ROSC 25MMX 3/4'",
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 20MM",
-      "JOELHO 90 SOLD 25MM",
-      "JOELHO 90 SOLD 50MM",
-      "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
-      "LUVA SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TE 90 SOLD 50MM",
-      "TUBO SOLD NBR 5648 6,00M 20MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM",
-      "TUBO SOLD NBR 5648 6,00M 50MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "CONECTOR AQ 28MMX1\" CB NOVO",
-      "JOELHO 90° AQ 15 7049 CB",
-      "JOELHO 90° AQ 22 7050 CB",
-      "JOELHO TRANS AQ 22MMX1/2\" CB",
-      "LUVA AQ 22 7059 CB",
-      "TE 90° AQ 22 7071 CB",
-      "TUBO CPVC AQ 15 7001",
-      "TUBO CPVC AQ 22 7002",
-      "TUBO CPVC AQ 28 7003"
-     ],
-     "ELÉTRICA": [
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "ELETR CORR PVC TFLEX 32MM 25M",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "ELETR REFOR CORR PVC TFLEX 32MM 25M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
-      "QD DIST EMB 18/24 DISJ PTA BR S/BAR CB",
-      "TUBO ELET ROSCA ANTICHAMA 1\" 3M",
-      "TUBO ELET ROSCA ANTICHAMA 3/4 3M"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "ENGATE FLEX DE PVC 1/2X60CM",
-      "SIFAO AJUST COPO MULTIUSO BRANCO",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN 15CM TANQ MANG CROSS BC 1/2\"-3/4\"",
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA COZ MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA LAVATORIO MESA CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    }
+  "generalista": {
+   "P": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0909
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0909
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0909
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0909
+     },
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0909
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0909
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0909
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0909
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0909
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0909
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0909
+     }
+    ],
+    "TORNEIRAS ABS": [
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0909
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0909
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0909
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0909
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0909
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0909
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0909
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0909
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
    },
-   "hidr_elet": {
-    "P": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 90 ESG 100MM",
-      "LUVA SIMP ESG 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM"
-     ],
-     "ÁGUA FRIA": [
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "JOELHO 90° AQ 22 7050 CB",
-      "LUVA AQ 22 7059 CB",
-      "TUBO CPVC AQ 22 7002"
-     ],
-     "ELÉTRICA": [
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    },
-    "M": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 45 ESG 50MM",
-      "JOELHO 90 ESG 100MM",
-      "JOELHO 90 ESG 50MM",
-      "LUVA SIMP ESG 100MM",
-      "LUVA SIMP ESG 50MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 50MM"
-     ],
-     "ÁGUA FRIA": [
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 25MM",
-      "JOELHO 90 SOLD 50MM",
-      "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
-      "LUVA SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM",
-      "TUBO SOLD NBR 5648 6,00M 50MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "CONECTOR AQ 28MMX1\" CB NOVO",
-      "JOELHO 90° AQ 22 7050 CB",
-      "JOELHO TRANS AQ 22MMX1/2\" CB",
-      "LUVA AQ 22 7059 CB",
-      "TUBO CPVC AQ 22 7002",
-      "TUBO CPVC AQ 28 7003"
-     ],
-     "ELÉTRICA": [
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
-      "TUBO ELET ROSCA ANTICHAMA 1\" 3M",
-      "TUBO ELET ROSCA ANTICHAMA 3/4 3M"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "ENGATE FLEX DE PVC 1/2X60CM",
-      "SIFAO AJUST COPO MULTIUSO BRANCO",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    },
-    "G": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 45 ESG 50MM",
-      "JOELHO 45° ESG.SEC 40MM",
-      "JOELHO 90 ESG 100MM",
-      "JOELHO 90 ESG 50MM",
-      "JOELHO 90 ESG SEC 40MM",
-      "LUVA SIMP ESG 100MM",
-      "LUVA SIMP ESG 50MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 50MM",
-      "TUBO ESG SEC TIGRE PB 6M 40MM"
-     ],
-     "ÁGUA FRIA": [
-      "ADAP SOLD CT BOL/ROSC 25MMX 3/4'",
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 25MM",
-      "JOELHO 90 SOLD 32MM",
-      "JOELHO 90 SOLD 50MM",
-      "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
-      "LUVA SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TE 90 SOLD 50MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM",
-      "TUBO SOLD NBR 5648 6,00M 32MM",
-      "TUBO SOLD NBR 5648 6,00M 50MM"
-     ],
-     "ÁGUA QUENTE": [
-      "BUCHA RED AQ 28X22 7020 CB",
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "CONECTOR AQ 28MMX1\" CB NOVO",
-      "JOELHO 90° AQ 22 7050 CB",
-      "JOELHO TRANS AQ 22MMX1/2\" CB",
-      "LUVA AQ 22 7059 CB",
-      "LUVA TRANS AQ 22MMX3/4\" 7068 CB",
-      "TE 90° AQ 22 7071 CB",
-      "TUBO CPVC AQ 22 7002",
-      "TUBO CPVC AQ 28 7003"
-     ],
-     "ELÉTRICA": [
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "ELETR CORR PVC TFLEX 32MM 25M",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "ELETR REFOR CORR PVC TFLEX 32MM 25M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
-      "QD DIST EMB 18/24 DISJ PTA BR S/BAR CB",
-      "TUBO ELET ROSCA ANTICHAMA 1\" 3M",
-      "TUBO ELET ROSCA ANTICHAMA 3/4 3M"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "ENGATE FLEX DE PVC 1/2X60CM",
-      "SIFAO AJUST COPO MULTIUSO BRANCO",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN 15CM TANQ MANG CROSS BC 1/2\"-3/4\"",
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA COZ MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA LAVATORIO MESA CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    }
+   "M": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA SIMP ESG 100MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0588
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TE 90 SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0588
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "CONECTOR AQ 22MMX3/4\" CB",
+      "w": 0.0588
+     },
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0588
+     },
+     {
+      "p": "JOELHO TRANS AQ 22MMX1/2\" CB",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA AQ 22 7059 CB",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0588
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0588
+     },
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0588
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0588
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0588
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0588
+     },
+     {
+      "p": "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
+      "w": 0.0588
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0588
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0588
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X60CM",
+      "w": 0.0588
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0588
+     }
+    ],
+    "TORNEIRAS ABS": [
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0588
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0588
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0588
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.0588
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0588
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0588
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.0588
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.0588
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.0588
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
    },
-   "ferr_mat_rev": {
-    "P": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 90 ESG 100MM",
-      "LUVA SIMP ESG 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM"
-     ],
-     "ÁGUA FRIA": [
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "JOELHO 90° AQ 22 7050 CB",
-      "LUVA AQ 22 7059 CB",
-      "TUBO CPVC AQ 22 7002"
-     ],
-     "ELÉTRICA": [
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    },
-    "M": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 45 ESG 50MM",
-      "JOELHO 90 ESG 100MM",
-      "JOELHO 90 ESG 50MM",
-      "LUVA SIMP ESG 100MM",
-      "LUVA SIMP ESG 50MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 50MM"
-     ],
-     "ÁGUA FRIA": [
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 20MM",
-      "JOELHO 90 SOLD 25MM",
-      "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
-      "LUVA SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TUBO SOLD NBR 5648 6,00M 20MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM"
-     ],
-     "ÁGUA QUENTE": [
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "CONECTOR AQ 28MMX1\" CB NOVO",
-      "JOELHO 90° AQ 22 7050 CB",
-      "JOELHO TRANS AQ 22MMX1/2\" CB",
-      "LUVA AQ 22 7059 CB",
-      "TUBO CPVC AQ 22 7002",
-      "TUBO CPVC AQ 28 7003"
-     ],
-     "ELÉTRICA": [
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
-      "TUBO ELET ROSCA ANTICHAMA 1\" 3M",
-      "TUBO ELET ROSCA ANTICHAMA 3/4 3M"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "ENGATE FLEX DE PVC 1/2X60CM",
-      "SIFAO AJUST COPO MULTIUSO BRANCO",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    },
-    "G": {
-     "ESGOTO SN": [
-      "JOELHO 45 ESG 100MM",
-      "JOELHO 45 ESG 50MM",
-      "JOELHO 45° ESG.SEC 40MM",
-      "JOELHO 90 ESG 100MM",
-      "JOELHO 90 ESG 50MM",
-      "JOELHO 90 ESG SEC 40MM",
-      "LUVA SIMP ESG 100MM",
-      "LUVA SIMP ESG 50MM",
-      "TUBO ESG PRIM TIGRE BV 6M 100MM",
-      "TUBO ESG PRIM TIGRE BV 6M 50MM",
-      "TUBO ESG SEC TIGRE PB 6M 40MM"
-     ],
-     "ÁGUA FRIA": [
-      "ADAP SOLD CT BOL/ROSC 25MMX 3/4'",
-      "CURVA 90 SOLD 25MM",
-      "JOELHO 90 SOLD 20MM",
-      "JOELHO 90 SOLD 25MM",
-      "JOELHO 90 SOLD 50MM",
-      "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
-      "LUVA SOLD 25MM",
-      "TE 90 SOLD 25MM",
-      "TE RED 90 SOLD BC LT 25MMX 1/2\" CB",
-      "TUBO SOLD NBR 5648 6,00M 20MM",
-      "TUBO SOLD NBR 5648 6,00M 25MM",
-      "TUBO SOLD NBR 5648 6,00M 50MM"
-     ],
-     "ÁGUA QUENTE": [
-      "BUCHA RED AQ 28X22 7020 CB",
-      "CONECTOR AQ 22MMX3/4\" CB",
-      "CONECTOR AQ 28MMX1\" CB NOVO",
-      "JOELHO 90° AQ 22 7050 CB",
-      "JOELHO TRANS AQ 22MMX1/2\" CB",
-      "LUVA AQ 22 7059 CB",
-      "LUVA TRANS AQ 22MMX3/4\" 7068 CB",
-      "TE 90° AQ 22 7071 CB",
-      "TUBO CPVC AQ 22 7002",
-      "TUBO CPVC AQ 28 7003"
-     ],
-     "ELÉTRICA": [
-      "CAIXA QDRADA 4X4 TFLEX N CB",
-      "CAIXA RETANG 4X2 TFLEX N",
-      "ELETR CORR PVC TFLEX 25MM 50M",
-      "ELETR CORR PVC TFLEX 32MM 25M",
-      "ELETR REFOR CORR PVC TFLEX 25MM 50M",
-      "ELETR REFOR CORR PVC TFLEX 32MM 25M",
-      "KIT SUPORTE/CX OCTOG 4X4 LAJE CB",
-      "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
-      "QD DIST EMB 18/24 DISJ PTA BR S/BAR CB",
-      "TUBO ELET ROSCA ANTICHAMA 1\" 3M",
-      "TUBO ELET ROSCA ANTICHAMA 3/4 3M"
-     ],
-     "ACESSÓRIOS": [
-      "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
-      "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
-      "CAIXA DESCARGA BRANCO 000 S/ENG V2",
-      "ENGATE FLEX DE PVC 1/2X50CM",
-      "ENGATE FLEX DE PVC 1/2X60CM",
-      "SIFAO AJUST COPO MULTIUSO BRANCO",
-      "SIFAO AJUST MULTIUSO 66CM BRANCO CB"
-     ],
-     "TORNEIRAS ABS": [
-      "TORN 15CM TANQ MANG CROSS BC 1/2\"-3/4\"",
-      "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
-      "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA COZ MESA ALTA MOV CROSS BC 1/2\"",
-      "TORNEIRA LAVATORIO MESA CROSS BC 1/2\"",
-      "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\""
-     ]
-    }
+   "G": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA SIMP ESG 100MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0476
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TE 90 SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0476
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "CONECTOR AQ 22MMX3/4\" CB",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO TRANS AQ 22MMX1/2\" CB",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA AQ 22 7059 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TE 90° AQ 22 7071 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0476
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 32MM 25M",
+      "w": 0.0476
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0476
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0476
+     },
+     {
+      "p": "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
+      "w": 0.0476
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0476
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0476
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X60CM",
+      "w": 0.0476
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORNEIRA LAVATORIO MESA CROSS BC 1/2\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0476
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA PELE CARNEIRO 1320-230",
+      "w": 0.0476
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA PREMIUM 920-2 SINTETICO GRIS",
+      "w": 0.0476
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.0476
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.0476
+     },
+     {
+      "p": "SUPORTE AJUSTE BIG ROLO REF.2108-46",
+      "w": 0.0476
+     },
+     {
+      "p": "DESEMPENADEIRA TIGRE PRO REF. 2190-25",
+      "w": 0.0476
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   }
+  },
+  "hidr_elet": {
+   "P": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0909
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0909
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0909
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0909
+     },
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0909
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0909
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0909
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0909
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0909
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0909
+     }
+    ],
+    "TORNEIRAS ABS": [
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0909
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0909
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0909
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0909
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0909
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0909
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0909
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0909
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.09,
+      "foco": true
+     }
+    ]
    },
-   "tintas": {
-    "P": {},
-    "M": {},
-    "G": {}
+   "M": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA SIMP ESG 100MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0588
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TE 90 SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0588
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "CONECTOR AQ 22MMX3/4\" CB",
+      "w": 0.0588
+     },
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0588
+     },
+     {
+      "p": "JOELHO TRANS AQ 22MMX1/2\" CB",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA AQ 22 7059 CB",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0588
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0588
+     },
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0588
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0588
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0588
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0588
+     },
+     {
+      "p": "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
+      "w": 0.0588
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0588
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0588
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X60CM",
+      "w": 0.0588
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0588
+     }
+    ],
+    "TORNEIRAS ABS": [
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0588
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0588
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0588
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.0588
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0588
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0588
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.0588
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.0588
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.0588
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   },
+   "G": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA SIMP ESG 100MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0476
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TE 90 SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0476
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "CONECTOR AQ 22MMX3/4\" CB",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO TRANS AQ 22MMX1/2\" CB",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA AQ 22 7059 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TE 90° AQ 22 7071 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0476
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 32MM 25M",
+      "w": 0.0476
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0476
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0476
+     },
+     {
+      "p": "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
+      "w": 0.0476
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0476
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0476
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X60CM",
+      "w": 0.0476
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORNEIRA LAVATORIO MESA CROSS BC 1/2\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0476
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA PELE CARNEIRO 1320-230",
+      "w": 0.0476
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA PREMIUM 920-2 SINTETICO GRIS",
+      "w": 0.0476
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.0476
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.0476
+     },
+     {
+      "p": "SUPORTE AJUSTE BIG ROLO REF.2108-46",
+      "w": 0.0476
+     },
+     {
+      "p": "DESEMPENADEIRA TIGRE PRO REF. 2190-25",
+      "w": 0.0476
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   }
+  },
+  "ferr_mat_rev": {
+   "P": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0909
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0909
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0909
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0909
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0909
+     },
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0909
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0909
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0909
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0909
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0909
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0909
+     }
+    ],
+    "TORNEIRAS ABS": [
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0909
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0909
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0909
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0909
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0909
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0909
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0909
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0909
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.09,
+      "foco": true
+     }
+    ]
+   },
+   "M": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA SIMP ESG 100MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0588
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TE 90 SOLD 25MM",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0588
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "CONECTOR AQ 22MMX3/4\" CB",
+      "w": 0.0588
+     },
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0588
+     },
+     {
+      "p": "JOELHO TRANS AQ 22MMX1/2\" CB",
+      "w": 0.0588
+     },
+     {
+      "p": "LUVA AQ 22 7059 CB",
+      "w": 0.0588
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0588
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0588
+     },
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0588
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0588
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0588
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0588
+     },
+     {
+      "p": "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
+      "w": 0.0588
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0588
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0588
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X60CM",
+      "w": 0.0588
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0588
+     }
+    ],
+    "TORNEIRAS ABS": [
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0588
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0588
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0588
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0588
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.0588
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0588
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0588
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.0588
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.0588
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.0588
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   },
+   "G": {
+    "ESGOTO SÉRIE NORMAL": [
+     {
+      "p": "JOELHO 90 ESG 100MM",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA SIMP ESG 100MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO ESG PRIM TIGRE BV 6M 100MM",
+      "w": 0.0476
+     }
+    ],
+    "ÁGUA FRIA": [
+     {
+      "p": "JOELHO 90 SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO RED 90 SOLD BC LT 25MMX 1/2'",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TE 90 SOLD 25MM",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO SOLD NBR 5648 6,00M 25MM",
+      "w": 0.0476
+     }
+    ],
+    "ÁGUA QUENTE": [
+     {
+      "p": "CONECTOR AQ 22MMX3/4\" CB",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO 90° AQ 22 7050 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "JOELHO TRANS AQ 22MMX1/2\" CB",
+      "w": 0.0476
+     },
+     {
+      "p": "LUVA AQ 22 7059 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TE 90° AQ 22 7071 CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TUBO CPVC AQ 22 7002",
+      "w": 0.0476
+     }
+    ],
+    "ELÉTRICA": [
+     {
+      "p": "CAIXA RETANG 4X2 TFLEX N",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 25MM 50M",
+      "w": 0.0476
+     },
+     {
+      "p": "ELETR REFOR CORR PVC TFLEX 32MM 25M",
+      "w": 0.0476
+     },
+     {
+      "p": "QD DIST EMB 12/16 DISJ PTA BR S/BAR CB",
+      "w": 0.0476
+     }
+    ],
+    "ACESSÓRIOS": [
+     {
+      "p": "ASSENTO SANIT MAX PLENA BR 000 9PC CB",
+      "w": 0.0476
+     },
+     {
+      "p": "ASSENTO SANIT SUAVIT BRANCO 000 6PC CB",
+      "w": 0.0476
+     },
+     {
+      "p": "CAIXA DESCARGA BRANCO 000 S/ENG V2",
+      "w": 0.0476
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X50CM",
+      "w": 0.0476
+     },
+     {
+      "p": "ENGATE FLEX DE PVC 1/2X60CM",
+      "w": 0.0476
+     },
+     {
+      "p": "SIFAO AJUST MULTIUSO 66CM BRANCO CB",
+      "w": 0.0476
+     },
+     {
+      "p": "TORN COZ PARED ALTA MOV CROS BC 1/2-3/4\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORN LAVAT MESA ALTA MOV CROSS BC 1/2\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORNEIRA LAVATORIO MESA CROSS BC 1/2\"",
+      "w": 0.0476
+     },
+     {
+      "p": "TORNEIRA P/TANQ/MAQ CROSS BC 1/2-3/4\"",
+      "w": 0.0476
+     }
+    ],
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.0476
+     },
+     {
+      "p": "ROLO LA PELE CARNEIRO 1320-230",
+      "w": 0.0476
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.0476
+     },
+     {
+      "p": "TRINCHA PREMIUM 920-2 SINTETICO GRIS",
+      "w": 0.0476
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.0476
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.0476
+     },
+     {
+      "p": "SUPORTE AJUSTE BIG ROLO REF.2108-46",
+      "w": 0.0476
+     },
+     {
+      "p": "DESEMPENADEIRA TIGRE PRO REF. 2190-25",
+      "w": 0.0476
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   }
+  },
+  "tintas": {
+   "P": {
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.6
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.6
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.6
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.6
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.6
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   },
+   "M": {
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.2222
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.2222
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.2222
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.2222
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.2222
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.2222
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.2222
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.2222
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.2222
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
+   },
+   "G": {
+    "ROLOS": [
+     {
+      "p": "ROLO LA SINT 1374-230 SEM RESPINGO",
+      "w": 0.1538
+     },
+     {
+      "p": "ROLO LA SINT 1376-230 ANTIRRESP ECON",
+      "w": 0.1538
+     },
+     {
+      "p": "ROLO ESPUMA 1341-090 AMARELO",
+      "w": 0.1538
+     },
+     {
+      "p": "ROLO LA SINT 1365-230 RESIFACIL",
+      "w": 0.1538
+     },
+     {
+      "p": "ROLO LA PELE CARNEIRO 1320-230",
+      "w": 0.1538
+     }
+    ],
+    "TRINCHAS": [
+     {
+      "p": "TRINCHA MEDIA 695-2 CERDA GRIS",
+      "w": 0.1538
+     },
+     {
+      "p": "TRINCHA MEDIA 519-2 SINTETICO PRETO",
+      "w": 0.1538
+     },
+     {
+      "p": "TRINCHA STARTEC 915-2",
+      "w": 0.1538
+     },
+     {
+      "p": "TRINCHA PREMIUM 920-2 SINTETICO GRIS",
+      "w": 0.1538
+     }
+    ],
+    "TIGREPRO": [
+     {
+      "p": "EXTENSOR TIGRE PRO 1,5 M REF.1309-15",
+      "w": 0.1538
+     },
+     {
+      "p": "CACAMBA TIGRE PRO DE MAO 2L REF.2309-01",
+      "w": 0.1538
+     },
+     {
+      "p": "SUPORTE AJUSTE BIG ROLO REF.2108-46",
+      "w": 0.1538
+     },
+     {
+      "p": "DESEMPENADEIRA TIGRE PRO REF. 2190-25",
+      "w": 0.1538
+     }
+    ],
+    "PRODUTOS FOCO": [
+     {
+      "p": "Produtos Foco (definidos no trimestre)",
+      "w": 1.0,
+      "foco": true
+     }
+    ]
    }
   }
  }
